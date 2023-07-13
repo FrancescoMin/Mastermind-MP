@@ -41,15 +41,3 @@ fun DefaultPreview() {
         Greeting("Android")
     }
 }
-fun Giorgio(){
-
-}
-fun Michael(){
-
-}
-
-fun Francesco(){
-
-}
-
-// CI SONO ANCHE IO
