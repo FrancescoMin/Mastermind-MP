@@ -41,5 +41,8 @@ fun DefaultPreview() {
         Greeting("Android")
     }
 }
+fun Giorgio(){
+
+}
 
 // CI SONO ANCHE IO
