@@ -11,10 +11,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import mp.project.mastermind.ui.theme.MastermindTheme
+import mp.project.mastermind.models.Tassello
+import mp.project.mastermind.models.Tassello.Color
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Example usage of Tassello Class
+        val tmp = Tassello()
+        tmp.setColor(Color.BROWN)
+        tmp.getColor()
+
         setContent {
             MastermindTheme {
                 // A surface container using the 'background' color from the theme
