@@ -20,6 +20,12 @@ class Tassello {
         color = id
     }
 
+    fun setColor(id: Int){
+        (Color from id) ?.let {
+            color = it
+        }
+    }
+
     fun getColor(): Color {
         return color
     }
