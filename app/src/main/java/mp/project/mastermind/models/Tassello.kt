@@ -5,6 +5,7 @@ class Tassello {
     enum class Color {
         NONE, WHITE, YELLOW, RED, GREEN, LBLUE, ROSE, BROWN, BLACK;
 
+        //example use for getting YELLOW: Color from 2
         companion object{
             private val map = Color.values().associateBy { it.ordinal }
             infix fun from(value: Int): Color?{
