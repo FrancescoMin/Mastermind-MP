@@ -13,5 +13,7 @@ data class Storico (
     @ColumnInfo(name= "attempts")var attempts: Int,
     @ColumnInfo(name= "time")var time: Int           //intended in seconds
 ){
-
+    override fun toString(): String {
+        return """Id: $id,Ver: $version,Date: $date,Res: $result,Atts: $attempts,Time: $time"""
+    }
 }

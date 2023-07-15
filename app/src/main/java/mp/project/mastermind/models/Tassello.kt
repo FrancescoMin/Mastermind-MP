@@ -1,6 +1,6 @@
 package mp.project.mastermind.models
 
-class Tassello {
+class Tassello(id: Int = 0) {
     // only way to get numerical value of color: Color.NONE.ordinal
     enum class Color {
         NONE, WHITE, YELLOW, RED, GREEN, LBLUE, ROSE, BROWN, BLACK;
@@ -15,6 +15,12 @@ class Tassello {
     }
 
     private var color = Color.NONE
+
+    init {
+        (Color from id) ?.let {
+            color = it
+        }
+    }
 
     fun setColor(id : Color){
         color = id

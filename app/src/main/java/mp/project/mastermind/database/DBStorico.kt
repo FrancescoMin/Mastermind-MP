@@ -9,6 +9,7 @@ import androidx.room.RoomDatabase
 abstract class DBStorico : RoomDatabase(){
     companion object{
         private var db: DBStorico? = null   //Singleton
+
         fun getInstance(context: Context): DBStorico {
             if(db == null){
                 db = Room.databaseBuilder(
