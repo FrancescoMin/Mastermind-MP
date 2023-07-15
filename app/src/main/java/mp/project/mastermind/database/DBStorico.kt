@@ -21,5 +21,5 @@ abstract class DBStorico : RoomDatabase(){
         }
     }
 
-    abstract fun DAOstorico(): DaoStorico
+    abstract fun daoStorico(): DaoStorico
 }
