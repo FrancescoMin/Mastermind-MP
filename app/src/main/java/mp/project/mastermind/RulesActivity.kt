@@ -2,28 +2,32 @@ package mp.project.mastermind
 
 //Idea schermata delle regole di gioco
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+
 
 @Composable
 fun RulesScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF4CAF50)) // Green background color
+            .background(Color(0xFF40CF92)) // Green background color
             .aspectRatio(9f / 16f) // 9:16 aspect ratio
     ) {
         Column(
@@ -46,7 +50,11 @@ fun RulesScreen() {
                 modifier = Modifier.padding(16.dp)
             )
 
-            Spacer(modifier = Modifier.weight(1f))
+            ClickableTextWithLink(
+                text = "Learn more about Mastermind",
+                link = "https://en.wikipedia.org/wiki/Mastermind_(board_game)",
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
 
             Button(
                 onClick = { /* Action when button is clicked */ },
@@ -62,8 +70,24 @@ fun RulesScreen() {
     }
 }
 
+@Composable
+fun ClickableTextWithLink(text: String, link: String, modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+
+    Text(
+        text = text,
+        modifier = modifier.clickable {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+            context.startActivity(intent)
+        },
+        style = MaterialTheme.typography.body1.copy(color = MaterialTheme.colors.primary),
+    )
+}
+
 @Preview
 @Composable
 fun PreviewRulesScreen() {
     RulesScreen()
 }
+
+
