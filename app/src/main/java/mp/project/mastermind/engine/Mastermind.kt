@@ -2,79 +2,63 @@ package mp.project.mastermind.engine
 
 import android.content.Context
 import android.util.Log
-import android.widget.Chronometer
 import androidx.compose.runtime.mutableStateListOf
 import mp.project.mastermind.models.*
-import java.io.File
-import android.app.Service
 
-class Mastermind (context: Context, nAtts: Int, dimAtts: Int, nColors: Int, hardmode: Boolean){
+class Mastermind (nAtts: Int, dimAtts: Int, nColors: Int, hardmode: Boolean){
 
-    private var nAtts: Int
-    private var dimAtts: Int
-    private var nColors: Int
+    //stato di configurazione del motore di gioco
+    private var initialized = false
 
-    //plancia di gioco
+    //proprietà plancia di gioco
+    private var nAtts: Int? = null
+    private var dimAtts: Int? = null
+    private var nColors: Int? = null
+
+    //oggetti plancia di gioco
     private var attempts = mutableStateListOf<Attempt>()
     private var hints = mutableStateListOf<Hint>()
-    private var secret: SecretCode
-    private var palette: ColorCol
+    private var secret: SecretCode? = null
+    private var palette: ColorCol? = null
 
     //valori di controllo di gioco
     private var usedAtts = 0
-    //il timer sarà l'ultima cosa che implementerò in questa classe
-    private var time : Chronometer
 
-    init{
-        //generazione campo di gioco
-        if(nAtts >= 10 && dimAtts > 4 && nColors >= 6){
-            this.nAtts = nAtts
-            this.dimAtts = dimAtts
-            this.nColors = nColors
+    init {
+        if(!initialized) {
+            //generazione campo di gioco
+            if (nAtts >= 10 && dimAtts > 4 && nColors >= 6) {
+                this.nAtts = nAtts
+                this.dimAtts = dimAtts
+                this.nColors = nColors
 
-            for(i in 0 until this.nAtts) {
-                attempts.add(Attempt(dimAtts))
-                hints.add(Hint(dimAtts))
+                for (i in 0 until nAtts) {
+                    attempts.add(Attempt(dimAtts))
+                    hints.add(Hint(dimAtts))
+                }
+                secret = SecretCode(dimAtts, hardmode)
+                palette = ColorCol(nColors)
+
+                Log.d("Mastermind", "Inizializzazione avvenuta con successo")
+
+            } else {
+                throw Exception("Valori di inizializzazione non validi")
             }
-            secret = SecretCode(dimAtts, hardmode)
-            palette = ColorCol(nColors)
-            time = Chronometer(context)
-
-            Log.d("Mastermind", "Inizializzazione avvenuta con successo")
-
         }else{
-            throw Exception("Valori di inizializzazione non validi")
+            Log.e("Mastermind", "Plancia già inizializzata, impossibile modificare i valori di gioco")
         }
     }
 
-    private fun secretGenerator(){
-        //generatore di codici
-    }
-
-    fun checkAttempt(){
+    fun checkAttempt() {
         //check del tentativo e generazione suggerimenti
     }
 
-    fun save(){
-        //salvataggio del gioco in corso
-
-    }
-
-    fun endgame(){
+    fun endgame() {
         //salvataggio in database dell'esito della partita
+        initialized = false
     }
 
-    fun move(){
+    fun move() {
         //interazione tra colonna colori e riga tentativo
     }
-
-    companion object{
-        fun load(savefile: File){
-            //caricamento da file di salvataggio
-        }
-    }
-
-
-
-
 }

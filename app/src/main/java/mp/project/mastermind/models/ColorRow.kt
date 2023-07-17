@@ -4,12 +4,12 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 
 open class ColorRow (n: Int){
-    protected val pawn = mutableStateListOf<Pawn?>()
+    protected val pawns = mutableStateListOf<Pawn?>()
 
     init {
         if(n >= 0) {
             repeat(n) {
-                pawn.add(null)
+                pawns.add(null)
             }
         }else{
             throw Exception("Index non valido")
@@ -17,13 +17,13 @@ open class ColorRow (n: Int){
     }
 
      open fun setTasselloColor(index: Int, color: Pawn.Color) {
-        if (index in 0 until pawn.size) {
-            pawn[index]?.let {
+        if (index in 0 until pawns.size) {
+            pawns[index]?.let {
                 it.setColor(color)
             } ?: run {
                 val pawn = Pawn()
                 pawn.setColor(color)
-                this.pawn[index] = pawn
+                this.pawns[index] = pawn
                 Log.d("RigaColori.setTasselloColor", "")
             }
         }else{
@@ -32,8 +32,8 @@ open class ColorRow (n: Int){
     }
 
      open fun getTassello(index: Int): Pawn? {
-        return if (index in 0 until pawn.size) {
-            pawn[index]
+        return if (index in 0 until pawns.size) {
+            pawns[index]
         } else {
             null
         }
