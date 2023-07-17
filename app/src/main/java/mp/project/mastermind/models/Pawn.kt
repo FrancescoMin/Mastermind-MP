@@ -1,6 +1,6 @@
 package mp.project.mastermind.models
 
-class Tassello(id: Int = 0) {
+class Pawn(id: Int = 0) {
     // only way to get numerical value of color: Color.NONE.ordinal
     enum class Color {
         NONE, WHITE, YELLOW, RED, GREEN, LBLUE, ROSE, BROWN, BLACK;

@@ -1,7 +1,6 @@
 package mp.project.mastermind
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,18 +10,16 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import mp.project.mastermind.database.DBStorico
-import mp.project.mastermind.database.Storico
 import mp.project.mastermind.ui.theme.MastermindTheme
-import mp.project.mastermind.models.Tassello
-import mp.project.mastermind.models.Tassello.Color
+import mp.project.mastermind.models.Pawn
+import mp.project.mastermind.models.Pawn.Color
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // Example usage of Tassello Class
-        val tmp = Tassello()
+        val tmp = Pawn()
         tmp.setColor(Color.BROWN)
         tmp.getColor()
 

@@ -2,10 +2,10 @@ package mp.project.mastermind.models
 
 import android.util.Log
 
-class Suggerimento (n: Int) : RigaColori(n){
+class Hint (n: Int) : ColorRow(n){
 
-    override fun setTasselloColor(index: Int, color: Tassello.Color) {
-        if(color == Tassello.Color.NONE || color == Tassello.Color.WHITE || color == Tassello.Color.BLACK){
+    override fun setTasselloColor(index: Int, color: Pawn.Color) {
+        if(color == Pawn.Color.NONE || color == Pawn.Color.WHITE || color == Pawn.Color.BLACK){
             super.setTasselloColor(index, color)
         }else{
             Log.e("Suggerimento.setTasselloColor", "Colore non valido per i suggerimenti: $color")
