@@ -1,5 +1,6 @@
 package mp.project.mastermind.models
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 
 class ColonnaColori(n: Int) {
@@ -7,7 +8,7 @@ class ColonnaColori(n: Int) {
 
     init {
         if(n < 0){
-            throw Exception("Invalid dimension")
+            throw Exception("Index non valido: $n")
         }
         for (i in 0 until n) {
             //i = 0 -> Color.NONE, colore inutile nella colonna selettrice
@@ -19,6 +20,7 @@ class ColonnaColori(n: Int) {
         return if(index in 0 until colors.size){
             colors[index].getColor()
         }else{
+            Log.e("ColonnaColori", "Index non valido: $index")
             null
         }
     }
