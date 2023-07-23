@@ -21,6 +21,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.runtime.*
+
+import kotlin.math.min
+
 class GameActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +40,9 @@ class GameActivity : ComponentActivity() {
 @Preview
 @Composable
 fun AppContent() {
+    var colorSelected by remember { mutableStateOf(false) }
+    var colors by remember { mutableStateOf(List(5) { Color(0xFFFFFFFF) }) }
+
     MaterialTheme {
         Surface(color = Color(0xFF40CF92)) {
             Column(
@@ -39,15 +50,29 @@ fun AppContent() {
                     .fillMaxSize()
                     .padding(16.dp)
             ) {
-                // Pause Button
+                // Pausa Button
                 PauseButton()
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 // 10 Zone
-                for (i in 1..10) {
-                    ZoneItem()
-                    Spacer(modifier = Modifier.height(16.dp))
+                repeat(10) {
+                    ZoneItem(
+                        onColorSelected = { index, color ->
+                            colors = colors.toMutableList().apply {
+                                this[index] = color
+                            }
+                        }
+                    )
+                    Spacer(modifier = Modifier.height(45.dp))
+                }
+
+                if (colorSelected) {
+                    SubmitButton(
+                        onClick = {
+                            // Handle submit button click here
+                        }
+                    )
                 }
             }
         }
@@ -61,17 +86,17 @@ fun PauseButton() {
             // Handle pause button click here
         },
         shape = RoundedCornerShape(8.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF40CF92))
+        colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF66DFAB))
     ) {
         Icon(
             imageVector = Icons.Default.Close,
-            contentDescription = "Close Icon",
+            contentDescription = "Pause Icon",
             tint = Color.White,
             modifier = Modifier.size(24.dp)
         )
         Spacer(modifier = Modifier.width(8.dp))
         Text(
-            text = "Close",
+            text = "Pause",
             fontSize = 16.sp,
             color = Color.White
         )
@@ -79,60 +104,95 @@ fun PauseButton() {
 }
 
 @Composable
-fun ZoneItem() {
+fun ZoneItem(onColorSelected: (Int, Color) -> Unit) {
     Row {
         SmallRectangleWithHoles()
         Spacer(modifier = Modifier.width(16.dp))
-        LargeRectangleWithHoles()
+        LargeRectangleWithHoles(
+            onColorSelected = { color ->
+                onColorSelected(0, color)
+            }
+        )
     }
 }
 
 @Composable
 fun SmallRectangleWithHoles() {
-    Box(
-        modifier = Modifier
-            .size(100.dp)
-            .background(Color.White, shape = RoundedCornerShape(8.dp))
-            .padding(8.dp)
+    Row(
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Row(
-            modifier = Modifier.fillMaxSize(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            repeat(5) {
-                Hole()
-            }
+        repeat(5) {
+            LittleHole()
+            Spacer(modifier = Modifier.width(8.dp))
         }
     }
 }
 
 @Composable
-fun LargeRectangleWithHoles() {
-    Box(
-        modifier = Modifier
-            .size(160.dp)
-            .background(Color.White, shape = RoundedCornerShape(8.dp))
-            .padding(8.dp)
+fun LargeRectangleWithHoles(onColorSelected: (Color) -> Unit) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Row(
-            modifier = Modifier.fillMaxSize(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            repeat(5) {
-                Hole()
-            }
+        val colors = listOf(
+            Color.Red,
+            Color.Green,
+            Color.Blue,
+            Color.Yellow,
+            Color.Cyan
+        )
+        repeat(5) { index ->
+            val color = colors[index]
+            Hole(
+                //color = color,
+                onClick = {
+                    onColorSelected(color)
+                }
+            )
+            Spacer(modifier = Modifier.width(8.dp))
         }
     }
 }
 
+
+
+
+
 @Composable
-fun Hole() {
+fun Hole(onClick: () -> Unit) {
     Box(
         modifier = Modifier
-            .size(40.dp)
-            .background(Color(0xFF40CF92), shape = RoundedCornerShape(4.dp))
-            .padding(4.dp)
+            .size(30.dp)
+            .background(Color(0xFFE2E2E2), shape = RoundedCornerShape(4.dp))
+            .clickable {
+                onClick()
+            }
     )
+}
+
+@Composable
+fun LittleHole() {
+    Box(
+        modifier = Modifier
+            .size(19.dp)
+            .background(Color(0xFFDEE4E1), shape = RoundedCornerShape(4.dp))
+    )
+}
+
+@Composable
+fun SubmitButton(onClick: () -> Unit) {
+    Button(
+        onClick = onClick,
+        modifier = Modifier
+            //.fillMaxWidth()
+            .padding(16.dp),
+        shape = RoundedCornerShape(8.dp),
+        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Gray),
+        enabled = true // Set this to false if the button should be disabled until all colors are set
+    ) {
+        Text(
+            text = "Submit",
+            fontSize = 16.sp,
+            color = Color.Black
+        )
+    }
 }

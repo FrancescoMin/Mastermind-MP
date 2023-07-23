@@ -58,6 +58,13 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.5.2'
     //implementation "com.google.accompanist:accompanist-icons:0.22.0"
 
+
+    implementation "androidx.appcompat:appcompat:1.2.0"
+    //implementation "androidx.compose.ui:ui:1.1.0" // Dipendenza per il pacchetto ui di Compose
+    //implementation "androidx.compose.material3:material3:1.1.0" // Dipendenza per Material Components di Compose
+    //implementation "androidx.compose.ui.tooling:ui-tooling:1.1.0"
+
+
     kapt 'androidx.room:room-compiler:2.5.2'
     //implementation 'androidx.core:core-ktx:+'
     //testImplementation 'junit:junit:4.13.2'
