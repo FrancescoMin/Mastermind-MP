@@ -38,4 +38,18 @@ open class ColorRow (n: Int){
             null
         }
     }
+
+    override fun toString(): String {
+        //layout: n_pawn.color_...
+        var ret = "${this.pawns.size}"
+        pawns.forEach {
+            try {
+                ret += "_${it!!.getColor().ordinal}"
+            }catch (e:Exception){
+                Log.e("toString Err", e.toString())
+                return ""
+            }
+        }
+        return ret
+    }
 }

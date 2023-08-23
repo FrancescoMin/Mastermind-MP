@@ -34,4 +34,9 @@ class SecretCode(n: Int, private var hardmode: Boolean = false) : ColorRow(n) {
     fun setHardmode(v: Boolean){
         hardmode = v
     }
+
+    override fun toString(): String {
+        //Layout: visible_hardmode_superString
+        return "${visible}_${hardmode}_${super.toString()}"
+    }
 }

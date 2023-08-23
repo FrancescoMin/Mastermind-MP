@@ -15,7 +15,7 @@ import mp.project.mastermind.models.Pawn
 //import mp.project.mastermind.models.Pawn.Color
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+//import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
