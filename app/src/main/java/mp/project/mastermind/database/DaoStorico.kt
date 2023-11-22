@@ -1,7 +1,7 @@
 package mp.project.mastermind.database
 
 import androidx.room.*
-
+//contiene i metodi per accedere al db
 @Dao
 interface DaoStorico {
 

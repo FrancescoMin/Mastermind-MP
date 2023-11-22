@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-
+//singleton class che implementa la connessione al db
 @Database(entities = [Storico::class], version = 1)
 abstract class DBStorico : RoomDatabase(){
     companion object{
@@ -22,5 +22,5 @@ abstract class DBStorico : RoomDatabase(){
         }
     }
 
-    abstract fun daoStorico(): DaoStorico
+   // abstract fun daoStorico(): DaoStorico
 }
