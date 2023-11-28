@@ -1,8 +1,10 @@
 package mp.project.mastermind
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -25,12 +27,15 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+
+
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.*
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -47,9 +52,26 @@ class GameActivity : ComponentActivity() {
         }
     }
 }
+@Composable
+fun arrowButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+    val image: Painter = painterResource(R.drawable.freccia) // Assicurati che freccia.png sia presente nelle risorse
 
+    IconButton(
+        onClick = onClick,
+        modifier = modifier
+            .requiredSize(31.dp)
+            .rotate(degrees = -180f)
+    ) {
+        Image(
+            painter = image,
+            contentDescription = "Arrow Icon",
+            modifier = Modifier.size(24.dp) // Modifica la dimensione dell'immagine se necessario
+        )
+    }
+}
 @Composable
 fun AndroidLarge2(modifier: Modifier = Modifier) {
+    val context = LocalContext.current
     Box(
         modifier = modifier
             .requiredWidth(width = 390.dp)
@@ -60,12 +82,15 @@ fun AndroidLarge2(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .requiredWidth(width = 412.dp)
                 .requiredHeight(height = 800.dp)
-                .background(color = Color(0xffb62fcc)))
+                .background(color = Color(0xffb62fcc))
+        )
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 111.dp,
-                    y = 70.dp)
+                .offset(
+                    x = 111.dp,
+                    y = 70.dp
+                )
                 .requiredWidth(width = 211.dp)
                 .requiredHeight(height = 43.dp)
         ) {
@@ -73,53 +98,71 @@ fun AndroidLarge2(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .requiredWidth(width = 47.dp)
                     .requiredHeight(height = 43.dp)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 55.dp,
-                        y = 0.dp)
+                    .offset(
+                        x = 55.dp,
+                        y = 0.dp
+                    )
                     .requiredWidth(width = 46.dp)
                     .requiredHeight(height = 43.dp)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 110.dp,
-                        y = 0.dp)
+                    .offset(
+                        x = 110.dp,
+                        y = 0.dp
+                    )
                     .requiredWidth(width = 46.dp)
                     .requiredHeight(height = 43.dp)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 164.dp,
-                        y = 0.dp)
+                    .offset(
+                        x = 164.dp,
+                        y = 0.dp
+                    )
                     .requiredWidth(width = 47.dp)
                     .requiredHeight(height = 43.dp)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
         }
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 166.dp,
-                    y = 206.dp)
+                .offset(
+                    x = 166.dp,
+                    y = 206.dp
+                )
                 .requiredWidth(width = 46.dp)
                 .requiredHeight(height = 43.dp)
-                .background(color = Color(0xffd9d9d9)))
+                .background(color = Color(0xffd9d9d9))
+        )
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 221.dp,
-                    y = 206.dp)
+                .offset(
+                    x = 221.dp,
+                    y = 206.dp
+                )
                 .requiredWidth(width = 46.dp)
                 .requiredHeight(height = 43.dp)
-                .background(color = Color(0xffd9d9d9)))
+                .background(color = Color(0xffd9d9d9))
+        )
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 111.dp,
-                    y = 206.dp)
+                .offset(
+                    x = 111.dp,
+                    y = 206.dp
+                )
                 .requiredWidth(width = 211.dp)
                 .requiredHeight(height = 43.dp)
         ) {
@@ -127,37 +170,49 @@ fun AndroidLarge2(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .requiredWidth(width = 47.dp)
                     .requiredHeight(height = 43.dp)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 164.dp,
-                        y = 0.dp)
+                    .offset(
+                        x = 164.dp,
+                        y = 0.dp
+                    )
                     .requiredWidth(width = 47.dp)
                     .requiredHeight(height = 43.dp)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
         }
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 166.dp,
-                    y = 275.dp)
+                .offset(
+                    x = 166.dp,
+                    y = 275.dp
+                )
                 .requiredWidth(width = 46.dp)
                 .requiredHeight(height = 43.dp)
-                .background(color = Color(0xffd9d9d9)))
+                .background(color = Color(0xffd9d9d9))
+        )
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 221.dp,
-                    y = 275.dp)
+                .offset(
+                    x = 221.dp,
+                    y = 275.dp
+                )
                 .requiredWidth(width = 46.dp)
                 .requiredHeight(height = 43.dp)
-                .background(color = Color(0xffd9d9d9)))
+                .background(color = Color(0xffd9d9d9))
+        )
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 111.dp,
-                    y = 275.dp)
+                .offset(
+                    x = 111.dp,
+                    y = 275.dp
+                )
                 .requiredWidth(width = 211.dp)
                 .requiredHeight(height = 43.dp)
         ) {
@@ -165,37 +220,49 @@ fun AndroidLarge2(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .requiredWidth(width = 47.dp)
                     .requiredHeight(height = 43.dp)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 164.dp,
-                        y = 0.dp)
+                    .offset(
+                        x = 164.dp,
+                        y = 0.dp
+                    )
                     .requiredWidth(width = 47.dp)
                     .requiredHeight(height = 43.dp)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
         }
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 166.dp,
-                    y = 343.dp)
+                .offset(
+                    x = 166.dp,
+                    y = 343.dp
+                )
                 .requiredWidth(width = 46.dp)
                 .requiredHeight(height = 43.dp)
-                .background(color = Color(0xffd9d9d9)))
+                .background(color = Color(0xffd9d9d9))
+        )
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 221.dp,
-                    y = 343.dp)
+                .offset(
+                    x = 221.dp,
+                    y = 343.dp
+                )
                 .requiredWidth(width = 46.dp)
                 .requiredHeight(height = 43.dp)
-                .background(color = Color(0xffd9d9d9)))
+                .background(color = Color(0xffd9d9d9))
+        )
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 111.dp,
-                    y = 343.dp)
+                .offset(
+                    x = 111.dp,
+                    y = 343.dp
+                )
                 .requiredWidth(width = 211.dp)
                 .requiredHeight(height = 43.dp)
         ) {
@@ -203,37 +270,49 @@ fun AndroidLarge2(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .requiredWidth(width = 47.dp)
                     .requiredHeight(height = 43.dp)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 164.dp,
-                        y = 0.dp)
+                    .offset(
+                        x = 164.dp,
+                        y = 0.dp
+                    )
                     .requiredWidth(width = 47.dp)
                     .requiredHeight(height = 43.dp)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
         }
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 166.dp,
-                    y = 411.dp)
+                .offset(
+                    x = 166.dp,
+                    y = 411.dp
+                )
                 .requiredWidth(width = 46.dp)
                 .requiredHeight(height = 43.dp)
-                .background(color = Color(0xffd9d9d9)))
+                .background(color = Color(0xffd9d9d9))
+        )
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 221.dp,
-                    y = 411.dp)
+                .offset(
+                    x = 221.dp,
+                    y = 411.dp
+                )
                 .requiredWidth(width = 46.dp)
                 .requiredHeight(height = 43.dp)
-                .background(color = Color(0xffd9d9d9)))
+                .background(color = Color(0xffd9d9d9))
+        )
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 111.dp,
-                    y = 411.dp)
+                .offset(
+                    x = 111.dp,
+                    y = 411.dp
+                )
                 .requiredWidth(width = 211.dp)
                 .requiredHeight(height = 43.dp)
         ) {
@@ -241,37 +320,49 @@ fun AndroidLarge2(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .requiredWidth(width = 47.dp)
                     .requiredHeight(height = 43.dp)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 164.dp,
-                        y = 0.dp)
+                    .offset(
+                        x = 164.dp,
+                        y = 0.dp
+                    )
                     .requiredWidth(width = 47.dp)
                     .requiredHeight(height = 43.dp)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
         }
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 166.dp,
-                    y = 479.dp)
+                .offset(
+                    x = 166.dp,
+                    y = 479.dp
+                )
                 .requiredWidth(width = 46.dp)
                 .requiredHeight(height = 43.dp)
-                .background(color = Color(0xffd9d9d9)))
+                .background(color = Color(0xffd9d9d9))
+        )
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 221.dp,
-                    y = 479.dp)
+                .offset(
+                    x = 221.dp,
+                    y = 479.dp
+                )
                 .requiredWidth(width = 46.dp)
                 .requiredHeight(height = 43.dp)
-                .background(color = Color(0xffd9d9d9)))
+                .background(color = Color(0xffd9d9d9))
+        )
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 111.dp,
-                    y = 479.dp)
+                .offset(
+                    x = 111.dp,
+                    y = 479.dp
+                )
                 .requiredWidth(width = 211.dp)
                 .requiredHeight(height = 43.dp)
         ) {
@@ -279,37 +370,49 @@ fun AndroidLarge2(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .requiredWidth(width = 47.dp)
                     .requiredHeight(height = 43.dp)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 164.dp,
-                        y = 0.dp)
+                    .offset(
+                        x = 164.dp,
+                        y = 0.dp
+                    )
                     .requiredWidth(width = 47.dp)
                     .requiredHeight(height = 43.dp)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
         }
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 166.dp,
-                    y = 548.dp)
+                .offset(
+                    x = 166.dp,
+                    y = 548.dp
+                )
                 .requiredWidth(width = 46.dp)
                 .requiredHeight(height = 43.dp)
-                .background(color = Color(0xffd9d9d9)))
+                .background(color = Color(0xffd9d9d9))
+        )
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 221.dp,
-                    y = 548.dp)
+                .offset(
+                    x = 221.dp,
+                    y = 548.dp
+                )
                 .requiredWidth(width = 46.dp)
                 .requiredHeight(height = 43.dp)
-                .background(color = Color(0xffd9d9d9)))
+                .background(color = Color(0xffd9d9d9))
+        )
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 111.dp,
-                    y = 548.dp)
+                .offset(
+                    x = 111.dp,
+                    y = 548.dp
+                )
                 .requiredWidth(width = 211.dp)
                 .requiredHeight(height = 43.dp)
         ) {
@@ -317,37 +420,49 @@ fun AndroidLarge2(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .requiredWidth(width = 47.dp)
                     .requiredHeight(height = 43.dp)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 164.dp,
-                        y = 0.dp)
+                    .offset(
+                        x = 164.dp,
+                        y = 0.dp
+                    )
                     .requiredWidth(width = 47.dp)
                     .requiredHeight(height = 43.dp)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
         }
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 166.dp,
-                    y = 616.dp)
+                .offset(
+                    x = 166.dp,
+                    y = 616.dp
+                )
                 .requiredWidth(width = 46.dp)
                 .requiredHeight(height = 43.dp)
-                .background(color = Color(0xffd9d9d9)))
+                .background(color = Color(0xffd9d9d9))
+        )
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 221.dp,
-                    y = 616.dp)
+                .offset(
+                    x = 221.dp,
+                    y = 616.dp
+                )
                 .requiredWidth(width = 46.dp)
                 .requiredHeight(height = 43.dp)
-                .background(color = Color(0xffd9d9d9)))
+                .background(color = Color(0xffd9d9d9))
+        )
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 111.dp,
-                    y = 616.dp)
+                .offset(
+                    x = 111.dp,
+                    y = 616.dp
+                )
                 .requiredWidth(width = 211.dp)
                 .requiredHeight(height = 43.dp)
         ) {
@@ -355,37 +470,49 @@ fun AndroidLarge2(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .requiredWidth(width = 47.dp)
                     .requiredHeight(height = 43.dp)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 164.dp,
-                        y = 0.dp)
+                    .offset(
+                        x = 164.dp,
+                        y = 0.dp
+                    )
                     .requiredWidth(width = 47.dp)
                     .requiredHeight(height = 43.dp)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
         }
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 166.dp,
-                    y = 684.dp)
+                .offset(
+                    x = 166.dp,
+                    y = 684.dp
+                )
                 .requiredWidth(width = 46.dp)
                 .requiredHeight(height = 43.dp)
-                .background(color = Color(0xffd9d9d9)))
+                .background(color = Color(0xffd9d9d9))
+        )
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 221.dp,
-                    y = 684.dp)
+                .offset(
+                    x = 221.dp,
+                    y = 684.dp
+                )
                 .requiredWidth(width = 46.dp)
                 .requiredHeight(height = 43.dp)
-                .background(color = Color(0xffd9d9d9)))
+                .background(color = Color(0xffd9d9d9))
+        )
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 111.dp,
-                    y = 684.dp)
+                .offset(
+                    x = 111.dp,
+                    y = 684.dp
+                )
                 .requiredWidth(width = 211.dp)
                 .requiredHeight(height = 43.dp)
         ) {
@@ -393,37 +520,49 @@ fun AndroidLarge2(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .requiredWidth(width = 47.dp)
                     .requiredHeight(height = 43.dp)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 164.dp,
-                        y = 0.dp)
+                    .offset(
+                        x = 164.dp,
+                        y = 0.dp
+                    )
                     .requiredWidth(width = 47.dp)
                     .requiredHeight(height = 43.dp)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
         }
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 166.dp,
-                    y = 138.dp)
+                .offset(
+                    x = 166.dp,
+                    y = 138.dp
+                )
                 .requiredWidth(width = 46.dp)
                 .requiredHeight(height = 43.dp)
-                .background(color = Color(0xffd9d9d9)))
+                .background(color = Color(0xffd9d9d9))
+        )
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 221.dp,
-                    y = 138.dp)
+                .offset(
+                    x = 221.dp,
+                    y = 138.dp
+                )
                 .requiredWidth(width = 46.dp)
                 .requiredHeight(height = 43.dp)
-                .background(color = Color(0xffd9d9d9)))
+                .background(color = Color(0xffd9d9d9))
+        )
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 111.dp,
-                    y = 138.dp)
+                .offset(
+                    x = 111.dp,
+                    y = 138.dp
+                )
                 .requiredWidth(width = 211.dp)
                 .requiredHeight(height = 43.dp)
         ) {
@@ -431,21 +570,27 @@ fun AndroidLarge2(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .requiredWidth(width = 47.dp)
                     .requiredHeight(height = 43.dp)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 164.dp,
-                        y = 0.dp)
+                    .offset(
+                        x = 164.dp,
+                        y = 0.dp
+                    )
                     .requiredWidth(width = 47.dp)
                     .requiredHeight(height = 43.dp)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
         }
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 20.dp,
-                    y = 72.dp)
+                .offset(
+                    x = 20.dp,
+                    y = 72.dp
+                )
                 .requiredWidth(width = 41.dp)
                 .requiredHeight(height = 37.dp)
         ) {
@@ -453,37 +598,49 @@ fun AndroidLarge2(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 25.dp,
-                        y = 0.dp)
+                    .offset(
+                        x = 25.dp,
+                        y = 0.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 25.dp,
-                        y = 21.dp)
+                    .offset(
+                        x = 25.dp,
+                        y = 21.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 0.dp,
-                        y = 21.dp)
+                    .offset(
+                        x = 0.dp,
+                        y = 21.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
         }
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 20.dp,
-                    y = 141.dp)
+                .offset(
+                    x = 20.dp,
+                    y = 141.dp
+                )
                 .requiredWidth(width = 41.dp)
                 .requiredHeight(height = 37.dp)
         ) {
@@ -491,37 +648,49 @@ fun AndroidLarge2(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 25.dp,
-                        y = 0.dp)
+                    .offset(
+                        x = 25.dp,
+                        y = 0.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 25.dp,
-                        y = 21.dp)
+                    .offset(
+                        x = 25.dp,
+                        y = 21.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 0.dp,
-                        y = 21.dp)
+                    .offset(
+                        x = 0.dp,
+                        y = 21.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
         }
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 20.dp,
-                    y = 206.dp)
+                .offset(
+                    x = 20.dp,
+                    y = 206.dp
+                )
                 .requiredWidth(width = 41.dp)
                 .requiredHeight(height = 37.dp)
         ) {
@@ -529,37 +698,49 @@ fun AndroidLarge2(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 25.dp,
-                        y = 0.dp)
+                    .offset(
+                        x = 25.dp,
+                        y = 0.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 25.dp,
-                        y = 21.dp)
+                    .offset(
+                        x = 25.dp,
+                        y = 21.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 0.dp,
-                        y = 21.dp)
+                    .offset(
+                        x = 0.dp,
+                        y = 21.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
         }
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 20.dp,
-                    y = 275.dp)
+                .offset(
+                    x = 20.dp,
+                    y = 275.dp
+                )
                 .requiredWidth(width = 41.dp)
                 .requiredHeight(height = 37.dp)
         ) {
@@ -567,37 +748,49 @@ fun AndroidLarge2(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 25.dp,
-                        y = 0.dp)
+                    .offset(
+                        x = 25.dp,
+                        y = 0.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 25.dp,
-                        y = 21.dp)
+                    .offset(
+                        x = 25.dp,
+                        y = 21.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 0.dp,
-                        y = 21.dp)
+                    .offset(
+                        x = 0.dp,
+                        y = 21.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
         }
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 20.dp,
-                    y = 343.dp)
+                .offset(
+                    x = 20.dp,
+                    y = 343.dp
+                )
                 .requiredWidth(width = 41.dp)
                 .requiredHeight(height = 37.dp)
         ) {
@@ -605,37 +798,49 @@ fun AndroidLarge2(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 25.dp,
-                        y = 0.dp)
+                    .offset(
+                        x = 25.dp,
+                        y = 0.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 25.dp,
-                        y = 21.dp)
+                    .offset(
+                        x = 25.dp,
+                        y = 21.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 0.dp,
-                        y = 21.dp)
+                    .offset(
+                        x = 0.dp,
+                        y = 21.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
         }
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 20.dp,
-                    y = 411.dp)
+                .offset(
+                    x = 20.dp,
+                    y = 411.dp
+                )
                 .requiredWidth(width = 41.dp)
                 .requiredHeight(height = 37.dp)
         ) {
@@ -643,37 +848,49 @@ fun AndroidLarge2(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 25.dp,
-                        y = 0.dp)
+                    .offset(
+                        x = 25.dp,
+                        y = 0.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 25.dp,
-                        y = 21.dp)
+                    .offset(
+                        x = 25.dp,
+                        y = 21.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 0.dp,
-                        y = 21.dp)
+                    .offset(
+                        x = 0.dp,
+                        y = 21.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
         }
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 20.dp,
-                    y = 479.dp)
+                .offset(
+                    x = 20.dp,
+                    y = 479.dp
+                )
                 .requiredWidth(width = 41.dp)
                 .requiredHeight(height = 37.dp)
         ) {
@@ -681,37 +898,49 @@ fun AndroidLarge2(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 25.dp,
-                        y = 0.dp)
+                    .offset(
+                        x = 25.dp,
+                        y = 0.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 25.dp,
-                        y = 21.dp)
+                    .offset(
+                        x = 25.dp,
+                        y = 21.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 0.dp,
-                        y = 21.dp)
+                    .offset(
+                        x = 0.dp,
+                        y = 21.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
         }
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 20.dp,
-                    y = 548.dp)
+                .offset(
+                    x = 20.dp,
+                    y = 548.dp
+                )
                 .requiredWidth(width = 41.dp)
                 .requiredHeight(height = 37.dp)
         ) {
@@ -719,37 +948,49 @@ fun AndroidLarge2(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 25.dp,
-                        y = 0.dp)
+                    .offset(
+                        x = 25.dp,
+                        y = 0.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 25.dp,
-                        y = 21.dp)
+                    .offset(
+                        x = 25.dp,
+                        y = 21.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 0.dp,
-                        y = 21.dp)
+                    .offset(
+                        x = 0.dp,
+                        y = 21.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
         }
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 20.dp,
-                    y = 684.dp)
+                .offset(
+                    x = 20.dp,
+                    y = 684.dp
+                )
                 .requiredWidth(width = 41.dp)
                 .requiredHeight(height = 37.dp)
         ) {
@@ -757,37 +998,49 @@ fun AndroidLarge2(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 25.dp,
-                        y = 0.dp)
+                    .offset(
+                        x = 25.dp,
+                        y = 0.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 25.dp,
-                        y = 21.dp)
+                    .offset(
+                        x = 25.dp,
+                        y = 21.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 0.dp,
-                        y = 21.dp)
+                    .offset(
+                        x = 0.dp,
+                        y = 21.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
         }
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 20.dp,
-                    y = 616.dp)
+                .offset(
+                    x = 20.dp,
+                    y = 616.dp
+                )
                 .requiredWidth(width = 41.dp)
                 .requiredHeight(height = 37.dp)
         ) {
@@ -795,142 +1048,140 @@ fun AndroidLarge2(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 25.dp,
-                        y = 0.dp)
+                    .offset(
+                        x = 25.dp,
+                        y = 0.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 25.dp,
-                        y = 21.dp)
+                    .offset(
+                        x = 25.dp,
+                        y = 21.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 0.dp,
-                        y = 21.dp)
+                    .offset(
+                        x = 0.dp,
+                        y = 21.dp
+                    )
                     .requiredSize(size = 16.dp)
                     .clip(shape = CircleShape)
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
         }
-        ColorAndPlacementVioletLeft(
-            modifier = Modifier
-                .align(alignment = Alignment.TopStart)
-                .offset(x = 12.dp,
-                    y = 11.923095703125.dp))
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 136.dp,
-                    y = 9.dp)
+                .offset(
+                    x = 136.dp,
+                    y = 9.dp
+                )
                 .requiredWidth(width = 212.dp)
                 .requiredHeight(height = 37.dp)
                 .clip(shape = RoundedCornerShape(18.dp))
-                .background(color = Color(0xffd9d9d9)))
-        Text(
-            text = "MASTERMIND",
-            color = Color(0xff7b24bf),
-            textAlign = TextAlign.Center,
-            lineHeight = 6.25.em,
-            style = MaterialTheme.typography.headlineSmall,
-            modifier = Modifier
-                .align(alignment = Alignment.TopStart)
-                .offset(x = 137.dp,
-                    y = 10.dp)
-                .requiredWidth(width = 208.dp))
+                .background(color = Color(0xffd9d9d9))
+        ) {
+            Button( //mastermind
+                onClick = {
+//                val intent = Intent(context, GameActivity::class.java)
+//                context.startActivity(intent) devo mettere la soluzione qua sotto
+                },
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffe4ccff)),
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Text("MASTERMIND", color = Color.White)
+            }
+        }
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 124.dp,
-                    y = 752.dp)
-                .requiredWidth(width = 193.dp)
+                .offset(
+                    x = 15.dp,
+                    y = 744.dp
+                )
+                .requiredWidth(width = 334.dp)
                 .requiredHeight(height = 43.dp)
         ) {
-            Button(
+            Button( //green
                 onClick = { },
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xff07ff5c)),
                 modifier = Modifier
                     .requiredWidth(width = 46.dp)
-                    .requiredHeight(height = 43.dp)){ }
-            Button(
+                    .requiredHeight(height = 43.dp)
+            ) { }
+            Button( //red
                 onClick = { },
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xfffb0707)),
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 98.dp,
-                        y = 0.dp)
+                    .offset(
+                        x = 192.dp,
+                        y = 0.dp
+                    )
                     .requiredWidth(width = 46.dp)
-                    .requiredHeight(height = 43.dp)){ }
-            Button(
+                    .requiredHeight(height = 43.dp)
+            ) { }
+            Button( //pink
                 onClick = { },
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xfff68fff)),
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 147.dp,
-                        y = 0.dp)
+                    .offset(
+                        x = 288.dp,
+                        y = 0.dp
+                    )
                     .requiredWidth(width = 46.dp)
-                    .requiredHeight(height = 43.dp)){ }
-            Button(
+                    .requiredHeight(height = 43.dp)
+            ) { }
+            Button(     //blue
                 onClick = { },
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xff0c24f7)),
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 49.dp,
-                        y = 0.dp)
+                    .offset(
+                        x = 96.dp,
+                        y = 0.dp
+                    )
                     .requiredWidth(width = 46.dp)
-                    .requiredHeight(height = 43.dp)){ }
+                    .requiredHeight(height = 43.dp)
+            ) { }
         }
+
+        arrowButton(
+            onClick = {
+                val intent = Intent(context, MainActivity::class.java)
+                context.startActivity(intent)
+            },
+            modifier = Modifier
+                .align(alignment = Alignment.TopStart)
+                .offset(x = 20.dp, y = 22.dp)
+        )
+
+
     }
 }
 
-@Composable
-fun ColorAndPlacementVioletLeft(modifier: Modifier = Modifier) {
-    Row(
-        verticalAlignment = Alignment.Bottom,
-        modifier = modifier
-            .clip(shape = RoundedCornerShape(topStart = 3.11513090133667.dp, bottomStart = 3.11513090133667.dp))
-    ) {
-        Image(      //TODO DA MODIFICARE IN BOTTONE
-            painter = painterResource(id = R.drawable.img_2),
-            contentDescription = "Vector 9",
-            colorFilter = ColorFilter.tint(Color(0xff9747ff)),
-            modifier = Modifier
-                .fillMaxHeight()
-                .requiredWidth(width = 24.dp)
-                .rotate(degrees = 180f))
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(5.191884517669678.dp, Alignment.CenterHorizontally),
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .clip(shape = RoundedCornerShape(2.076753854751587.dp))
-                .background(color = Color(0xff9747ff))
-                .padding(all = 6.23026180267334.dp)
-        ) {
-            Text(
-                text = "Go Home",
-                color = Color.White,
-                lineHeight = 1.56.em,
-                style = TextStyle(
-                    fontSize = 9.345392227172852.sp,
-                    fontWeight = FontWeight.Medium)
-            )
-        }
+    @Preview(widthDp = 390, heightDp = 800)
+    @Composable
+    private fun AndroidLarge2Preview() {
+        AndroidLarge2(Modifier)
     }
-}
 
-@Preview(widthDp = 390, heightDp = 800)
-@Composable
-private fun AndroidLarge2Preview() {
-    AndroidLarge2(Modifier)
-}
 
 //@Preview
 //@Composable

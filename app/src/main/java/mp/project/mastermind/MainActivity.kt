@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import mp.project.mastermind.ui.theme.MastermindTheme
 import mp.project.mastermind.models.Pawn
 //import mp.project.mastermind.models.Pawn.Color
-
+import androidx.compose.ui.unit.sp
 import android.content.Intent
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -20,6 +20,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -32,10 +33,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
 
-class MainActivity : ComponentActivity() {
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.font.FontWeight as FontWeight1
+
+
+
+val Typography.headlineSmall: TextStyle
+    get() = TextStyle(
+        // Imposta qui gli attributi dello stile di testo desiderato
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Bold,
+        /* Altri attributi come fontFamily, lineHeight, etc. */
+    )
+
+        class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -55,13 +69,10 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-val Typography.headlineSmall: TextStyle
-    get() = TextStyle(
-        // Imposta qui gli attributi dello stile di testo desiderato
-        fontSize = 16.sp,
-        fontWeight = FontWeight.Bold,
-        /* Altri attributi come fontFamily, lineHeight, etc. */
-    )
+
+
+
+
 @Composable
 fun AndroidLarge1(modifier: Modifier = Modifier) {
     val context = LocalContext.current
@@ -129,7 +140,7 @@ fun AndroidLarge1(modifier: Modifier = Modifier) {
                 color = Color(0xff7b24bf),
                 textAlign = TextAlign.Center,
                 lineHeight = 6.25.em,
-                style = MaterialTheme.typography.headlineSmall,
+                style = typography.headlineSmall,
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
                     .offset(x = 52.dp,
@@ -182,7 +193,7 @@ fun AndroidLarge1(modifier: Modifier = Modifier) {
                         val intent = Intent(context, GameActivity::class.java)
                         context.startActivity(intent)
                     },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffe4ccff)),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                     modifier = Modifier.fillMaxSize()
                 ) {
                     Text("PLAY", color = Color.White)
@@ -192,7 +203,7 @@ fun AndroidLarge1(modifier: Modifier = Modifier) {
             Button(
                 onClick = {val intent = Intent(context, RulesActivity::class.java)
                     context.startActivity(intent) },
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffe4ccff)),
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
                     .offset(x = 6.187255859375.dp,
