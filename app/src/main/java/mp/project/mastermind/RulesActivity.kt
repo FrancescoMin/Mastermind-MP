@@ -38,19 +38,19 @@ class RulesActivity : ComponentActivity() {
         }
     }
 }
-// TODO DA MIGLIORARE VISUALIZZAZIONE TESTO
+
 @Composable
 fun AndroidLarge3(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     Box(
         modifier = modifier
-            .requiredWidth(width = 360.dp)
+            .requiredWidth(width = 400.dp)
             .requiredHeight(height = 800.dp)
             .background(color = Color.White)
     ) {
         Box(
             modifier = Modifier
-                .requiredWidth(width = 360.dp)
+                .requiredWidth(width = 400.dp)
                 .requiredHeight(height = 800.dp)
                 .background(color = Color(0xff7b24bf))
         )
@@ -93,7 +93,7 @@ fun AndroidLarge3(modifier: Modifier = Modifier) {
                 ) // Regola l'offset verticale per posizionare il testo sotto "RULES"
         )
 
-        // Aggiungi il pulsante
+
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)

@@ -78,22 +78,22 @@ fun AndroidLarge1(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     Box(
         modifier = modifier
-            .requiredWidth(width = 360.dp)
+            .requiredWidth(width = 400.dp)
             .requiredHeight(height = 800.dp)
             .background(color = Color.White)
     ) {
         Box(
             modifier = Modifier
-                .requiredWidth(width = 360.dp)
-                .requiredHeight(height = 529.dp)
+                .requiredWidth(width = 400.dp)
+                .requiredHeight(height = 800.dp)
                 .background(color = Color(0xffb62fcc)))
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
                 .offset(x = 0.dp,
                     y = 198.dp)
-                .requiredWidth(width = 360.dp)
-                .requiredHeight(height = 602.dp)
+                .requiredWidth(width = 400.dp)
+                .requiredHeight(height = 800.dp)
                 .clip(shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
                 .background(color = Color(0xff7b24bf)))
         Box(
@@ -101,8 +101,8 @@ fun AndroidLarge1(modifier: Modifier = Modifier) {
                 .align(alignment = Alignment.TopStart)
                 .offset(x = 25.dp,
                     y = 48.dp)
-                .requiredWidth(width = 311.dp)
-                .requiredHeight(height = 170.dp)
+                .requiredWidth(width = 400.dp)
+                .requiredHeight(height = 800.dp)
         ) {
             Box(
                 modifier = Modifier
