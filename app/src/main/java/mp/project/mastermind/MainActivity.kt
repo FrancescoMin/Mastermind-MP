@@ -114,7 +114,7 @@ fun AndroidLarge1(modifier: Modifier = Modifier) {
                     .clip(shape = RoundedCornerShape(18.dp))
                     .background(color = Color(0xffd9d9d9))
             )
-            Property1Default(
+            Property1Default2(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
                     .offset(
@@ -154,6 +154,14 @@ fun AndroidLarge1(modifier: Modifier = Modifier) {
                         y = 113.dp
                     )
             )
+            Alien2(
+                modifier = Modifier
+                    .align(alignment = Alignment.TopStart)
+                    .offset(
+                        x = 143.dp,
+                        y = 9.dp
+                    )
+            )
             Text(
                 text = "MASTERMIND",
                 color = Color(0xff7b24bf),
@@ -168,18 +176,6 @@ fun AndroidLarge1(modifier: Modifier = Modifier) {
                     )
                     .requiredWidth(width = 208.dp)
             )
-            Box(
-                modifier = Modifier
-                    .align(alignment = Alignment.TopStart)
-                    .offset(
-                        x = 143.4542236328125.dp,
-                        y = 9.7701416015625.dp
-                    )
-                    .requiredWidth(width = 25.dp)
-                    .requiredHeight(height = 45.dp)
-            ) {
-                Alien()
-            }
         }
         Box(
             modifier = Modifier
@@ -232,6 +228,15 @@ fun AndroidLarge1(modifier: Modifier = Modifier) {
                 }
 
             }
+            Box(
+                    modifier = Modifier
+                        .align(alignment = Alignment.TopStart)
+                        .offset(x = 15.dp,
+                            y = 213.dp)
+                        .requiredWidth(width = 238.dp)
+                        .requiredHeight(height = 61.dp)
+                        .clip(shape = RoundedCornerShape(10.dp))
+                        .background(color = Color(0xffb62fcc)))
             Button(
                 onClick = {
                     val intent = Intent(context, RulesActivity::class.java)
@@ -248,15 +253,7 @@ fun AndroidLarge1(modifier: Modifier = Modifier) {
                     .requiredHeight(height = 34.dp)
             ) { Text("RULES", color = Color.White) }
 
-            Box(
-                modifier = Modifier
-                    .align(alignment = Alignment.TopStart)
-                    .offset(x = 15.dp,
-                        y = 213.dp)
-                    .requiredWidth(width = 238.dp)
-                    .requiredHeight(height = 61.dp)
-                    .clip(shape = RoundedCornerShape(10.dp))
-                    .background(color = Color(0xffb62fcc)))
+
 
             Button(
                 onClick = { },
@@ -288,22 +285,49 @@ fun Property1Default(modifier: Modifier = Modifier) {
                 .requiredSize(size = 48.dp))
     }
 }
-
 @Composable
-fun Alien(modifier: Modifier = Modifier) {
+fun Property1Default2(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
-            .requiredWidth(width = 25.dp)
-            .requiredHeight(height = 45.dp)
+            .requiredSize(size = 23.dp)
     ) {
         Image(
-            painter = painterResource(id = R.drawable.img_1),
-            contentDescription = "Alien",
+            painter = painterResource(id = R.drawable.img),
+            contentDescription = "Robot1-01 1",
             modifier = Modifier
                 .requiredSize(size = 23.dp))
     }
 }
 
+@Composable
+fun Alien(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .requiredWidth(width = 48.dp)
+            .requiredHeight(height = 48.dp)
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.img_1),
+            contentDescription = "Alien",
+            modifier = Modifier
+                .fillMaxSize())
+    }
+}
+
+@Composable
+fun Alien2(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .requiredWidth(width = 23.dp)
+            .requiredHeight(height = 23.dp)
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.img_1),
+            contentDescription = "Alien",
+            modifier = Modifier
+                .fillMaxSize())
+    }
+}
 @Preview(widthDp = 400, heightDp = 800)
 @Composable
 private fun AndroidLarge1Preview() {
