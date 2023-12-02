@@ -70,9 +70,6 @@ val Typography.headlineSmall: TextStyle
 }
 
 
-
-
-
 @Composable
 fun AndroidLarge1(modifier: Modifier = Modifier) {
     val context = LocalContext.current
@@ -86,71 +83,98 @@ fun AndroidLarge1(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .requiredWidth(width = 400.dp)
                 .requiredHeight(height = 800.dp)
-                .background(color = Color(0xffb62fcc)))
+                .background(color = Color(0xffb62fcc))
+        )
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 0.dp,
-                    y = 198.dp)
+                .offset(
+                    x = 0.dp,
+                    y = 198.dp
+                )
                 .requiredWidth(width = 400.dp)
                 .requiredHeight(height = 800.dp)
                 .clip(shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
-                .background(color = Color(0xff7b24bf)))
+                .background(color = Color(0xff7b24bf))
+        )
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 25.dp,
-                    y = 48.dp)
-                .requiredWidth(width = 400.dp)
-                .requiredHeight(height = 800.dp)
+                .offset(
+                    x = 52.dp,
+                    y = 51.dp
+                )
+                .requiredWidth(width = 311.dp)
+                .requiredHeight(height = 170.dp)
         ) {
             Box(
                 modifier = Modifier
                     .requiredWidth(width = 311.dp)
                     .requiredHeight(height = 170.dp)
                     .clip(shape = RoundedCornerShape(18.dp))
-                    .background(color = Color(0xffd9d9d9)))
+                    .background(color = Color(0xffd9d9d9))
+            )
             Property1Default(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 143.4542236328125.dp,
-                        y = 125.0574951171875.dp))
+                    .offset(
+                        x = 143.4542236328125.dp,
+                        y = 125.0574951171875.dp
+                    )
+            )
             Property1Default(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 7.dp,
-                        y = 113.dp))
+                    .offset(
+                        x = 7.dp,
+                        y = 113.dp
+                    )
+            )
             Property1Default(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 254.dp,
-                        y = 0.dp))
+                    .offset(
+                        x = 254.dp,
+                        y = 0.dp
+                    )
+            )
             Alien(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 7.dp,
-                        y = 8.dp))
+                    .offset(
+                        x = 7.dp,
+                        y = 8.dp
+                    )
+            )
             Alien(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 257.dp,
-                        y = 113.dp))
+                    .offset(
+                        x = 257.dp,
+                        y = 113.dp
+                    )
+            )
             Text(
                 text = "MASTERMIND",
                 color = Color(0xff7b24bf),
                 textAlign = TextAlign.Center,
                 lineHeight = 6.25.em,
-                style = typography.headlineSmall,
+                style = MaterialTheme.typography.headlineSmall,
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 52.dp,
-                        y = 58.dp)
-                    .requiredWidth(width = 208.dp))
+                    .offset(
+                        x = 52.dp,
+                        y = 58.dp
+                    )
+                    .requiredWidth(width = 208.dp)
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 143.4542236328125.dp,
-                        y = 9.7701416015625.dp)
+                    .offset(
+                        x = 143.4542236328125.dp,
+                        y = 9.7701416015625.dp
+                    )
                     .requiredWidth(width = 25.dp)
                     .requiredHeight(height = 45.dp)
             ) {
@@ -160,8 +184,10 @@ fun AndroidLarge1(modifier: Modifier = Modifier) {
         Box(
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
-                .offset(x = 45.dp,
-                    y = 361.dp)
+                .offset(
+                    x = 73.dp,
+                    y = 366.dp
+                )
                 .requiredWidth(width = 271.dp)
                 .requiredHeight(height = 180.dp)
         ) {
@@ -170,21 +196,27 @@ fun AndroidLarge1(modifier: Modifier = Modifier) {
                     .requiredWidth(width = 271.dp)
                     .requiredHeight(height = 86.dp)
                     .clip(shape = RoundedCornerShape(10.dp))
-                    .background(color = Color(0xffb62fcc)))
+                    .background(color = Color(0xffb62fcc))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 16.086761474609375.dp,
-                        y = 118.5714111328125.dp)
+                    .offset(
+                        x = 16.086761474609375.dp,
+                        y = 118.5714111328125.dp
+                    )
                     .requiredWidth(width = 238.dp)
                     .requiredHeight(height = 61.dp)
                     .clip(shape = RoundedCornerShape(10.dp))
-                    .background(color = Color(0xffb62fcc)))
+                    .background(color = Color(0xffb62fcc))
+            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 6.dp,
-                        y = 32.dp)
+                    .offset(
+                        x = 6.dp,
+                        y = 32.dp
+                    )
                     .requiredWidth(width = 257.dp)
                     .requiredHeight(height = 34.dp)
             ) {
@@ -201,18 +233,47 @@ fun AndroidLarge1(modifier: Modifier = Modifier) {
 
             }
             Button(
-                onClick = {val intent = Intent(context, RulesActivity::class.java)
-                    context.startActivity(intent) },
+                onClick = {
+                    val intent = Intent(context, RulesActivity::class.java)
+                    context.startActivity(intent)
+                },
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 6.187255859375.dp,
-                        y = 137.14285278320312.dp)
+                    .offset(
+                        x = 6.187255859375.dp,
+                        y = 137.14285278320312.dp
+                    )
                     .requiredWidth(width = 257.dp)
-                    .requiredHeight(height = 34.dp)){ Text("RULES", color = Color.White)}
+                    .requiredHeight(height = 34.dp)
+            ) { Text("RULES", color = Color.White) }
+
+            Box(
+                modifier = Modifier
+                    .align(alignment = Alignment.TopStart)
+                    .offset(x = 15.dp,
+                        y = 213.dp)
+                    .requiredWidth(width = 238.dp)
+                    .requiredHeight(height = 61.dp)
+                    .clip(shape = RoundedCornerShape(10.dp))
+                    .background(color = Color(0xffb62fcc)))
+
+            Button(
+                onClick = { },
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
+                modifier = Modifier
+                    .align(alignment = Alignment.TopStart)
+                    .offset(
+                        x = 6.dp,
+                        y = 233.dp
+                    )
+                    .requiredWidth(width = 257.dp)
+                    .requiredHeight(height = 34.dp)
+            ) { Text("MATCH HISTORY", color = Color.White) }
         }
     }
 }
+
 
 @Composable
 fun Property1Default(modifier: Modifier = Modifier) {
@@ -243,83 +304,186 @@ fun Alien(modifier: Modifier = Modifier) {
     }
 }
 
-@Preview(widthDp = 360, heightDp = 800)
+@Preview(widthDp = 400, heightDp = 800)
 @Composable
 private fun AndroidLarge1Preview() {
     AndroidLarge1(Modifier)
 }
 
-//@Composable
-//fun Greeting(name: String) {
-    //Text(text = "Hello $name!")
-//}
 
-//@Preview(showBackground = true)
 //@Composable
-//fun DefaultPreview() {
-    //MastermindTheme {
-        //Greeting("Android")
-    //}
-//}
-//@Preview
-//@Composable
-//
-//fun MyMainActivity() {
+//fun AndroidLarge1(modifier: Modifier = Modifier) {
 //    val context = LocalContext.current
 //    Box(
-//        modifier = Modifier
-//            .fillMaxSize()
-//            .background(Color(0xFFFFFFFF)) // Green background color
-//            .aspectRatio(9f / 16f) // 9:16 aspect ratio
-//    )
-//    Column(
-//        modifier = Modifier
-//            .fillMaxSize()
-//            .padding(16.dp),
-//        verticalArrangement = Arrangement.Center,
-//        horizontalAlignment = Alignment.CenterHorizontally
+//        modifier = modifier
+//            .requiredWidth(width = 400.dp)
+//            .requiredHeight(height = 800.dp)
+//            .background(color = Color.White)
 //    ) {
-//        // Button for RulesActivity
-//        Button(
-//            onClick = {
-//                val intent = Intent(context, RulesActivity::class.java)
-//                context.startActivity(intent)
-//            },
+//        Box(
 //            modifier = Modifier
-//                .fillMaxWidth()
-//                .clip(RoundedCornerShape(8.dp))
-//                .padding(16.dp)
+//                .requiredWidth(width = 400.dp)
+//                .requiredHeight(height = 800.dp)
+//                .background(color = Color(0xffb62fcc)))
+//        Box(
+//            modifier = Modifier
+//                .align(alignment = Alignment.TopStart)
+//                .offset(x = 0.dp,
+//                    y = 198.dp)
+//                .requiredWidth(width = 400.dp)
+//                .requiredHeight(height = 800.dp)
+//                .clip(shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
+//                .background(color = Color(0xff7b24bf)))
+//        Box(
+//            modifier = Modifier
+//                .align(alignment = Alignment.TopStart)
+//                .offset(x = 25.dp,
+//                    y = 48.dp)
+//                .requiredWidth(width = 400.dp)
+//                .requiredHeight(height = 800.dp)
 //        ) {
+//            Box(
+//                modifier = Modifier
+//                    .requiredWidth(width = 311.dp)
+//                    .requiredHeight(height = 170.dp)
+//                    .clip(shape = RoundedCornerShape(18.dp))
+//                    .background(color = Color(0xffd9d9d9)))
+//            Property1Default(
+//                modifier = Modifier
+//                    .align(alignment = Alignment.TopStart)
+//                    .offset(x = 143.4542236328125.dp,
+//                        y = 125.0574951171875.dp))
+//            Property1Default(
+//                modifier = Modifier
+//                    .align(alignment = Alignment.TopStart)
+//                    .offset(x = 7.dp,
+//                        y = 113.dp))
+//            Property1Default(
+//                modifier = Modifier
+//                    .align(alignment = Alignment.TopStart)
+//                    .offset(x = 254.dp,
+//                        y = 0.dp))
+//            Alien(
+//                modifier = Modifier
+//                    .align(alignment = Alignment.TopStart)
+//                    .offset(x = 7.dp,
+//                        y = 8.dp))
+//            Alien(
+//                modifier = Modifier
+//                    .align(alignment = Alignment.TopStart)
+//                    .offset(x = 257.dp,
+//                        y = 113.dp))
 //            Text(
-//                "Vai alla RulesActivity",
-//                textAlign = TextAlign.Center
-//            )
+//                text = "MASTERMIND",
+//                color = Color(0xff7b24bf),
+//                textAlign = TextAlign.Center,
+//                lineHeight = 6.25.em,
+//                style = typography.headlineSmall,
+//                modifier = Modifier
+//                    .align(alignment = Alignment.TopStart)
+//                    .offset(x = 52.dp,
+//                        y = 58.dp)
+//                    .requiredWidth(width = 208.dp))
+//            Box(
+//                modifier = Modifier
+//                    .align(alignment = Alignment.TopStart)
+//                    .offset(x = 143.4542236328125.dp,
+//                        y = 9.7701416015625.dp)
+//                    .requiredWidth(width = 25.dp)
+//                    .requiredHeight(height = 45.dp)
+//            ) {
+//                Alien()
+//            }
 //        }
-//
-//        Spacer(modifier = Modifier.height(16.dp))
-//
-//        // Button for GameActivity
-//        Button(
-//            onClick = {
-//                val intent = Intent(context, GameActivity::class.java)
-//                context.startActivity(intent)
-//            },
+//        Box(
 //            modifier = Modifier
-//                .fillMaxWidth()
-//                .clip(RoundedCornerShape(8.dp))
-//                .padding(16.dp)
+//                .align(alignment = Alignment.TopStart)
+//                .offset(x = 45.dp,
+//                    y = 361.dp)
+//                .requiredWidth(width = 271.dp)
+//                .requiredHeight(height = 180.dp)
 //        ) {
-//            Text(
-//                "Vai alla GameActivity",
-//                textAlign = TextAlign.Center
-//            )
+//            Box(
+//                modifier = Modifier
+//                    .requiredWidth(width = 271.dp)
+//                    .requiredHeight(height = 86.dp)
+//                    .clip(shape = RoundedCornerShape(10.dp))
+//                    .background(color = Color(0xffb62fcc)))
+//            Box(
+//                modifier = Modifier
+//                    .align(alignment = Alignment.TopStart)
+//                    .offset(x = 16.086761474609375.dp,
+//                        y = 118.5714111328125.dp)
+//                    .requiredWidth(width = 238.dp)
+//                    .requiredHeight(height = 61.dp)
+//                    .clip(shape = RoundedCornerShape(10.dp))
+//                    .background(color = Color(0xffb62fcc)))
+//            Box(
+//                modifier = Modifier
+//                    .align(alignment = Alignment.TopStart)
+//                    .offset(x = 6.dp,
+//                        y = 32.dp)
+//                    .requiredWidth(width = 257.dp)
+//                    .requiredHeight(height = 34.dp)
+//            ) {
+//                Button(
+//                    onClick = {
+//                        val intent = Intent(context, GameActivity::class.java)
+//                        context.startActivity(intent)
+//                    },
+//                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
+//                    modifier = Modifier.fillMaxSize()
+//                ) {
+//                    Text("PLAY", color = Color.White)
+//                }
+//
+//            }
+//            Button(
+//                onClick = {val intent = Intent(context, RulesActivity::class.java)
+//                    context.startActivity(intent) },
+//                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
+//                modifier = Modifier
+//                    .align(alignment = Alignment.TopStart)
+//                    .offset(x = 6.187255859375.dp,
+//                        y = 137.14285278320312.dp)
+//                    .requiredWidth(width = 257.dp)
+//                    .requiredHeight(height = 34.dp)){ Text("RULES", color = Color.White)}
 //        }
 //    }
 //}
 //
-//@Preview
 //@Composable
-//fun DefaultPreview() {
-//    MyMainActivity()
+//fun Property1Default(modifier: Modifier = Modifier) {
+//    Box(
+//        modifier = modifier
+//            .requiredSize(size = 48.dp)
+//    ) {
+//        Image(
+//            painter = painterResource(id = R.drawable.img),
+//            contentDescription = "Robot1-01 1",
+//            modifier = Modifier
+//                .requiredSize(size = 48.dp))
+//    }
 //}
 //
+//@Composable
+//fun Alien(modifier: Modifier = Modifier) {
+//    Box(
+//        modifier = modifier
+//            .requiredWidth(width = 25.dp)
+//            .requiredHeight(height = 45.dp)
+//    ) {
+//        Image(
+//            painter = painterResource(id = R.drawable.img_1),
+//            contentDescription = "Alien",
+//            modifier = Modifier
+//                .requiredSize(size = 23.dp))
+//    }
+//}
+//
+//@Preview(widthDp = 360, heightDp = 800)
+//@Composable
+//private fun AndroidLarge1Preview() {
+//    AndroidLarge1(Modifier)
+//}
+
