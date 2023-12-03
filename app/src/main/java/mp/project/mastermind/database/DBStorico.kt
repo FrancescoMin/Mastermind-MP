@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 //singleton class che implementa la connessione al db
-@Database(entities = [Storico::class], version = 1)
+@Database(entities = [Storico::class], exportSchema = false, version = 1)
 abstract class DBStorico : RoomDatabase(){
     companion object{
         private var db: DBStorico? = null   //Singleton
