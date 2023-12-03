@@ -18,3 +18,4 @@ interface DaoStorico {
     fun loadAll(): Array<Storico>
 
 }
+//repository si occupa di chiamare le funzioni delle dao
