@@ -36,7 +36,7 @@ class Mastermind (nAtts: Int, dimAtts: Int, nColors: Int, hardmode: Boolean, fla
                 attempts.add(Attempt(dimAtts))
                 hints.add(Hint(dimAtts))
             }
-            secret = SecretCode(dimAtts, hardmode)
+            secret = SecretCode() //(dimAtts, hardmode)
             palette = ColorCol(nColors)
             if(flag >= -1 && flag <= 1) {
                 status = flag

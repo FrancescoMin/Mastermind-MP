@@ -1,8 +1,8 @@
 package mp.project.mastermind.models
 
 import androidx.compose.ui.graphics.Color
-import kotlin.random.Random
 
+/*
 class SecretCode(n: Int, private var hardmode: Boolean = false) : ColorRow(n) {
     private var visible = false
 
@@ -39,4 +39,34 @@ class SecretCode(n: Int, private var hardmode: Boolean = false) : ColorRow(n) {
         //Layout: visible_hardmode_superString
         return "${visible}_${hardmode}_${super.toString()}"
     }
+}
+*/
+
+import kotlin.random.Random
+
+class SecretCode {
+    private val codeLength = 5
+    private val totalColors = 8
+    private val secretCode: MutableList<Int> = mutableListOf()
+
+    init {
+        generateSecretCode()
+    }
+
+    private fun generateSecretCode() {
+        for (i in 0 until codeLength) {
+            val randomColor = Random.nextInt(1, totalColors + 1) // generazione casuale di un colore da 1 a 8
+            secretCode.add(randomColor)
+        }
+    }
+
+    fun getSecretCode(): List<Int> {
+        return secretCode.toList()
+    }
+}
+
+fun main() {
+    val mastermindSecretCode = SecretCode()
+    val secretCode = mastermindSecretCode.getSecretCode()
+    println("Il codice segreto generato è: $secretCode")
 }
