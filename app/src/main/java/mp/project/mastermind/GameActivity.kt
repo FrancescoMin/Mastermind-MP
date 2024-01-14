@@ -46,10 +46,11 @@ import mp.project.mastermind.ui.theme.AndroidLarge2
 import kotlin.math.min
 
 class GameActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {        //bundle è una classe di mappatura basata su coppie
         super.onCreate(savedInstanceState)
         setContent {
             AndroidLarge2().AndroidLarge2(Modifier.fillMaxSize())
         }
     }
+
 }

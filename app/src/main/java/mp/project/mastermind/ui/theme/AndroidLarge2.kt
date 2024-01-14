@@ -46,6 +46,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.ButtonColors
 import androidx.compose.runtime.mutableStateListOf
 import androidx.core.content.res.ResourcesCompat
+import mp.project.mastermind.R.color.bottone_Mastermind
 import androidx.compose.runtime.key as Key
 
 class AndroidLarge2 {
@@ -54,21 +55,21 @@ class AndroidLarge2 {
         var currentColor by remember { mutableStateOf(Color.Gray) }
 
     }
+
     @Composable
     fun ArrowButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
         val image: Painter =
-            painterResource(R.drawable.freccia) // Assicurati che freccia.png sia presente nelle risorse
+            painterResource(R.drawable.freccia)
 
         IconButton(
             onClick = onClick,
             modifier = modifier
                 .requiredSize(31.dp)
-                .rotate(degrees = -180f)
         ) {
             Image(
                 painter = image,
                 contentDescription = "Arrow Icon",
-                modifier = Modifier.size(24.dp) // Modifica la dimensione dell'immagine se necessario
+                modifier = Modifier.size(24.dp)
             )
         }
     }
@@ -193,7 +194,7 @@ class AndroidLarge2 {
 //                val intent = Intent(context, GameActivity::class.java)
 //                context.startActivity(intent) devo mettere la soluzione qua sotto
                         },
-                        colors = ButtonDefaults.buttonColors(backgroundColor = Color(R.color.bottone_Mastermind)),
+                        colors = ButtonDefaults.buttonColors(backgroundColor = Color(bottone_Mastermind)),
                         modifier = Modifier.fillMaxSize()
                     ) {
                         Text("MASTERMIND", color = Color.White)
@@ -212,7 +213,7 @@ class AndroidLarge2 {
                 {//ARANCIONW
                     Button(
                         onClick = { /*listState.scrollToItem(index = numberOfRows * numberOfBoxesPerRow)*/ },
-                        colors = ButtonDefaults.buttonColors(backgroundColor =Color(R.color.arancio) ),
+                        colors = ButtonDefaults.buttonColors(backgroundColor = Color(R.color.arancio)),
                         modifier = Modifier
                             .align(alignment = Alignment.TopStart)
                             .offset(
@@ -322,21 +323,17 @@ class AndroidLarge2 {
             )
         }
 
-        }
+    }
+
+
+
+
+    @Preview(widthDp = 400, heightDp = 800)
+    @Composable
+    private fun AndroidLarge2Preview() {
+        AndroidLarge2(Modifier)
+    }
 }
-
-
-fun magic(){
-
-
-
-}
-//
-//    @Preview(widthDp = 400, heightDp = 800)
-//    @Composable
-//    private fun AndroidLarge2Preview() {
-//        AndroidLarge2(Modifier)
-//    }
 
 
 

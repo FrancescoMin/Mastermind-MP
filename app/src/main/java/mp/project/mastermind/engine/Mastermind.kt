@@ -54,7 +54,7 @@ class Mastermind (nAtts: Int, dimAtts: Int, nColors: Int, hardmode: Boolean, fla
     }
 
     fun checkAttempt() {
-        //check del tentativo e generazione suggerimenti
+        //check del tentativo e generazione suggerimenti, deve prendere come parametro la lista di interi in sequenza ordinata?
     }
 
     fun endgame() {
