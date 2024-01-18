@@ -2,6 +2,8 @@ package mp.project.mastermind.ui.theme
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color.valueOf
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -83,14 +85,8 @@ class AndroidLarge2 {
             modifier = modifier
                 .requiredWidth(width = 400.dp)
                 .requiredHeight(height = 800.dp)
-                .background(color = Color.White)
+                .background(color = Color(0xffb62fcc))
         ) {
-            Box(
-                modifier = Modifier
-                    .requiredWidth(width = 412.dp)
-                    .requiredHeight(height = 800.dp)
-                    .background(color = Color(0xffb62fcc))
-            )
             Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
@@ -176,156 +172,170 @@ class AndroidLarge2 {
                         }
                     }
                 }
-
-                Box(
-                    modifier = Modifier
-                        .align(alignment = Alignment.TopStart)
-                        .offset(
-                            x = 136.dp,
-                            y = 9.dp
-                        )
-                        .requiredWidth(width = 212.dp)
-                        .requiredHeight(height = 37.dp)
-                        .clip(shape = RoundedCornerShape(18.dp))
-                        .background(color = Color(0xffd9d9d9))
-                ) {
-                    Button( //mastermind
-                        onClick = {
-//                val intent = Intent(context, GameActivity::class.java)
-//                context.startActivity(intent) devo mettere la soluzione qua sotto
-                        },
-                        colors = ButtonDefaults.buttonColors(backgroundColor = Color(bottone_Mastermind)),
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        Text("MASTERMIND", color = Color.White)
-                    }
-                }
-                Box(
-                    modifier = Modifier
-                        .align(alignment = Alignment.TopStart)
-                        .offset(
-                            x = 5.dp,
-                            y = 700.dp
-                        )
-                        .requiredWidth(width = 389.dp)
-                        .requiredHeight(height = 43.dp)
-                )
-                {//ARANCIONW
-                    Button(
-                        onClick = { /*listState.scrollToItem(index = numberOfRows * numberOfBoxesPerRow)*/ },
-                        colors = ButtonDefaults.buttonColors(backgroundColor = Color(R.color.arancio)),
-                        modifier = Modifier
-                            .align(alignment = Alignment.TopStart)
-                            .offset(
-                                x = 343.dp,
-                                y = 0.dp
-                            )
-                            .requiredWidth(width = 43.dp)
-                            .requiredHeight(height = 43.dp)
-                            .clip(shape = CircleShape)
-                    ) { }
-                    Button(
-                        onClick = { },
-                        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Black),
-                        modifier = Modifier
-                            .align(alignment = Alignment.TopStart)
-                            .offset(
-                                x = 294.dp,
-                                y = 0.dp
-                            )
-                            .requiredWidth(width = 43.dp)
-                            .requiredHeight(height = 43.dp)
-                            .clip(shape = CircleShape)
-                    ) { }
-                    Button(
-                        onClick = { },
-                        colors = ButtonDefaults.buttonColors(backgroundColor = Color(R.color.giallo)),
-                        modifier = Modifier
-                            .align(alignment = Alignment.TopStart)
-                            .offset(
-                                x = 245.dp,
-                                y = 0.dp
-                            )
-                            .requiredWidth(width = 43.dp)
-                            .requiredHeight(height = 43.dp)
-                            .clip(shape = CircleShape)
-                    ) { }
-                    Button(
-                        onClick = { },
-                        colors = ButtonDefaults.buttonColors(backgroundColor = Color(R.color.verde)),
-                        modifier = Modifier
-                            .requiredWidth(width = 43.dp)
-                            .requiredHeight(height = 43.dp)
-                            .clip(shape = CircleShape)
-                    ) { }
-                    Button(
-                        onClick = { },
-                        colors = ButtonDefaults.buttonColors(backgroundColor = Color(R.color.rossa)),
-                        modifier = Modifier
-                            .align(alignment = Alignment.TopStart)
-                            .offset(
-                                x = 98.dp,
-                                y = 0.dp
-                            )
-                            .requiredWidth(width = 43.dp)
-                            .requiredHeight(height = 43.dp)
-                            .clip(shape = CircleShape)
-                    ) { }
-                    Button(
-                        onClick = { },
-                        colors = ButtonDefaults.buttonColors(backgroundColor = Color(R.color.cyan)),
-                        modifier = Modifier
-                            .align(alignment = Alignment.TopStart)
-                            .offset(
-                                x = 196.dp,
-                                y = 0.dp
-                            )
-                            .requiredWidth(width = 43.dp)
-                            .requiredHeight(height = 43.dp)
-                            .clip(shape = CircleShape)
-                    ) { }
-                    Button(
-                        onClick = { },
-                        colors = ButtonDefaults.buttonColors(backgroundColor = Color(R.color.rosa)),
-                        modifier = Modifier
-                            .align(alignment = Alignment.TopStart)
-                            .offset(
-                                x = 147.dp,
-                                y = 0.dp
-                            )
-                            .requiredWidth(width = 43.dp)
-                            .requiredHeight(height = 43.dp)
-                            .clip(shape = CircleShape)
-                    ) { }
-                    Button(
-                        onClick = { },
-                        colors = ButtonDefaults.buttonColors(backgroundColor = Color(R.color.blu)),
-                        modifier = Modifier
-                            .align(alignment = Alignment.TopStart)
-                            .offset(
-                                x = 49.dp,
-                                y = 0.dp
-                            )
-                            .requiredWidth(width = 43.dp)
-                            .requiredHeight(height = 43.dp)
-                            .clip(shape = CircleShape)
-                    ) { }
-                }
             }
-            ArrowButton(
-                onClick = {
-                    val intent = Intent(context, MainActivity::class.java)
-                    context.startActivity(intent)
-                },
+            Box(
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
-                    .offset(x = 20.dp, y = 22.dp)
+                    .offset(
+                        x = 157.dp,
+                        y = 21.dp
+                    )
+                    .requiredWidth(width = 212.dp)
+                    .requiredHeight(height = 37.dp)
+                    .clip(shape = RoundedCornerShape(18.dp))
+                    .background(color = Color(0xffd9d9d9))
+            ) {
+                Button( //mastermind
+                    onClick = {
+//                val intent = Intent(context, GameActivity::class.java)
+//                context.startActivity(intent) devo mettere la soluzione qua sotto
+                    },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFE4CCFF)),
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    Text("MASTERMIND", color = Color.White)
+                }
+            }
+            Box(
+                modifier = Modifier
+                    .align(alignment = Alignment.TopStart)
+                    .offset(
+                        x = 5.dp,
+                        y = 700.dp
+                    )
+                    .requiredWidth(width = 389.dp)
+                    .requiredHeight(height = 43.dp)
             )
-        }
+            {//ARANCIONW
+                Button(
+                    onClick = { /*listState.scrollToItem(index = numberOfRows * numberOfBoxesPerRow)*/ },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFFB4207)),
+                    modifier = Modifier
+                        .align(alignment = Alignment.TopStart)
+                        .offset(
+                            x = 343.dp,
+                            y = 0.dp
+                        )
+                        .requiredWidth(width = 43.dp)
+                        .requiredHeight(height = 43.dp)
+                        .clip(shape = CircleShape)
+                ) { }
+                Button(
+                    onClick = { },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF000000)),
+                    modifier = Modifier
+                        .align(alignment = Alignment.TopStart)
+                        .offset(
+                            x = 294.dp,
+                            y = 0.dp
+                        )
+                        .requiredWidth(width = 43.dp)
+                        .requiredHeight(height = 43.dp)
+                        .clip(shape = CircleShape)
+                ) { }
+                Button(
+                    onClick = { },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFFBF207)),
+                    modifier = Modifier
+                        .align(alignment = Alignment.TopStart)
+                        .offset(
+                            x = 245.dp,
+                            y = 0.dp
+                        )
+                        .requiredWidth(width = 43.dp)
+                        .requiredHeight(height = 43.dp)
+                        .clip(shape = CircleShape)
+                ) { }
+                Button(
+                    onClick = { },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF07FF5C)),
+                    modifier = Modifier
+                        .requiredWidth(width = 43.dp)
+                        .requiredHeight(height = 43.dp)
+                        .clip(shape = CircleShape)
+                ) { }
+                Button(
+                    onClick = { },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFFB0707)),
+                    modifier = Modifier
+                        .align(alignment = Alignment.TopStart)
+                        .offset(
+                            x = 98.dp,
+                            y = 0.dp
+                        )
+                        .requiredWidth(width = 43.dp)
+                        .requiredHeight(height = 43.dp)
+                        .clip(shape = CircleShape)
+                ) { }
+                Button(
+                    onClick = { },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF07FBDE)),
+                    modifier = Modifier
+                        .align(alignment = Alignment.TopStart)
+                        .offset(
+                            x = 196.dp,
+                            y = 0.dp
+                        )
+                        .requiredWidth(width = 43.dp)
+                        .requiredHeight(height = 43.dp)
+                        .clip(shape = CircleShape)
+                ) { }
+                Button(
+                    onClick = { },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFF68FFF)),
+                    modifier = Modifier
+                        .align(alignment = Alignment.TopStart)
+                        .offset(
+                            x = 147.dp,
+                            y = 0.dp
+                        )
+                        .requiredWidth(width = 43.dp)
+                        .requiredHeight(height = 43.dp)
+                        .clip(shape = CircleShape)
+                ) { }
+                Button(
+                    onClick = { },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF0C24F7)),
+                    modifier = Modifier
+                        .align(alignment = Alignment.TopStart)
+                        .offset(
+                            x = 49.dp,
+                            y = 0.dp
+                        )
+                        .requiredWidth(width = 43.dp)
+                        .requiredHeight(height = 43.dp)
+                        .clip(shape = CircleShape)
+                ) {}
+            }
+
+        ArrowButton(
+            onClick = {
+                val intent = Intent(context, MainActivity::class.java)
+                context.startActivity(intent)
+            },
+            modifier = Modifier
+                .align(alignment = Alignment.TopStart)
+                .offset(x = 20.dp, y = 22.dp)
+        )
+    }
+
 
     }
 
 
+        private fun getColorResourceId(color: Int): Int {
+            return when (color) {
+                1 -> R.color.arancio
+                2 -> R.color.giallo
+                3 -> R.color.verde
+                4 -> R.color.rossa
+                5 -> R.color.cyan
+                6 -> R.color.rosa
+                7 -> R.color.blu
+                8 -> R.color.black
+                else -> throw IllegalArgumentException("Invalid color: $color")
+            }
+        }
 
 
     @Preview(widthDp = 400, heightDp = 800)
