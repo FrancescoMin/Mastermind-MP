@@ -47,7 +47,9 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.ButtonColors
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.ui.platform.testTag
 import androidx.core.content.res.ResourcesCompat
+import androidx.room.util.findColumnIndexBySuffix
 import mp.project.mastermind.R.color.bottone_Mastermind
 import androidx.compose.runtime.key as Key
 
@@ -79,7 +81,7 @@ class AndroidLarge2 {
     @SuppressLint("NotConstructor")
     @Composable
     fun AndroidLarge2(modifier: Modifier = Modifier) {
-
+        val temp = 0
         val context = LocalContext.current
         Box(
             modifier = modifier
@@ -158,7 +160,7 @@ class AndroidLarge2 {
                                 ) // Padding per ogni riga
                         ) {
                             items(numberOfBoxesPerRow) { index ->
-                                val boxId = "Box #${(rowIndex * numberOfBoxesPerRow) + index}"
+                                var boxId = "Box #${(rowIndex * numberOfBoxesPerRow) + index}"
 
                                 Box(
                                     modifier = Modifier
@@ -167,6 +169,7 @@ class AndroidLarge2 {
                                         .requiredHeight(height = 16.dp)
                                         .clip(shape = CircleShape)
                                         .background(color = Color(0xffd9d9d9))
+                                        .testTag(boxId)
                                 )
                             }
                         }
@@ -268,7 +271,7 @@ class AndroidLarge2 {
                         .clip(shape = CircleShape)
                 ) { }
                 Button(
-                    onClick = { },
+                    onClick = { setColorChange(5, temp) },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF07FBDE)),
                     modifier = Modifier
                         .align(alignment = Alignment.TopStart)
@@ -308,35 +311,40 @@ class AndroidLarge2 {
                 ) {}
             }
 
-        ArrowButton(
-            onClick = {
-                val intent = Intent(context, MainActivity::class.java)
-                context.startActivity(intent)
-            },
-            modifier = Modifier
-                .align(alignment = Alignment.TopStart)
-                .offset(x = 20.dp, y = 22.dp)
-        )
-    }
-
-
-    }
-
-
-        private fun getColorResourceId(color: Int): Int {
-            return when (color) {
-                1 -> R.color.arancio
-                2 -> R.color.giallo
-                3 -> R.color.verde
-                4 -> R.color.rossa
-                5 -> R.color.cyan
-                6 -> R.color.rosa
-                7 -> R.color.blu
-                8 -> R.color.black
-                else -> throw IllegalArgumentException("Invalid color: $color")
-            }
+            ArrowButton(
+                onClick = {
+                    val intent = Intent(context, MainActivity::class.java)
+                    context.startActivity(intent)
+                },
+                modifier = Modifier
+                    .align(alignment = Alignment.TopStart)
+                    .offset(x = 20.dp, y = 22.dp)
+            )
         }
 
+
+    }
+
+
+    private fun getColorResourceId(color: Int): Int {
+        return when (color) {
+            1 -> R.color.arancio
+            2 -> R.color.giallo
+            3 -> R.color.verde
+            4 -> R.color.rossa
+            5 -> R.color.cyan
+            6 -> R.color.rosa
+            7 -> R.color.blu
+            8 -> R.color.black
+            else -> throw IllegalArgumentException("Invalid color: $color")
+        }
+    }
+
+    private fun setColorChange(color: Int, temp: Int) {
+        val colorList = mutableListOf<Int>()
+        colorList.add(color)
+        //prendi index e setta box
+    }
 
     @Preview(widthDp = 400, heightDp = 800)
     @Composable
