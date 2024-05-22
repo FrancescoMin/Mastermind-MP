@@ -69,6 +69,8 @@ class AndroidLarge2 {
             onClick = onClick,
             modifier = modifier
                 .requiredSize(31.dp)
+                .clip(CircleShape)
+                .background(color=Color.White)
         ) {
             Image(
                 painter = image,
@@ -87,7 +89,7 @@ class AndroidLarge2 {
             modifier = modifier
                 .requiredWidth(width = 400.dp)
                 .requiredHeight(height = 800.dp)
-                .background(color = Color(0xffb62fcc))
+                .background(color = Color.Black)
         ) {
             Box(
                 modifier = Modifier
@@ -190,10 +192,9 @@ class AndroidLarge2 {
             ) {
                 Button( //mastermind
                     onClick = {
-//                val intent = Intent(context, GameActivity::class.java)
-//                context.startActivity(intent) devo mettere la soluzione qua sotto
+//                 devo mettere la soluzione qua sotto
                     },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFE4CCFF)),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffb62fcc)),
                     modifier = Modifier.fillMaxSize()
                 ) {
                     Text("MASTERMIND", color = Color.White)
@@ -225,7 +226,7 @@ class AndroidLarge2 {
                 ) { }
                 Button(
                     onClick = { },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF000000)),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffb62fcc)),
                     modifier = Modifier
                         .align(alignment = Alignment.TopStart)
                         .offset(
@@ -352,7 +353,6 @@ class AndroidLarge2 {
         AndroidLarge2(Modifier)
     }
 }
-
 
 
 
