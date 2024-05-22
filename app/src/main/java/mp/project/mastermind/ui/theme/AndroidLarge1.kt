@@ -36,7 +36,7 @@ import androidx.compose.ui.unit.sp
 import mp.project.mastermind.GameActivity
 import mp.project.mastermind.R
 import mp.project.mastermind.RulesActivity
-
+import mp.project.mastermind.ScoresActivity
 
 
 val Typography.headlineSmall: TextStyle
@@ -155,8 +155,8 @@ class AndroidLarge1 {
 
 
                 Button(
-                    onClick = {//val intent = Intent(context, ScoresActivity::class.java)
-                        //context.startActivity(intent)
+                    onClick = {val intent = Intent(context, ScoresActivity::class.java)
+                        context.startActivity(intent)
                         },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                     modifier = Modifier
