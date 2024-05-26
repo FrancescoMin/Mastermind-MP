@@ -21,8 +21,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
@@ -38,6 +40,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.delay
 import mp.project.mastermind.MainActivity
 import mp.project.mastermind.R
 
@@ -67,6 +70,45 @@ class AndroidLarge2{
         else{
             println("TOCCA PREME MASTERMIND PE ANNA AVANTI")
         }
+
+    }
+
+    @Composable
+    fun TimerScreen() {
+        var timerState = remember {mutableStateOf("") }
+
+        LaunchedEffect(Unit) {
+            var minutes = 0
+            var seconds = 0
+
+            while (true) {
+                delay(1000) // attendi 1 secondo
+                seconds++
+
+                if (seconds >= 60) {
+                    minutes++
+                    seconds = 0
+                }
+                timerState.value = String.format("%02d:%02d", minutes, seconds)
+
+            }
+            }
+
+            Column(
+                modifier = Modifier
+                    .requiredWidth(width = 60.dp)
+                    .requiredHeight(height = 37.dp)
+                    .offset(x=85.dp, y=22.dp)
+                    .clip(shape = RoundedCornerShape(18.dp))
+                    .background(color = Color.White)
+
+            ) { //todo timer non centrato
+                Text(
+                    text = "${timerState.value}",
+                    style = MaterialTheme.typography.h6,
+
+                )
+            }
 
     }
 
@@ -158,7 +200,7 @@ class AndroidLarge2{
                                         .requiredHeight(height = 43.dp)
                                         .background(boxColor)
                                         .layoutId(boxId)
-                                       // .clickable { colorChange("Box #"+box.value,Color.White )}  //se cliccato il box torna bianco non funziona
+                                    // .clickable { colorChange("Box #"+box.value,Color.White )}  //se cliccato il box torna bianco non funziona
 
 
                                 )
@@ -225,7 +267,7 @@ class AndroidLarge2{
                     .background(color = Color(0xffd9d9d9))
             ) {
                 Button( //mastermind
-                    onClick = {checkMastermind() },
+                    onClick = { checkMastermind() },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffb62fcc)),
                     modifier = Modifier.fillMaxSize()
                 ) {
@@ -246,7 +288,7 @@ class AndroidLarge2{
             )
             {//ARANCIONE
                 Button(
-                    onClick = { colorChange("Box #"+box.value, Color(0xFFFB4207) ) },
+                    onClick = { colorChange("Box #" + box.value, Color(0xFFFB4207)) },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFFB4207)),
                     modifier = Modifier
                         .align(alignment = Alignment.TopStart)
@@ -259,7 +301,7 @@ class AndroidLarge2{
                         .clip(shape = CircleShape)
                 ) { }
                 Button(
-                    onClick = { colorChange("Box #"+box.value,Color(0xffb62fcc) ) },
+                    onClick = { colorChange("Box #" + box.value, Color(0xffb62fcc)) },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffb62fcc)),
                     modifier = Modifier
                         .align(alignment = Alignment.TopStart)
@@ -272,7 +314,7 @@ class AndroidLarge2{
                         .clip(shape = CircleShape)
                 ) { }
                 Button(
-                    onClick = { colorChange("Box #"+box.value,Color(0xFFFBF207) ) },
+                    onClick = { colorChange("Box #" + box.value, Color(0xFFFBF207)) },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFFBF207)),
                     modifier = Modifier
                         .align(alignment = Alignment.TopStart)
@@ -285,7 +327,7 @@ class AndroidLarge2{
                         .clip(shape = CircleShape)
                 ) { }
                 Button(
-                    onClick = { colorChange("Box #"+box.value,Color(0xFF07FF5C) ) },
+                    onClick = { colorChange("Box #" + box.value, Color(0xFF07FF5C)) },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF07FF5C)),
                     modifier = Modifier
                         .requiredWidth(width = 43.dp)
@@ -293,7 +335,7 @@ class AndroidLarge2{
                         .clip(shape = CircleShape)
                 ) { }
                 Button(
-                    onClick = { colorChange("Box #"+box.value,Color(0xFFFB0707) ) },
+                    onClick = { colorChange("Box #" + box.value, Color(0xFFFB0707)) },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFFB0707)),
                     modifier = Modifier
                         .align(alignment = Alignment.TopStart)
@@ -306,7 +348,7 @@ class AndroidLarge2{
                         .clip(shape = CircleShape)
                 ) { }
                 Button(
-                    onClick = { colorChange("Box #"+box.value,Color(0xFF07FBDE) ) },
+                    onClick = { colorChange("Box #" + box.value, Color(0xFF07FBDE)) },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF07FBDE)),
                     modifier = Modifier
                         .align(alignment = Alignment.TopStart)
@@ -319,7 +361,7 @@ class AndroidLarge2{
                         .clip(shape = CircleShape)
                 ) { }
                 Button(
-                    onClick = { colorChange("Box #"+box.value,Color(0xFFF68FFF) ) },
+                    onClick = { colorChange("Box #" + box.value, Color(0xFFF68FFF)) },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFF68FFF)),
                     modifier = Modifier
                         .align(alignment = Alignment.TopStart)
@@ -332,7 +374,7 @@ class AndroidLarge2{
                         .clip(shape = CircleShape)
                 ) { }
                 Button(
-                    onClick = { colorChange("Box #"+box.value,Color(0xFF0C24F7) ) },
+                    onClick = { colorChange("Box #" + box.value, Color(0xFF0C24F7)) },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF0C24F7)),
                     modifier = Modifier
                         .align(alignment = Alignment.TopStart)
@@ -355,6 +397,10 @@ class AndroidLarge2{
                     .align(alignment = Alignment.TopStart)
                     .offset(x = 20.dp, y = 22.dp)
             )
+
+
+                TimerScreen()
+
         }
 
 
