@@ -21,7 +21,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -40,6 +39,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 import mp.project.mastermind.MainActivity
 import mp.project.mastermind.R
@@ -76,40 +76,48 @@ class AndroidLarge2{
     @Composable
     fun TimerScreen() {
         var timerState = remember {mutableStateOf("") }
+        var isPaused = remember { mutableStateOf(false) }
 
-        LaunchedEffect(Unit) {
-            var minutes = 0
-            var seconds = 0
+        LaunchedEffect(isPaused.value) {
+            if (!isPaused.value) {
+                var minutes = 0
+                var seconds = 0
 
-            while (true) {
-                delay(1000) // attendi 1 secondo
-                seconds++
+                while (true) {
+                    delay(1000) // attendi 1 secondo
+                    seconds++
 
-                if (seconds >= 60) {
-                    minutes++
-                    seconds = 0
+                    if (seconds >= 60) {
+                        minutes++
+                        seconds = 0
+                    }
+                    timerState.value = String.format("%02d:%02d", minutes, seconds)
+
                 }
-                timerState.value = String.format("%02d:%02d", minutes, seconds)
-
             }
-            }
+        }
 
-            Column(
+        Column(
+            modifier = Modifier
+                .requiredWidth(width = 70.dp)
+                .requiredHeight(height = 37.dp)
+                .offset(x=80.dp, y=21.dp)
+                .clip(shape = RoundedCornerShape(18.dp))
+                .background(color = Color.White)
+        )
+        { //todo quando riclicco il timer si rinizializza
+            Button(onClick = { isPaused.value = !isPaused.value },
                 modifier = Modifier
-                    .requiredWidth(width = 60.dp)
-                    .requiredHeight(height = 37.dp)
-                    .offset(x=85.dp, y=22.dp)
-                    .clip(shape = RoundedCornerShape(18.dp))
-                    .background(color = Color.White)
-
-            ) { //todo timer non centrato
+                    .fillMaxSize()
+                    .background(color=Color.White)
+            )
+            {
                 Text(
-                    text = "${timerState.value}",
-                    style = MaterialTheme.typography.h6,
-
+                    text = timerState.value,
+                    fontSize = 11.sp
                 )
             }
-
+        }
     }
 
 
