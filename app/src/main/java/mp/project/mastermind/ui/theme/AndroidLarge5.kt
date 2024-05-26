@@ -100,7 +100,7 @@ class AndroidLarge5 {
             modifier = Modifier
                 .requiredWidth(width = 70.dp)
                 .requiredHeight(height = 37.dp)
-                .offset(x=80.dp, y=21.dp)
+                .offset(x=80.dp, y=22.dp)
                 .clip(shape = RoundedCornerShape(18.dp))
                 .background(color = Color.White)
         )
@@ -286,7 +286,7 @@ class AndroidLarge5 {
                     .align(alignment = Alignment.TopStart)
                     .offset(
                         x = 5.dp,
-                        y = 700.dp
+                        y = 750.dp
                     )
                     .requiredWidth(width = 389.dp)
                     .requiredHeight(height = 43.dp)
@@ -392,7 +392,26 @@ class AndroidLarge5 {
                         .clip(shape = CircleShape)
                 ) {}
             }
-
+            Box(
+                modifier = Modifier
+                    .align(alignment = Alignment.TopStart)
+                    .offset(
+                        x = 265.dp,
+                        y = 670.dp
+                    )
+                    .requiredWidth(width = 120.dp)
+                    .requiredHeight(height = 37.dp)
+                    .clip(shape = RoundedCornerShape(18.dp))
+                    .background(color = Color(0xffd9d9d9))
+            ) {
+                Button( //mastermind
+                    onClick = {checkMastermind() },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffb62fcc)),
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    Text("CHECK", color = Color.White)
+                }
+            }
             ArrowButton(
                 onClick = {
                     val intent = Intent(context, MainActivity::class.java)
