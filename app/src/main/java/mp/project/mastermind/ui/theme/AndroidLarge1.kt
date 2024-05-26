@@ -5,19 +5,24 @@ import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
-import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.requiredWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.Typography
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,16 +33,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Popup
 import mp.project.mastermind.GameActivity
+import mp.project.mastermind.GameActivity4
 import mp.project.mastermind.R
 import mp.project.mastermind.RulesActivity
 import mp.project.mastermind.ScoresActivity
-
 
 val Typography.headlineSmall: TextStyle
     get() = TextStyle(
@@ -53,6 +57,7 @@ class AndroidLarge1 {
     @Composable
     fun AndroidLarge1(modifier: Modifier = Modifier) {
         val context = LocalContext.current
+        var showPopup by remember { mutableStateOf(false) }
         Box(
             modifier = modifier
                 .requiredWidth(width = 400.dp)
@@ -94,15 +99,46 @@ class AndroidLarge1 {
                 ) {
                     Button(
                         onClick = {
-                            val intent = Intent(context, GameActivity::class.java)
-                            context.startActivity(intent)
+                            showPopup = true
                         },
                         colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                         modifier = Modifier.fillMaxSize()
                     ) {
                         Text("PLAY", color = Color.White)
                     }
-
+                    if (showPopup) {
+                        Popup(
+                            onDismissRequest = { showPopup = false }
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .width(200.dp)
+                                    .background(Color.White)
+                                    .padding(16.dp)
+                            ) {
+                                Column {
+                                    Button(
+                                        onClick = {
+                                            showPopup = false
+                                            val intent = Intent(context, GameActivity::class.java)
+                                            context.startActivity(intent)
+                                        }
+                                    ) {
+                                        Text("Play 5")
+                                    }
+                                    Button(
+                                        onClick = {
+                                            showPopup = false
+                                            val intent = Intent(context, GameActivity4::class.java)
+                                            context.startActivity(intent)
+                                        }
+                                    ) {
+                                        Text("Play 4")
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
                 Box(
                     modifier = Modifier

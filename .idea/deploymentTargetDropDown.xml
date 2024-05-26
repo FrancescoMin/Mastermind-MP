@@ -2,6 +2,15 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="AndroidLarge4Preview">
+        <State />
+      </entry>
+      <entry key="AndroidLarge5Preview">
+        <State />
+      </entry>
+      <entry key="GameActivity4">
+        <State />
+      </entry>
       <entry key="app">
         <State />
       </entry>

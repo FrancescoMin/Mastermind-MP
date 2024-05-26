@@ -41,7 +41,7 @@ import androidx.compose.ui.unit.dp
 import mp.project.mastermind.MainActivity
 import mp.project.mastermind.R
 
-class AndroidLarge2{
+class AndroidLarge5 {
 
     //Una mappa che associa quadretto a colore
     private val boxColors = mutableStateMapOf<String,Color>()
@@ -59,8 +59,8 @@ class AndroidLarge2{
             boxColors[id] = color
             box.value += 1
 
-            //se abbiamo riempito tutte e 5 le caselle, blocca l'avanzamento
-            if(box.value %5 == 0 && box.value != 0){
+            //se abbiamo riempito tutte e 4 le caselle, blocca l'avanzamento
+            if(box.value %4 == 0 && box.value != 0){
                 mastermindPressed.value = false
             }
         }
@@ -69,7 +69,6 @@ class AndroidLarge2{
         }
 
     }
-
 
     @Composable
     fun ArrowButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
@@ -91,10 +90,10 @@ class AndroidLarge2{
         }
     }
 
-    //qua bisognerà implementare la logica del controllo dei 5 quadretti, per adesso blocca semplicemente il gioco
+    //qua bisognerà implementare la logica del controllo dei 4 quadretti, per adesso blocca semplicemente il gioco
     //per evitare che premendo colori a caso si vada a finire nelle righe dopo anche senza fare il check
     private fun checkMastermind() {
-        if(box.value != 0 && box.value%5 == 0){
+        if(box.value != 0 && box.value%4 == 0){
             mastermindPressed.value =true
         }
         else{
@@ -104,7 +103,7 @@ class AndroidLarge2{
 
     @SuppressLint("NotConstructor")
     @Composable
-    fun AndroidLarge2(modifier: Modifier = Modifier) {
+    fun AndroidLarge5(modifier: Modifier = Modifier) {
         val temp = 0
         val context = LocalContext.current
 
@@ -128,7 +127,7 @@ class AndroidLarge2{
                 val listState = rememberLazyListState()
 
                 val numberOfRows = 10
-                val numberOfBoxesPerRow = 5
+                val numberOfBoxesPerRow = 4
                 val spacingBetweenBoxes = 8.dp // Spaziatura tra le caselle
 
                 LazyColumn(state = listState) {
@@ -158,7 +157,7 @@ class AndroidLarge2{
                                         .requiredHeight(height = 43.dp)
                                         .background(boxColor)
                                         .layoutId(boxId)
-                                       // .clickable { colorChange("Box #"+box.value,Color.White )}  //se cliccato il box torna bianco non funziona
+                                    // .clickable { colorChange("Box #"+box.value,Color.White )}  //se cliccato il box torna bianco non funziona
 
 
                                 )
@@ -181,7 +180,7 @@ class AndroidLarge2{
             ) {
                 val listState = rememberLazyListState()
                 val numberOfRows = 10
-                val numberOfBoxesPerRow = 5
+                val numberOfBoxesPerRow = 4
                 val spacingBetweenBoxes = 5.dp // Spaziatura tra le caselle
 // ...
                 //box di check
@@ -259,7 +258,7 @@ class AndroidLarge2{
                         .clip(shape = CircleShape)
                 ) { }
                 Button(
-                    onClick = { colorChange("Box #"+box.value,Color(0xffb62fcc) ) },
+                    onClick = { colorChange("Box #"+box.value, Color(0xffb62fcc) ) },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffb62fcc)),
                     modifier = Modifier
                         .align(alignment = Alignment.TopStart)
@@ -272,7 +271,7 @@ class AndroidLarge2{
                         .clip(shape = CircleShape)
                 ) { }
                 Button(
-                    onClick = { colorChange("Box #"+box.value,Color(0xFFFBF207) ) },
+                    onClick = { colorChange("Box #"+box.value, Color(0xFFFBF207) ) },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFFBF207)),
                     modifier = Modifier
                         .align(alignment = Alignment.TopStart)
@@ -285,7 +284,7 @@ class AndroidLarge2{
                         .clip(shape = CircleShape)
                 ) { }
                 Button(
-                    onClick = { colorChange("Box #"+box.value,Color(0xFF07FF5C) ) },
+                    onClick = { colorChange("Box #"+box.value, Color(0xFF07FF5C) ) },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF07FF5C)),
                     modifier = Modifier
                         .requiredWidth(width = 43.dp)
@@ -293,7 +292,7 @@ class AndroidLarge2{
                         .clip(shape = CircleShape)
                 ) { }
                 Button(
-                    onClick = { colorChange("Box #"+box.value,Color(0xFFFB0707) ) },
+                    onClick = { colorChange("Box #"+box.value, Color(0xFFFB0707) ) },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFFB0707)),
                     modifier = Modifier
                         .align(alignment = Alignment.TopStart)
@@ -306,7 +305,7 @@ class AndroidLarge2{
                         .clip(shape = CircleShape)
                 ) { }
                 Button(
-                    onClick = { colorChange("Box #"+box.value,Color(0xFF07FBDE) ) },
+                    onClick = { colorChange("Box #"+box.value, Color(0xFF07FBDE) ) },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF07FBDE)),
                     modifier = Modifier
                         .align(alignment = Alignment.TopStart)
@@ -319,7 +318,7 @@ class AndroidLarge2{
                         .clip(shape = CircleShape)
                 ) { }
                 Button(
-                    onClick = { colorChange("Box #"+box.value,Color(0xFFF68FFF) ) },
+                    onClick = { colorChange("Box #"+box.value, Color(0xFFF68FFF) ) },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFF68FFF)),
                     modifier = Modifier
                         .align(alignment = Alignment.TopStart)
@@ -332,7 +331,7 @@ class AndroidLarge2{
                         .clip(shape = CircleShape)
                 ) { }
                 Button(
-                    onClick = { colorChange("Box #"+box.value,Color(0xFF0C24F7) ) },
+                    onClick = { colorChange("Box #"+box.value, Color(0xFF0C24F7) ) },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF0C24F7)),
                     modifier = Modifier
                         .align(alignment = Alignment.TopStart)
@@ -360,32 +359,9 @@ class AndroidLarge2{
 
     }
 
-
-    private fun getColorResourceId(color: Int): Int {
-        return when (color) {
-            1 -> R.color.arancio
-            2 -> R.color.giallo
-            3 -> R.color.verde
-            4 -> R.color.rossa
-            5 -> R.color.cyan
-            6 -> R.color.rosa
-            7 -> R.color.blu
-            8 -> R.color.black
-            else -> throw IllegalArgumentException("Invalid color: $color")
-        }
-    }
-
-
-
     @Preview(widthDp = 400, heightDp = 800)
     @Composable
-    private fun AndroidLarge2Preview() {
-        AndroidLarge2(Modifier)
+    private fun AndroidLarge5Preview() {
+        AndroidLarge5(Modifier)
     }
 }
-
-
-
-
-
-
