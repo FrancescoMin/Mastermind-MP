@@ -21,8 +21,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
@@ -38,6 +40,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.delay
 import mp.project.mastermind.MainActivity
 import mp.project.mastermind.R
 
@@ -69,7 +72,44 @@ class AndroidLarge5 {
         }
 
     }
+    @Composable
+    fun TimerScreen() {
+        var timerState = remember {mutableStateOf("") }
 
+        LaunchedEffect(Unit) {
+            var minutes = 0
+            var seconds = 0
+
+            while (true) {
+                delay(1000) // attendi 1 secondo
+                seconds++
+
+                if (seconds >= 60) {
+                    minutes++
+                    seconds = 0
+                }
+                timerState.value = String.format("%02d:%02d", minutes, seconds)
+
+            }
+        }
+
+        Column(
+            modifier = Modifier
+                .requiredWidth(width = 60.dp)
+                .requiredHeight(height = 37.dp)
+                .offset(x=85.dp, y=22.dp)
+                .clip(shape = RoundedCornerShape(18.dp))
+                .background(color = Color.White)
+
+        ) { //todo timer non centrato
+            Text(
+                text = "${timerState.value}",
+                style = MaterialTheme.typography.h6,
+
+                )
+        }
+
+    }
     @Composable
     fun ArrowButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
         val image: Painter =
@@ -356,7 +396,7 @@ class AndroidLarge5 {
             )
         }
 
-
+        TimerScreen()
     }
 
     @Preview(widthDp = 400, heightDp = 800)
