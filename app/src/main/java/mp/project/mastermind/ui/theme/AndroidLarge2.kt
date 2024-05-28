@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,20 +35,40 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.toColorInt
 import kotlinx.coroutines.delay
 import mp.project.mastermind.MainActivity
 import mp.project.mastermind.R
+import kotlin.random.Random
 
 class AndroidLarge2{
 
     //Una mappa che associa quadretto a colore
     private val boxColors = mutableStateMapOf<String,Color>()
+
+    private val checkColors = mutableStateMapOf<Int,Color>()
+    private val appoggioCheckColors = mutableStateOf(0)
+
+    private val colorNames = mapOf(
+        R.color.arancio to "Arancio",
+        R.color.giallo to "Giallo",
+        R.color.verde to "Verde",
+        R.color.rossa to "Rosso",
+        R.color.cyan to "Cyan",
+        R.color.rosa to "Rosa",
+        R.color.blu to "Blu",
+    )
+
+    val randomColors = generateRandomColorsArray()
+
+
 
     //lo usiamo insieme al boxId per tenere traccia del quadretto a cui ci troviamo
     private var box = mutableStateOf(0)
@@ -70,28 +91,28 @@ class AndroidLarge2{
         else{
             println("TOCCA PREME MASTERMIND PE ANNA AVANTI")
         }
-
     }
 
     @Composable
     fun TimerScreen() {
         var timerState = remember {mutableStateOf("") }
         var isPaused = remember { mutableStateOf(false) }
+        var minutes = remember {mutableStateOf(0)}
+        var seconds = remember {mutableStateOf(0)}
 
         LaunchedEffect(isPaused.value) {
             if (!isPaused.value) {
-                var minutes = 0
-                var seconds = 0
+
 
                 while (true) {
                     delay(1000) // attendi 1 secondo
-                    seconds++
+                    seconds.value++
 
-                    if (seconds >= 60) {
-                        minutes++
-                        seconds = 0
+                    if (seconds.value >= 60) {
+                        minutes.value++
+                        seconds.value = 0
                     }
-                    timerState.value = String.format("%02d:%02d", minutes, seconds)
+                    timerState.value = String.format("%02d:%02d", minutes.value, seconds.value)
 
                 }
             }
@@ -144,17 +165,70 @@ class AndroidLarge2{
     //qua bisognerà implementare la logica del controllo dei 5 quadretti, per adesso blocca semplicemente il gioco
     //per evitare che premendo colori a caso si vada a finire nelle righe dopo anche senza fare il check
     private fun checkMastermind() {
-        if(box.value != 0 && box.value%5 == 0){
-            mastermindPressed.value =true
+        if (box.value != 0 && box.value % 5 == 0) {
+            mastermindPressed.value = true
+
+            val mySet: MutableList<String> = mutableListOf()
+            var positionMatchFound = false
+
+            for(element in randomColors) {
+                mySet.add(getColorHexFromName(element.second))
+            }
+
+
+
+            for(i in 1 until 6){
+                val boxKey = "Box #${box.value-i}"
+                val boxColorHex = boxColors[boxKey]?.toArgb()?.let { colorIntToHex(it)}
+                val randomColorHex = getColorHexFromName(randomColors[5-i].second)
+
+                if (boxColors[boxKey]?.let { colorToHex(it) } == randomColorHex) {
+
+                    mySet.remove(boxColors[boxKey]?.let{colorToHex(it)})
+                    checkColors[appoggioCheckColors.value] = Color(0xFF07FF5C)
+                    appoggioCheckColors.value += 1
+                    println("Sono VERDE per ${boxColors[boxKey]?.let { colorToHex(it)}}")
+                }
+
+            }
+
+            for (i in 1 until 6) {
+                val boxKey = "Box #${box.value - i}"
+                val boxColorHex = boxColors[boxKey]?.toArgb()?.let { colorIntToHex(it) }
+                val randomColorHex = getColorHexFromName(randomColors[5 - i].second)
+
+                    if(box.value-i >= 0 && boxColors[boxKey]?.let { colorToHex(it) } != randomColorHex && boxColors[boxKey]?.let { colorToHex(it) } in mySet){
+                        println("Ho trovato ${boxColors[boxKey]?.let { colorToHex(it) }} ")
+                        mySet.remove(boxColors[boxKey]?.let { colorToHex(it) })
+                        checkColors[appoggioCheckColors.value] = Color(0xFFFBF207)
+                        appoggioCheckColors.value += 1
+
+
+                    }
+                }
+
+
+            }
+
+            if (appoggioCheckColors.value % 5 != 0) {
+                appoggioCheckColors.value += 5 - appoggioCheckColors.value % 5
+            }
+
         }
-        else{
-            println("TOCCA RIEMPIRE I QUADRETTI PRIMA DE FA MASTERMIND")
-        }
+
+
+
+    private fun colorIntToHex(colorInt: Int): String {
+        return String.format("#%06X", 0xFFFFFF and colorInt)
     }
 
     @SuppressLint("NotConstructor")
     @Composable
     fun AndroidLarge2(modifier: Modifier = Modifier) {
+        randomColors.forEach { (colorId, colorName) ->
+        println("Generated color: $colorName (ID: $colorId)")
+    }
+
         val temp = 0
         val context = LocalContext.current
 
@@ -201,14 +275,14 @@ class AndroidLarge2{
                                 var boxColor by remember { mutableStateOf(Color(0xffd9d9d9)) }
                                 boxColor = boxColors[boxId] ?: Color(0xffd9d9d9)
 
+
                                 Box(
                                     modifier = Modifier
                                         .padding(end = if (index < numberOfBoxesPerRow - 1) spacingBetweenBoxes else 0.dp)
                                         .requiredWidth(width = 43.dp)
                                         .requiredHeight(height = 43.dp)
                                         .background(boxColor)
-                                        .layoutId(boxId)
-                                    // .clickable { colorChange("Box #"+box.value,Color.White )}  //se cliccato il box torna bianco non funziona
+                                        .clickable{/*specialcolorChange(boxId)*/}  //se cliccato il box torna bianco non funziona
 
 
                                 )
@@ -248,13 +322,16 @@ class AndroidLarge2{
                             items(numberOfBoxesPerRow) { index ->
                                 var boxId = "Box #${(rowIndex * numberOfBoxesPerRow) + index}"
 
+                                var checkColor by remember { mutableStateOf(Color(0xffd9d9d9)) }
+                                checkColor = checkColors[(rowIndex * numberOfBoxesPerRow) + index] ?: Color(0xffd9d9d9)
+
                                 Box(
                                     modifier = Modifier
                                         .padding(end = if (index < numberOfBoxesPerRow - 1) spacingBetweenBoxes else 0.dp)
                                         .requiredWidth(width = 16.dp)
                                         .requiredHeight(height = 16.dp)
                                         .clip(shape = CircleShape)
-                                        .background(color = Color(0xffd9d9d9))
+                                        .background(checkColor)
 
                                 )
                             }
@@ -275,7 +352,7 @@ class AndroidLarge2{
                     .background(color = Color(0xffd9d9d9))
             ) {
                 Button( //mastermind
-                    onClick = { checkMastermind() },
+                    onClick = {  },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffb62fcc)),
                     modifier = Modifier.fillMaxSize()
                 ) {
@@ -433,6 +510,10 @@ class AndroidLarge2{
 
     }
 
+    private fun specialcolorChange(s: String) {
+        boxColors[s] = Color(0xffd9d9d9)
+    }
+
 
     private fun getColorResourceId(color: Int): Int {
         return when (color) {
@@ -447,8 +528,53 @@ class AndroidLarge2{
             else -> throw IllegalArgumentException("Invalid color: $color")
         }
     }
+    fun generateRandomColorsArray(size: Int = 5): Array<Pair<Int, String>> {
+        return Array(size) { getRandomColorResourceId() }
+    }
+    // Funzione per ottenere un colore casuale dal set predefinito
+    fun getRandomColorResourceId(): Pair<Int, String> {
+        val colors = listOf(
+            R.color.arancio,
+            R.color.giallo,
+            R.color.verde,
+            R.color.rossa,
+            R.color.cyan,
+            R.color.rosa,
+            R.color.blu
+        )
+        val randomColor = colors.random()
+        val colorName = colorNames[randomColor] ?: "Sconosciuto"
+        return randomColor to colorName
+    }
 
+    fun getColorHexFromName(colorName: String): String {
+        return when (colorName) {
+            "Arancio" -> "#FFA500"
+            "Giallo" -> "#FFFF00"
+            "Verde" -> "#008000"
+            "Rosso" -> "#FF0000"
+            "Cyan" -> "#00FFFF"
+            "Rosa" -> "#FF69B4"
+            "Blu" -> "#0000FF"
+            "Viola" -> "#B81ECC"
 
+            else -> throw IllegalArgumentException("Colore non valido: $colorName")
+        }
+    }
+
+    fun colorToHex(color: Color): String {
+        return when {
+            color == Color(0.9647059f, 0.56078434f, 1.0f, 1.0f) -> "#FF69B4" // Rosa
+            color == Color(0.9843137f, 0.02745098f, 0.02745098f, 1.0f) -> "#FF0000" // Rosso
+            color == Color(0.02745098f, 1.0f, 0.36078432f, 1.0f) -> "#008000" // Verde
+            color == Color(0.047058824f, 0.14117648f, 0.96862745f, 1.0f) -> "#0000FF" // Blu
+            color == Color(0.02745098f, 0.9843137f, 0.87058824f, 1.0f) -> "#00FFFF" // Cyan
+            color == Color(0.9843137f, 0.9490196f, 0.02745098f, 1.0f) -> "#FFFF00" // Giallo
+            color == Color(0.7137255f, 0.18431373f, 0.8f, 1.0f) -> "#B81ECC" // Viola
+            color == Color(0.9843137f, 0.25882354f, 0.02745098f, 1.0f) -> "#FFA500" // Arancione
+            else -> throw IllegalArgumentException("Colore non valido")
+        }
+    }
 
     @Preview(widthDp = 400, heightDp = 800)
     @Composable
