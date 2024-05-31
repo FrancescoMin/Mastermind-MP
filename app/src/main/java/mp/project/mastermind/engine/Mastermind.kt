@@ -3,10 +3,13 @@ package mp.project.mastermind.engine
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
-import mp.project.mastermind.models.*
+import mp.project.mastermind.models.Attempt
+import mp.project.mastermind.models.ColorCol
+import mp.project.mastermind.models.Hint
+import mp.project.mastermind.models.SecretCode
 import java.io.File
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
 
 class Mastermind (nAtts: Int, dimAtts: Int, nColors: Int, hardmode: Boolean, flag: Int){
 
@@ -96,7 +99,7 @@ class Mastermind (nAtts: Int, dimAtts: Int, nColors: Int, hardmode: Boolean, fla
         //generazione del nome del file
         var dateFormatter = SimpleDateFormat("ddMMyyyy")
         var current = Calendar.getInstance().time
-        val dateString = dateFormatter.format(current)
+        val dateString = dateFormatter.format(current)      //prende la data corrente e la formatta
 
         var c: Int = 0
         var filename: String

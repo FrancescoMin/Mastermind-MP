@@ -1,0 +1,13 @@
+--
+-- File generato con SQLiteStudio v3.4.4 su ven mag 31 17:55:30 2024
+--
+-- Codifica del testo utilizzata: UTF-8
+--
+PRAGMA foreign_keys = off;
+BEGIN TRANSACTION;
+
+-- Tabella: Game
+CREATE TABLE IF NOT EXISTS Game (ID INTEGER PRIMARY KEY AUTOINCREMENT, Data TEXT (10), Configurazione TEXT (20), Risultato NUMERIC, Tempo TEXT, Tentativi NUMERIC);
+
+COMMIT TRANSACTION;
+PRAGMA foreign_keys = on;

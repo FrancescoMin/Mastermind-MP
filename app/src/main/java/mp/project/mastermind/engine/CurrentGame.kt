@@ -1,6 +1,7 @@
 package mp.project.mastermind.engine
 
 import androidx.compose.ui.graphics.Color
+import mp.project.mastermind.models.Game
 
 class CurrentGame {
     var current: Game? = null

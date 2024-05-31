@@ -1,4 +1,4 @@
-package mp.project.mastermind.engine
+package mp.project.mastermind.models
 
 class Game {
     //List colori

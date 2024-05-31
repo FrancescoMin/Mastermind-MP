@@ -36,17 +36,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.graphics.toColorInt
 import kotlinx.coroutines.delay
 import mp.project.mastermind.MainActivity
 import mp.project.mastermind.R
-import kotlin.random.Random
 
 class AndroidLarge2{
 
@@ -575,6 +572,8 @@ class AndroidLarge2{
             else -> throw IllegalArgumentException("Colore non valido")
         }
     }
+
+
 
     @Preview(widthDp = 400, heightDp = 800)
     @Composable
