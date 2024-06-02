@@ -170,8 +170,6 @@ class AndroidLarge2{
         }
     }
 
-    //qua bisognerà implementare la logica del controllo dei 5 quadretti, per adesso blocca semplicemente il gioco
-    //per evitare che premendo colori a caso si vada a finire nelle righe dopo anche senza fare il check
     private fun checkMastermind() {
 
         if (box.value != 0 && box.value % 5 == 0 && mastermindPressed.value == false) {
