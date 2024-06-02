@@ -215,10 +215,10 @@ class AndroidLarge2{
             row.value += 1
         }
 
-
-        //SI BUGGA SE CI AZZECCHI PERCHE E' PREVISTO CHE LI LA PARTITA FINISCA E BASTA
-        if(appoggioCheckColors.value != row.value*5 && row.value%5 != 0) {
+        //Qui si arrotonda appoggio per farlo passare alla riga successiva(QUI C ERA IL BUG DI GIADA DEL 02/06
+        if(appoggioCheckColors.value != row.value*5) {
             appoggioCheckColors.value += 5 - appoggioCheckColors.value % 5
+            println("Ho aggiunto ${appoggioCheckColors.value}")
         }
 
         println("valore di appoggio adesso è : ${appoggioCheckColors.value}")
