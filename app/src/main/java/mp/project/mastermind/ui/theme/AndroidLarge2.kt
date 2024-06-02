@@ -25,6 +25,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
@@ -44,6 +45,7 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 import mp.project.mastermind.MainActivity
 import mp.project.mastermind.R
+
 
 class AndroidLarge2{
 
@@ -75,6 +77,9 @@ class AndroidLarge2{
     //per tenere traccia in quale riga siamo
     private var row = mutableStateOf(0)
 
+    var _allBoxesAreGreen = mutableStateOf(false)
+    val allBoxesAreGreen: State<Boolean> = _allBoxesAreGreen
+
     fun colorChange(id: String, color : Color){
 
         //colora il quadretto va avanti di uno
@@ -101,10 +106,10 @@ class AndroidLarge2{
         }
     }
 
+    var isPaused = mutableStateOf(false)
     @Composable
     fun TimerScreen() {
         var timerState = remember {mutableStateOf("") }
-        var isPaused = remember { mutableStateOf(false) }
         var minutes = remember {mutableStateOf(0)}
         var seconds = remember {mutableStateOf(0)}
 
@@ -130,15 +135,15 @@ class AndroidLarge2{
             modifier = Modifier
                 .requiredWidth(width = 70.dp)
                 .requiredHeight(height = 37.dp)
-                .offset(x=80.dp, y=21.dp)
+                .offset(x = 80.dp, y = 21.dp)
                 .clip(shape = RoundedCornerShape(18.dp))
                 .background(color = Color.White)
         )
-        { //todo quando riclicco il timer si rinizializza
+        {
             Button(onClick = { isPaused.value = !isPaused.value },
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(color=Color.White)
+                    .background(color = Color.White)
             )
             {
                 Text(
@@ -170,6 +175,30 @@ class AndroidLarge2{
         }
     }
 
+@Composable
+ fun Successcheck() {
+    val image: Painter =
+        painterResource(R.drawable.winner)
+            // Mostra l'icona a schermo
+            Box(
+                modifier = Modifier
+                    .size(200.dp)
+                    .background(Color.Transparent)
+                    .offset(
+                        x = 100.dp,
+                        y = 300.dp  //così è al centro
+                    )
+            ) {
+                Image(
+                    painter = image,
+                    contentDescription = "Win Image",
+                    modifier = Modifier.size(200.dp)
+
+                )
+            }
+        }
+
+
     private fun checkMastermind() {
 
         if (box.value != 0 && box.value % 5 == 0 && mastermindPressed.value == false) {
@@ -195,8 +224,12 @@ class AndroidLarge2{
                     checkColors[appoggioCheckColors.value] = Color(0xFF07FF5C)
                     appoggioCheckColors.value += 1
                     println("Sono VERDE per ${boxColors[boxKey]?.let { colorToHex(it)}}")
-                }
 
+                    // Verifica se tutti i box sono verdi
+                    if (appoggioCheckColors.value == 5) {
+                        _allBoxesAreGreen.value = true
+                    }
+                }
             }
 
             for (i in 1 until 6) {
@@ -297,12 +330,12 @@ class AndroidLarge2{
                                             val boxPosition =
                                                 (rowIndex * numberOfBoxesPerRow) + index
                                             val startRange = row.value * 5
-                                            val endRange = row.value*5 + 5
+                                            val endRange = row.value * 5 + 5
 
                                             if (boxPosition in startRange..endRange) {
                                                 specialColorChange(boxId)
                                                 println("DAJe")
-                                            } else{
+                                            } else {
                                                 println("Erroraccio qua boxPosition è ${boxId} mentre il range è ${startRange} - ${endRange}")
                                             }
                                         }
@@ -523,13 +556,19 @@ class AndroidLarge2{
                     .offset(x = 20.dp, y = 22.dp)
             )
 
-
             TimerScreen()
 
         }
+        if (allBoxesAreGreen.value) {
+            isPaused.value = true
+            Successcheck()
 
+        }
 
     }
+
+
+
 
     private fun specialColorChange(s: String) {
 
