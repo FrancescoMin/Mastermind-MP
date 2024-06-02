@@ -49,10 +49,8 @@ class AndroidLarge2{
 
     //Una mappa che associa quadretto a colore
     private val boxColors = mutableStateMapOf<String,Color>()
-
     private val checkColors = mutableStateMapOf<Int,Color>()
     private val appoggioCheckColors = mutableStateOf(0)
-
     private val colorNames = mapOf(
         R.color.arancio to "Arancio",
         R.color.giallo to "Giallo",
@@ -63,9 +61,8 @@ class AndroidLarge2{
         R.color.blu to "Blu",
     )
 
+    //genera soluzione della partita
     val randomColors = generateRandomColorsArray()
-
-
 
     //lo usiamo insieme al boxId per tenere traccia del quadretto a cui ci troviamo
     private var box = mutableStateOf(0)
@@ -73,12 +70,26 @@ class AndroidLarge2{
     //per fare il check del mastermind,
     private var mastermindPressed = mutableStateOf(true)
 
+    private var changedColor =  mutableStateOf(false)
+
+    //per tenere traccia in quale riga siamo
+    private var row = mutableStateOf(0)
+
     fun colorChange(id: String, color : Color){
 
         //colora il quadretto va avanti di uno
         if(mastermindPressed.value) {
             boxColors[id] = color
-            box.value += 1
+            box.value++
+
+            if(changedColor.value || boxColors["Box #${box.value}"] != Color(0xffd9d9d9)){
+                //println("Ci risiamo ecco: Box #${box.value} poi ecco ${boxColors["Box #${box.value+1}"] != Color(0xffd9d9d9)}  ")
+
+                while(boxColors.containsKey("Box #${box.value}") && boxColors["Box #${box.value}"] != Color(0xffd9d9d9)){
+                    box.value++
+                }
+                changedColor.value = false
+            }
 
             //se abbiamo riempito tutte e 5 le caselle, blocca l'avanzamento
             if(box.value %5 == 0 && box.value != 0){
@@ -162,7 +173,11 @@ class AndroidLarge2{
     //qua bisognerà implementare la logica del controllo dei 5 quadretti, per adesso blocca semplicemente il gioco
     //per evitare che premendo colori a caso si vada a finire nelle righe dopo anche senza fare il check
     private fun checkMastermind() {
-        if (box.value != 0 && box.value % 5 == 0) {
+
+        if (box.value != 0 && box.value % 5 == 0 && mastermindPressed.value == false) {
+            println("valore di boxvalue è : ${box.value}")
+            println("valore di appoggio è : ${appoggioCheckColors.value}")
+
             mastermindPressed.value = true
 
             val mySet: MutableList<String> = mutableListOf()
@@ -172,15 +187,12 @@ class AndroidLarge2{
                 mySet.add(getColorHexFromName(element.second))
             }
 
-
-
             for(i in 1 until 6){
                 val boxKey = "Box #${box.value-i}"
                 val boxColorHex = boxColors[boxKey]?.toArgb()?.let { colorIntToHex(it)}
                 val randomColorHex = getColorHexFromName(randomColors[5-i].second)
 
                 if (boxColors[boxKey]?.let { colorToHex(it) } == randomColorHex) {
-
                     mySet.remove(boxColors[boxKey]?.let{colorToHex(it)})
                     checkColors[appoggioCheckColors.value] = Color(0xFF07FF5C)
                     appoggioCheckColors.value += 1
@@ -194,24 +206,28 @@ class AndroidLarge2{
                 val boxColorHex = boxColors[boxKey]?.toArgb()?.let { colorIntToHex(it) }
                 val randomColorHex = getColorHexFromName(randomColors[5 - i].second)
 
-                    if(box.value-i >= 0 && boxColors[boxKey]?.let { colorToHex(it) } != randomColorHex && boxColors[boxKey]?.let { colorToHex(it) } in mySet){
-                        println("Ho trovato ${boxColors[boxKey]?.let { colorToHex(it) }} ")
-                        mySet.remove(boxColors[boxKey]?.let { colorToHex(it) })
-                        checkColors[appoggioCheckColors.value] = Color(0xFFFBF207)
-                        appoggioCheckColors.value += 1
-
-
-                    }
+                if(box.value-i >= 0 && boxColors[boxKey]?.let { colorToHex(it) } != randomColorHex && boxColors[boxKey]?.let { colorToHex(it) } in mySet){
+                    println("Ho trovato ${boxColors[boxKey]?.let { colorToHex(it) }} ")
+                    mySet.remove(boxColors[boxKey]?.let { colorToHex(it) })
+                    checkColors[appoggioCheckColors.value] = Color(0xFFFBF207)
+                    appoggioCheckColors.value += 1
                 }
-
-
             }
 
-            if (appoggioCheckColors.value % 5 != 0) {
-                appoggioCheckColors.value += 5 - appoggioCheckColors.value % 5
-            }
-
+            row.value += 1
         }
+
+
+        //SI BUGGA SE CI AZZECCHI PERCHE E' PREVISTO CHE LI LA PARTITA FINISCA E BASTA
+        if(appoggioCheckColors.value != row.value*5 && row.value%5 != 0) {
+            appoggioCheckColors.value += 5 - appoggioCheckColors.value % 5
+        }
+
+        println("valore di appoggio adesso è : ${appoggioCheckColors.value}")
+        println("valore di row adesso è : ${row.value}")
+
+
+    }
 
 
 
@@ -223,8 +239,8 @@ class AndroidLarge2{
     @Composable
     fun AndroidLarge2(modifier: Modifier = Modifier) {
         randomColors.forEach { (colorId, colorName) ->
-        println("Generated color: $colorName (ID: $colorId)")
-    }
+            println("Generated color: $colorName (ID: $colorId)")
+        }
 
         val temp = 0
         val context = LocalContext.current
@@ -279,9 +295,19 @@ class AndroidLarge2{
                                         .requiredWidth(width = 43.dp)
                                         .requiredHeight(height = 43.dp)
                                         .background(boxColor)
-                                        .clickable{/*specialcolorChange(boxId)*/}  //se cliccato il box torna bianco non funziona
+                                        .clickable {
+                                            val boxPosition =
+                                                (rowIndex * numberOfBoxesPerRow) + index
+                                            val startRange = row.value * 5
+                                            val endRange = row.value*5 + 5
 
-
+                                            if (boxPosition in startRange..endRange) {
+                                                specialColorChange(boxId)
+                                                println("DAJe")
+                                            } else{
+                                                println("Erroraccio qua boxPosition è ${boxId} mentre il range è ${startRange} - ${endRange}")
+                                            }
+                                        }
                                 )
                             }
                         }
@@ -500,15 +526,34 @@ class AndroidLarge2{
             )
 
 
-                TimerScreen()
+            TimerScreen()
 
         }
 
 
     }
 
-    private fun specialcolorChange(s: String) {
-        boxColors[s] = Color(0xffd9d9d9)
+    private fun specialColorChange(s: String) {
+
+        if(boxColors[s] != Color(0xffd9d9d9)) {
+            mastermindPressed.value = true
+            boxColors[s] = Color(0xffd9d9d9)
+            if (box.value != row.value * 5 && row.value < 2) {
+                box.value = s[s.length - 1].digitToInt()
+            } else if (box.value != row.value * 5 && box.value != row.value * 5 + 5 && row.value >= 2 && (box.value/5)%2 != 0) {
+                box.value = row.value * 5 + s[s.length - 1].digitToInt()%5
+            } else if(box.value != row.value * 5 && box.value != row.value * 5  && row.value >= 2 && (box.value/5)%2 != 0){
+                box.value = row.value * 5 + s[s.length - 1].digitToInt()
+            } else if (box.value != row.value * 5 && row.value >= 2 && (box.value/5)%2 == 0 ){
+                box.value = row.value * 5 + s[s.length - 1].digitToInt()%5
+
+            }
+            else{
+                println("Non sono entrato in nessun if per boxvalue ${box.value}")
+            }
+
+            changedColor.value = true
+        }
     }
 
 
@@ -581,7 +626,6 @@ class AndroidLarge2{
         AndroidLarge2(Modifier)
     }
 }
-
 
 
 
