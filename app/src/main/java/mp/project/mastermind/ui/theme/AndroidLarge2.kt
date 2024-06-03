@@ -46,7 +46,6 @@ import kotlinx.coroutines.delay
 import mp.project.mastermind.MainActivity
 import mp.project.mastermind.R
 
-
 class AndroidLarge2{
 
     //Una mappa che associa quadretto a colore
@@ -562,6 +561,8 @@ class AndroidLarge2{
         if (allBoxesAreGreen.value) {
             isPaused.value = true
             Successcheck()
+            while(box.value<=49)
+                box.value++
 
         }
 
