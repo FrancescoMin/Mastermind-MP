@@ -43,6 +43,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
+import mp.project.mastermind.GameActivity
 import mp.project.mastermind.MainActivity
 import mp.project.mastermind.R
 
@@ -176,28 +177,93 @@ class AndroidLarge2{
 
 @Composable
  fun Successcheck() {
+
+    val context = LocalContext.current
     val image: Painter =
         painterResource(R.drawable.winner)
-            // Mostra l'icona a schermo
-            Box(
-                modifier = Modifier
-                    .size(200.dp)
-                    .background(Color.Transparent)
-                    .offset(
-                        x = 100.dp,
-                        y = 300.dp  //così è al centro
-                    )
-            ) {
-                Image(
-                    painter = image,
-                    contentDescription = "Win Image",
-                    modifier = Modifier.size(200.dp)
+    // Mostra l'icona a schermo
+    Box(
+        modifier = Modifier
+            .size(200.dp)
+            .background(Color.Transparent)
+            .offset(
+                x = 100.dp,
+                y = 300.dp  //così è al centro
+            )
+    ) {
+        Image(
+            painter = image,
+            contentDescription = "Win Image",
+            modifier = Modifier.size(200.dp)
 
-                )
-            }
+        )
+    }
+    Box(
+        modifier = Modifier
+            .background(Color.Transparent)
+            .offset(
+                x = 150.dp,
+                y = 500.dp)
+                .requiredWidth(width = 200.dp)
+                .requiredHeight(height = 50.dp)
+
+    ) {
+        Button(
+            onClick = {
+                val intent = Intent(context, GameActivity::class.java)
+                context.startActivity(intent)
+            },
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffb62fcc)),
+        ) {
+            Text("NEW GAME", color = Color.White)
         }
+    }
+}
 
+@Composable
+fun FailedCheck(){
+    val context = LocalContext.current
+    val image: Painter =
+        painterResource(R.drawable.lose)
+    // Mostra l'icona a schermo
+    Box(
+        modifier = Modifier
+            .size(200.dp)
+            .background(Color.Transparent)
+            .offset(
+                x = 100.dp,
+                y = 300.dp  //così è al centro
+            )
 
+    ) {
+        Image(
+            painter = image,
+            contentDescription = "Lose Image",
+            modifier = Modifier.size(200.dp)
+
+        )
+    }
+    Box(
+        modifier = Modifier
+            .background(Color.Transparent)
+            .offset(
+                x = 150.dp,
+                y = 500.dp  //così è al centro
+            )
+            .requiredWidth(width = 200.dp)
+            .requiredHeight(height = 50.dp)
+    ){
+        Button(onClick = {
+            val intent = Intent(context, GameActivity::class.java)
+            context.startActivity(intent)
+        },
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffb62fcc)),
+        ) {
+            Text("NEW GAME", color = Color.White)
+        }
+    }
+
+}
     private fun checkMastermind() {
 
         if (box.value != 0 && box.value % 5 == 0 && mastermindPressed.value == false) {
@@ -563,7 +629,10 @@ class AndroidLarge2{
             Successcheck()
             while(box.value<=49)
                 box.value++
-
+        }
+        if(box.value>49 && mastermindPressed.value==true && allBoxesAreGreen.value==false){
+            isPaused.value = true
+            FailedCheck()
         }
 
     }
