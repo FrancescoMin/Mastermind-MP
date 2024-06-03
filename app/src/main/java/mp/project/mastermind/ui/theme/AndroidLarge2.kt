@@ -51,7 +51,9 @@ class AndroidLarge2{
 
     //Una mappa che associa quadretto a colore
     private val boxColors = mutableStateMapOf<String,Color>()
+
     private val checkColors = mutableStateMapOf<Int,Color>()
+
     private val appoggioCheckColors = mutableStateOf(0)
     private val colorNames = mapOf(
         R.color.arancio to "Arancio",
@@ -68,6 +70,7 @@ class AndroidLarge2{
 
     //lo usiamo insieme al boxId per tenere traccia del quadretto a cui ci troviamo
     private var box = mutableStateOf(0)
+    private var currentBox= mutableStateOf(0)
 
     //per fare il check del mastermind,
     private var mastermindPressed = mutableStateOf(true)
@@ -645,20 +648,34 @@ fun FailedCheck(){
         if(boxColors[s] != Color(0xffd9d9d9)) {
             mastermindPressed.value = true
             boxColors[s] = Color(0xffd9d9d9)
-            if (box.value != row.value * 5 && row.value < 2) {
-                box.value = s[s.length - 1].digitToInt()
-            } else if (box.value != row.value * 5 && box.value != row.value * 5 + 5 && row.value >= 2 && (box.value/5)%2 != 0) {
-                box.value = row.value * 5 + s[s.length - 1].digitToInt()%5
-            } else if(box.value != row.value * 5 && box.value != row.value * 5  && row.value >= 2 && (box.value/5)%2 != 0){
-                box.value = row.value * 5 + s[s.length - 1].digitToInt()
-            } else if (box.value != row.value * 5 && row.value >= 2 && (box.value/5)%2 == 0 ){
-                box.value = row.value * 5 + s[s.length - 1].digitToInt()%5
 
-            }
-            else{
-                println("Non sono entrato in nessun if per boxvalue ${box.value}")
-            }
+            if(s.substringAfter("#").toIntOrNull()!!< box.value ) {
+                if (box.value != row.value * 5 && row.value < 2) {
+                    println("1.sono entrato per boxvalue ${box.value}")
 
+                    box.value = s[s.length - 1].digitToInt()
+                } else if (box.value != row.value * 5 && box.value != row.value * 5 + 5 && row.value >= 2 && (box.value / 5) % 2 != 0) {
+                    println("2.sono entrato per boxvalue ${box.value}")
+
+                    box.value = row.value * 5 + s[s.length - 1].digitToInt() % 5
+                } else if (box.value != row.value * 5 && box.value != row.value * 5 && row.value >= 2 && (box.value / 5) % 2 != 0) {
+                    println("3.sono entrato per boxvalue ${box.value}")
+
+                    box.value = row.value * 5 + s[s.length - 1].digitToInt()
+                } else if (box.value != row.value * 5 && row.value >= 2 && (box.value / 5) % 2 == 0) {
+                    println("4.sono entrato per boxvalue ${box.value}")
+
+                    box.value = row.value * 5 + s[s.length - 1].digitToInt() % 5
+
+                } /*else if(box.value == row.value*5 && box.value != 0 ){
+                box.value = row.value*5 + s[s.length - 1].digitToInt()%5
+            }*/
+                else {
+                    println("Non sono entrato in nessun if per boxvalue ${box.value}")
+                    println("IL valore dell'infamotto è ${box.value}")
+                }
+            }
+            println("IL valore dell'infamotto alla fine è ${box.value}")
             changedColor.value = true
         }
     }
