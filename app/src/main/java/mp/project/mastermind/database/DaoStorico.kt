@@ -11,7 +11,7 @@ import androidx.room.Update
 @Dao
 interface DaoStorico {
 
-    @Insert     //qui fra parentesi posso specificare delle strategie di conflitto
+    @Insert
     fun insert(s: Storico)
 
     @Update
@@ -22,6 +22,15 @@ interface DaoStorico {
 
     @Query("SELECT * FROM Storico")
     fun loadAll(): LiveData<List<Storico>>
+
+    @Query("SELECT * FROM Storico ORDER BY id DESC LIMIT 1")
+    abstract fun getLastInserted():  LiveData<List<Storico>>
+
+    companion object {
+        fun insert(storico: Storico) {
+
+        }
+    }
 
 }
 //repository si occupa di chiamare le funzioni delle dao

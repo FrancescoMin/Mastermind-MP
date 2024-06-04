@@ -2,6 +2,7 @@ package mp.project.mastermind.ui.theme
 
 import android.annotation.SuppressLint
 import android.content.Intent
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -42,10 +43,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import mp.project.mastermind.GameActivity
 import mp.project.mastermind.MainActivity
 import mp.project.mastermind.R
+import mp.project.mastermind.database.DBStorico
+import mp.project.mastermind.database.Storico
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class AndroidLarge2{
 
@@ -110,9 +118,10 @@ class AndroidLarge2{
     }
 
     var isPaused = mutableStateOf(false)
+    var timerState = mutableStateOf("")
     @Composable
     fun TimerScreen() {
-        var timerState = remember {mutableStateOf("") }
+      //  var timerState = remember {mutableStateOf("") }
         var minutes = remember {mutableStateOf(0)}
         var seconds = remember {mutableStateOf(0)}
 
@@ -180,7 +189,7 @@ class AndroidLarge2{
 
 @Composable
  fun Successcheck() {
-
+    println("immagine del successo")
     val context = LocalContext.current
     val image: Painter =
         painterResource(R.drawable.winner)
@@ -221,7 +230,14 @@ class AndroidLarge2{
             Text("NEW GAME", color = Color.White)
         }
     }
+
 }
+
+
+    fun getCurrentDate(): String {
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy")
+        return dateFormat.format(Date())
+    }
 
 @Composable
 fun FailedCheck(){
@@ -294,7 +310,8 @@ fun FailedCheck(){
                     println("Sono VERDE per ${boxColors[boxKey]?.let { colorToHex(it)}}")
 
                     // Verifica se tutti i box sono verdi
-                    if (appoggioCheckColors.value == 5) {
+                    if (appoggioCheckColors.value%5 == 0 && appoggioCheckColors.value != 0 ) {
+                        println("cambio in green i res")
                         _allBoxesAreGreen.value = true
                     }
                 }
@@ -334,7 +351,7 @@ fun FailedCheck(){
         return String.format("#%06X", 0xFFFFFF and colorInt)
     }
 
-    @SuppressLint("NotConstructor")
+    @SuppressLint("NotConstructor", "CoroutineCreationDuringComposition")
     @Composable
     fun AndroidLarge2(modifier: Modifier = Modifier) {
         randomColors.forEach { (colorId, colorName) ->
@@ -628,14 +645,67 @@ fun FailedCheck(){
 
         }
         if (allBoxesAreGreen.value) {
+            println("sono entrato nel successo")
             isPaused.value = true
             Successcheck()
-            while(box.value<=49)
+            while (box.value <= 49)
                 box.value++
-        }
+            val storico = Storico(
+                date = getCurrentDate(),
+                configuration = randomColors,
+                result = allBoxesAreGreen.value,
+                attempts = row.value,
+                time = this.timerState
+            )
+            val storicoDao = DBStorico.getInstance(context).daoStorico()
+            // Creo un coroutine scope
+            val scope = CoroutineScope(Dispatchers.Main)
+
+// Eseguo l'inserimento nel database in background
+            scope.launch(Dispatchers.IO) {
+                try {
+                    storicoDao.insert(storico)
+                    // Verifico che l'inserimento sia avvenuto
+                    val storedStorico= storicoDao.getLastInserted() // Implementa questa funzione per recuperare l'ultimo record inserito
+                    if (storedStorico != null ) {
+                       println("Database Inserimento avvenuto con successo: $storedStorico")
+                    } else {
+                       println("Database Inserimento fallito")
+                    }
+                } catch (e: Exception) {
+                   println("Database Errore durante l'inserimento: ${e.message}")
+                }
+            }
+            }
         if(box.value>49 && mastermindPressed.value==true && allBoxesAreGreen.value==false){
             isPaused.value = true
+            println("fallito")
             FailedCheck()
+            val storico = Storico(
+                date = getCurrentDate(),
+                configuration = randomColors,
+                result = allBoxesAreGreen.value,
+                attempts = row.value,
+                time = this.timerState)
+            val storicoDao= DBStorico.getInstance(context).daoStorico()
+            val scope = CoroutineScope(Dispatchers.Main)
+
+// Eseguo l'inserimento nel database in background
+            scope.launch(Dispatchers.IO) {
+                try {
+                    storicoDao.insert(storico)
+                    // Verifico che l'inserimento sia avvenuto
+                    val storedStorico = storicoDao.getLastInserted() // Implementa questa funzione per recuperare l'ultimo record inserito
+                    if (storedStorico != null ) {
+                        println("Database Inserimento avvenuto con successo: $storedStorico")
+                    } else {
+                        println("Database Inserimento fallito")
+                    }
+                } catch (e: Exception) {
+                    println("Database Errore durante l'inserimento: ${e.message}")
+                }
+            }
+//            StoricoRepository.addStorico(storico)
         }
 
     }
@@ -742,6 +812,19 @@ fun FailedCheck(){
         }
     }
 
+//    fun colorToHex(color: Color): String {
+//        return when {
+//            color.red == 0.9647059f && color.green == 0.56078434f && color.blue == 1.0f && color.alpha == 1.0f -> "#FF69B4" // Rosa
+//            color.red == 0.9843137f && color.green == 0.02745098f && color.blue == 0.02745098f && color.alpha == 1.0f -> "#FF0000" // Rosso
+//            color.red == 0.02745098f && color.green == 1.0f && color.blue == 0.36078432f && color.alpha == 1.0f -> "#008000" // Verde
+//            color.red == 0.047058824f && color.green == 0.14117648f && color.blue == 0.96862745f && color.alpha == 1.0f -> "#0000FF" // Blu
+//            color.red == 0.02745098f && color.green == 0.9843137f && color.blue == 0.87058824f && color.alpha == 1.0f -> "#00FFFF" // Cyan
+//            color.red == 0.9843137f && color.green == 0.9490196f && color.blue == 0.02745098f && color.alpha == 1.0f -> "#FFFF00" // Giallo
+//            color.red == 0.7137255f && color.green == 0.18431373f && color.blue == 0.8f && color.alpha == 1.0f -> "#B81ECC" // Viola
+//            color.red == 0.9843137f && color.green == 0.25882354f && color.blue == 0.02745098f && color.alpha == 1.0f -> "#FFA500" // Arancione
+//            else -> throw IllegalArgumentException("Colore non valido")
+//        }
+//    }
 
 
     @Preview(widthDp = 400, heightDp = 800)

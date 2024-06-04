@@ -19,17 +19,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
+import androidx.compose.ui.unit.sp
 import mp.project.mastermind.MainActivity
+import mp.project.mastermind.database.DBStorico
 
 class AndroidLarge4 {
     @SuppressLint("NotConstructor")
     @Composable
     fun AndroidLarge4(modifier: Modifier = Modifier) {
         val context = LocalContext.current
+        val storicoDao= DBStorico.getInstance(context).daoStorico()
+        val strings= storicoDao.loadAll().value
+        println(strings)
         Box(
             modifier = modifier
                 .requiredWidth(width = 400.dp)
@@ -98,8 +104,26 @@ class AndroidLarge4 {
                     .clip(shape = RoundedCornerShape(10.dp))
                     .background(color = Color.White)
             )
+
+                Text(
+                    text = strings.toString(),
+                    color = Color.White,
+                    textAlign = TextAlign.Center,
+                    lineHeight = 1.38.em,
+                    style = TextStyle(
+                        fontSize = 16.sp
+                    ),
+                    modifier = Modifier
+                        .align(alignment = Alignment.TopStart)
+                        .offset(
+                            x = 78.dp,
+                            y = 142.dp
+                        )
+                        .requiredWidth(width = 245.dp)
+                        .requiredHeight(height = 436.dp)
+                )
+            }
         }
-    }
 
     @Preview(widthDp = 400, heightDp = 800)
     @Composable

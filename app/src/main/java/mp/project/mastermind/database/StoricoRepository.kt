@@ -10,4 +10,10 @@ class StoricoRepository(private val StoricoDao: DaoStorico) {       //classe che
         StoricoDao.insert(storico)
     }
 
+    companion object {
+        fun addStorico(storico: Storico) {
+            DaoStorico.insert(storico)
+        }
+    }
+
 }
