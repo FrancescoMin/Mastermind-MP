@@ -7,12 +7,12 @@ import androidx.room.PrimaryKey
 //le tabella del db
 
 //questa è Game praticamente
-@Entity
+@Entity(tableName = "Storico")
 data class Storico(
     @PrimaryKey(autoGenerate = true) var id: Int = 0,
     @ColumnInfo(name= "date") var date: String,       //formatted like yyyy-MM-dd
-    @ColumnInfo(name= "version") var configuration: Array<Pair<Int, String>>,  //forse lista di stringhe
-    @ColumnInfo(name= "result") var result: Boolean,        //see array of results
+    @ColumnInfo(name= "configuration") var configuration: Array<Pair<Int, String>>,  //forse lista di stringhe
+    @ColumnInfo(name= "result") var result: String,        //see array of results
     @ColumnInfo(name= "attempts") var attempts: Int,     //tentativi
     @ColumnInfo(name= "time") var time: MutableState<String>           //intended in seconds
 ){

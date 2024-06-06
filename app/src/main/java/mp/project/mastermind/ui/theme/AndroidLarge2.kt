@@ -653,7 +653,7 @@ fun FailedCheck(){
             val storico = Storico(
                 date = getCurrentDate(),
                 configuration = randomColors,
-                result = allBoxesAreGreen.value,
+                result = allBoxesAreGreen.value.toString(),
                 attempts = row.value,
                 time = this.timerState
             )
@@ -684,7 +684,7 @@ fun FailedCheck(){
             val storico = Storico(
                 date = getCurrentDate(),
                 configuration = randomColors,
-                result = allBoxesAreGreen.value,
+                result = allBoxesAreGreen.value.toString(),
                 attempts = row.value,
                 time = this.timerState)
             val storicoDao= DBStorico.getInstance(context).daoStorico()

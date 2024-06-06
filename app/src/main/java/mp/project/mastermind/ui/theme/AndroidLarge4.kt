@@ -34,7 +34,7 @@ class AndroidLarge4 {
     fun AndroidLarge4(modifier: Modifier = Modifier) {
         val context = LocalContext.current
         val storicoDao= DBStorico.getInstance(context).daoStorico()
-        val strings= storicoDao.loadAll().value
+        val strings= storicoDao.loadAll()
         println(strings)
         Box(
             modifier = modifier
