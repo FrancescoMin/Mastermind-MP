@@ -1,0 +1,32 @@
+<!-- res/values-it/strings.xml -->
+
+<resources>
+    <string name="app_name">Mastermind</string>
+    //AndroidLarge1.kt
+    <string name="play">GIOCA</string>
+    <string name="play_5">GIOCA A 5</string>
+    <string name="play_4">GIOCA A 4</string>
+    <string name="rules">REGOLE</string>
+    <string name="match_history">STORICO PARTITE</string>
+    //AndroidLarge2.kt
+    <string name="new_game">NUOVA PARTITA</string>
+    <string name="mastermind">MASTERMIND</string>
+    <string name="check">CONTROLLA</string>
+    //AdnroidLarge3.kt
+    <string name="show_game_ui">MOSTRA INTERFACCIA</string>
+    <string name="explained_rules">Lo scopo del gioco è indovinare \l\'esatta sequenza di colori generata dal computer.
+
+Nella sezione gioco hai 4 caselle rotonde in cui dovrai selezionare i colori.
+
+Per indovinare hai suggerimenti disponibili per ogni gioco, ci sono 10 giochi in totale.
+I suggerimenti sono contrassegnati in nero se hai indovinato il colore e la posizione di una delle caselle e in giallo se hai solo indovinato il colore</string>
+    <string name="close">Chiudi</string>
+    //AndroidLarge4.kt
+    <string name="scores">PUNTEGGI</string>
+    //AndroidLarge5.kt
+    //solo ripetizione CHECK
+    //GameActivity.kt
+    <string name="exit_dialog">Sei sicuro di voler uscire dalla schermata di gioco?</string>
+    <string name="yes">Sì</string>
+    <string name="no">No</string>
+</resources>
