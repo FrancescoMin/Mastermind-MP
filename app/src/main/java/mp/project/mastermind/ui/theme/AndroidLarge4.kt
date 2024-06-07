@@ -1,7 +1,9 @@
 package mp.project.mastermind.ui.theme
 
 import android.annotation.SuppressLint
+import android.app.Application
 import android.content.Intent
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +16,8 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,18 +28,28 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
-import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import mp.project.mastermind.MainActivity
-import mp.project.mastermind.database.DBStorico
+import mp.project.mastermind.database.StoricoViewModel
+import mp.project.mastermind.database.StoricoViewModelFactory
 
 class AndroidLarge4 {
     @SuppressLint("NotConstructor")
     @Composable
     fun AndroidLarge4(modifier: Modifier = Modifier) {
-        val context = LocalContext.current
-        val storicoDao= DBStorico.getInstance(context).daoStorico()
-        val strings= storicoDao.loadAll()
-        println(strings)
+        println("sono dentro androd4")
+        val application = LocalContext.current.applicationContext
+        val context= LocalContext.current
+        println(application)
+        println(context)
+        val viewModel = ViewModelProvider(
+            context as ViewModelStoreOwner,
+            StoricoViewModelFactory(application as Application)
+        )[StoricoViewModel::class.java]
+        val storicoList by viewModel.allStorico.observeAsState(emptyList())
+        println(storicoList.toString())
+        Log.w("XXX", storicoList.toString())
         Box(
             modifier = modifier
                 .requiredWidth(width = 400.dp)
@@ -104,15 +118,29 @@ class AndroidLarge4 {
                     .clip(shape = RoundedCornerShape(10.dp))
                     .background(color = Color.White)
             )
-
+            if (storicoList.isNotEmpty()) {
+                println("sono dentro il text")
+                // Se ci sono dati nel database, visualizzali a schermo
+                storicoList.forEach { storico ->
+                    Text(
+                        text = storico.toString(),
+                        style = TextStyle(color = Color.Black),
+                        modifier = Modifier
+                            .align(alignment = Alignment.TopStart)
+                            .offset(
+                                x = 78.dp,
+                                y = 142.dp
+                            )
+                            .requiredWidth(width = 245.dp)
+                            .requiredHeight(height = 436.dp)
+                    )
+                }
+            } else {
+                // Se non ci sono dati nel database, visualizza un messaggio di vuoto
                 Text(
-                    text = strings.toString(),
-                    color = Color.White,
-                    textAlign = TextAlign.Center,
-                    lineHeight = 1.38.em,
-                    style = TextStyle(
-                        fontSize = 16.sp
-                    ),
+                    text = "Nessun dato presente nel database",
+                    style = TextStyle(color = Color.Black),
+
                     modifier = Modifier
                         .align(alignment = Alignment.TopStart)
                         .offset(
@@ -124,6 +152,7 @@ class AndroidLarge4 {
                 )
             }
         }
+    }
 
     @Preview(widthDp = 400, heightDp = 800)
     @Composable

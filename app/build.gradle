@@ -72,6 +72,7 @@ dependencies {
     //implementation "androidx.compose.ui.tooling:ui-tooling:1.1.0"
     implementation 'com.google.code.gson:gson:2.8.8'
     implementation 'com.google.firebase:firebase-crashlytics-buildtools:3.0.0'
+    implementation "androidx.compose.runtime:runtime-livedata:$compose_ui_version"
 
 
     kapt 'androidx.room:room-compiler:2.5.2'
