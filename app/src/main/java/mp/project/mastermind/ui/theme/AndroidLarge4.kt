@@ -7,9 +7,13 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredWidth
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -40,7 +44,7 @@ class AndroidLarge4 {
     fun AndroidLarge4(modifier: Modifier = Modifier) {
         println("sono dentro androd4")
         val application = LocalContext.current.applicationContext
-        val context= LocalContext.current
+        val context = LocalContext.current
         println(application)
         println(context)
         val viewModel = ViewModelProvider(
@@ -117,39 +121,40 @@ class AndroidLarge4 {
                     .requiredHeight(height = 437.dp)
                     .clip(shape = RoundedCornerShape(10.dp))
                     .background(color = Color.White)
-            )
-            if (storicoList.isNotEmpty()) {
-                println("sono dentro il text")
-                // Se ci sono dati nel database, visualizzali a schermo
-                storicoList.forEach { storico ->
+            ) {
+                if (storicoList.isNotEmpty()) {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(8.dp)
+                    ) {
+                        items(storicoList) { storico ->
+                            Box(
+                                modifier = Modifier
+                                    .padding(4.dp)
+                                    .clip(shape = RoundedCornerShape(10.dp))
+                                    .background(color = Color.LightGray)
+                                    .padding(8.dp)
+                                    .fillMaxWidth()
+                            ) {
+                                Text(
+                                    text = storico.toString(),
+                                    style = TextStyle(color = Color.Black),
+                                    modifier = Modifier
+                                        .padding(4.dp)
+                                )
+                            }
+                        }
+                    }
+                } else {
                     Text(
-                        text = storico.toString(),
+                        text = "Nessun dato presente nel database",
                         style = TextStyle(color = Color.Black),
                         modifier = Modifier
-                            .align(alignment = Alignment.TopStart)
-                            .offset(
-                                x = 78.dp,
-                                y = 142.dp
-                            )
-                            .requiredWidth(width = 245.dp)
-                            .requiredHeight(height = 436.dp)
+                            .align(alignment = Alignment.Center)
+                            .padding(16.dp)
                     )
                 }
-            } else {
-                // Se non ci sono dati nel database, visualizza un messaggio di vuoto
-                Text(
-                    text = "Nessun dato presente nel database",
-                    style = TextStyle(color = Color.Black),
-
-                    modifier = Modifier
-                        .align(alignment = Alignment.TopStart)
-                        .offset(
-                            x = 78.dp,
-                            y = 142.dp
-                        )
-                        .requiredWidth(width = 245.dp)
-                        .requiredHeight(height = 436.dp)
-                )
             }
         }
     }
