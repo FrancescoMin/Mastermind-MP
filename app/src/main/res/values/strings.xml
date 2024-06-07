@@ -24,6 +24,8 @@ The suggestions are marked black if you have guessed the color and position of o
     //AndroidLarge5.kt
     //solo ripetizione CHECK
     //GameActivity.kt
+
+    <string name="DB">"There are not data saved in database"</string>
     <string name="exit_dialog">Are you sure you want to exit the game screen?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>

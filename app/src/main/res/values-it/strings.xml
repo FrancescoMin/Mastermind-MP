@@ -11,9 +11,10 @@
     //AndroidLarge2.kt
     <string name="new_game">NUOVA PARTITA</string>
     <string name="mastermind">MASTERMIND</string>
-    <string name="check">CONTROLLA</string>
+    <string name="check">VERIFICA</string>
     //AdnroidLarge3.kt
-    <string name="show_game_ui">MOSTRA INTERFACCIA</string>
+    <string name="show_game_ui">INTERFACCIA GIOCO</string>
+
     <string name="explained_rules">Lo scopo del gioco è indovinare \l\'esatta sequenza di colori generata dal computer.
 
 Nella sezione gioco hai 4 caselle rotonde in cui dovrai selezionare i colori.
@@ -26,6 +27,8 @@ I suggerimenti sono contrassegnati in nero se hai indovinato il colore e la posi
     //AndroidLarge5.kt
     //solo ripetizione CHECK
     //GameActivity.kt
+
+    <string name="DB">"Nessun dato presente nel database"</string>
     <string name="exit_dialog">Sei sicuro di voler uscire dalla schermata di gioco?</string>
     <string name="yes">Sì</string>
     <string name="no">No</string>

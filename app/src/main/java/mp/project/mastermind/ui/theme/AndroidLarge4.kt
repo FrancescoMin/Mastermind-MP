@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,6 +36,7 @@ import androidx.compose.ui.unit.em
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import mp.project.mastermind.MainActivity
+import mp.project.mastermind.R
 import mp.project.mastermind.database.StoricoViewModel
 import mp.project.mastermind.database.StoricoViewModelFactory
 
@@ -97,7 +99,7 @@ class AndroidLarge4 {
                     .background(color = Color.White)
             )
             Text(
-                text = "SCORES",
+                text = stringResource(id = R.string.scores),
                 color = Color(0xff7b24bf),
                 textAlign = TextAlign.Center,
                 lineHeight = 6.25.em,
@@ -148,7 +150,7 @@ class AndroidLarge4 {
                     }
                 } else {
                     Text(
-                        text = "Nessun dato presente nel database",
+                        text = stringResource(id = R.string.DB),
                         style = TextStyle(color = Color.Black),
                         modifier = Modifier
                             .align(alignment = Alignment.Center)

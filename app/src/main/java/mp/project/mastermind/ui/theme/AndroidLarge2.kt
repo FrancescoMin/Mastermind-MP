@@ -284,6 +284,7 @@ fun FailedCheck(){
     }
 
 }
+    val mySet: MutableList<String> = mutableListOf()
     private fun checkMastermind() {
 
         if (box.value != 0 && box.value % 5 == 0 && mastermindPressed.value == false) {
@@ -292,7 +293,7 @@ fun FailedCheck(){
 
             mastermindPressed.value = true
 
-            val mySet: MutableList<String> = mutableListOf()
+
             var positionMatchFound = false
 
             for(element in randomColors) {
@@ -358,6 +359,7 @@ fun FailedCheck(){
         randomColors.forEach { (colorId, colorName) ->
             println("Generated color: $colorName (ID: $colorId)")
         }
+
 
         val temp = 0
         val context = LocalContext.current
@@ -658,6 +660,7 @@ fun FailedCheck(){
                 attempts = row.value,
                 time = this.timerState
             )
+            println(mySet)
             val storicoDao = DBStorico.getInstance(context).daoStorico()
             // Creo un coroutine scope
             val scope = CoroutineScope(Dispatchers.Main)
