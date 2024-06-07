@@ -31,6 +31,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -104,7 +105,7 @@ class AndroidLarge1 {
                         colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                         modifier = Modifier.fillMaxSize()
                     ) {
-                        Text("PLAY", color = Color.White)
+                        Text(stringResource(id = R.string.play), color = Color.White)
                     }
                     if (showPopup) {
                         Popup(
@@ -124,7 +125,7 @@ class AndroidLarge1 {
                                             context.startActivity(intent)
                                         }
                                     ) {
-                                        Text("Play 5")
+                                        Text(stringResource(id = R.string.play_5))
                                     }
                                     Button(
                                         onClick = {
@@ -133,7 +134,7 @@ class AndroidLarge1 {
                                             context.startActivity(intent)
                                         }
                                     ) {
-                                        Text("Play 4")
+                                        Text(stringResource(id = R.string.play_4))
                                     }
                                 }
                             }
@@ -161,7 +162,7 @@ class AndroidLarge1 {
                             .fillMaxSize()
                         ,
                         colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent) ) {
-                        Text("RULES", color = Color.White)
+                        Text(stringResource(id = R.string.rules), color = Color.White)
                     }
                 }
                 Box(
@@ -197,7 +198,7 @@ class AndroidLarge1 {
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                     modifier = Modifier
 
-                        .fillMaxSize()                ) { Text("MATCH HISTORY", color = Color.White) }
+                        .fillMaxSize()                ) { Text(stringResource(id = R.string.match_history), color = Color.White) }
             }
         }
 }

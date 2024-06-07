@@ -40,6 +40,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -278,7 +279,7 @@ fun FailedCheck(){
         },
             colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffb62fcc)),
         ) {
-            Text("NEW GAME", color = Color.White)
+            Text(stringResource(id = R.string.new_game), color = Color.White)
         }
     }
 
@@ -628,7 +629,7 @@ fun FailedCheck(){
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffb62fcc)),
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    Text("CHECK", color = Color.White)
+                    Text(stringResource(id = R.string.check), color = Color.White)
                 }
             }
             ArrowButton(

@@ -37,6 +37,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -409,7 +410,7 @@ class AndroidLarge5 {
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffb62fcc)),
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    Text("CHECK", color = Color.White)
+                    Text(stringResource(id = R.string.check), color = Color.White)
                 }
             }
             ArrowButton(
