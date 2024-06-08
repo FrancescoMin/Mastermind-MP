@@ -20,8 +20,6 @@ abstract class DBStorico : RoomDatabase() {
                     DBStorico::class.java,
                     "prova.db"
                 )
-                    .fallbackToDestructiveMigration()
-                    .createFromAsset("prova.db")
 
                     .build()
             }
