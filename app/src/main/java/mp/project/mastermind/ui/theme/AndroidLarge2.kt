@@ -359,8 +359,8 @@ fun FailedCheck(){
         randomColors.forEach { (colorId, colorName) ->
             println("Generated color: $colorName (ID: $colorId)")
         }
-
-
+        val stringList: List<String> = randomColors.map { it.second }
+    println(stringList)
         val temp = 0
         val context = LocalContext.current
 
@@ -655,12 +655,11 @@ fun FailedCheck(){
                 box.value++
             val storico = Storico(
                 date = getCurrentDate(),
-                configuration = randomColors,
+                configuration = stringList,
                 result = allBoxesAreGreen.value.toString(),
                 attempts = row.value,
-                time = this.timerState
+                time = timerState.value
             )
-            println(mySet)
             val storicoDao = DBStorico.getInstance(context).daoStorico()
             // Creo un coroutine scope
             val scope = CoroutineScope(Dispatchers.Main)
@@ -687,10 +686,10 @@ fun FailedCheck(){
             FailedCheck()
             val storico = Storico(
                 date = getCurrentDate(),
-                configuration = randomColors,
+                configuration = stringList,
                 result = allBoxesAreGreen.value.toString(),
                 attempts = row.value,
-                time = this.timerState)
+                time = timerState.value)
             val storicoDao= DBStorico.getInstance(context).daoStorico()
             val scope = CoroutineScope(Dispatchers.Main)
 
