@@ -61,8 +61,7 @@ class AndroidLarge1 {
         var showPopup by remember { mutableStateOf(false) }
         Box(
             modifier = modifier
-                .requiredWidth(width = 400.dp)
-                .requiredHeight(height = 800.dp)
+                .fillMaxSize()
                 .background(color = Color.Black)
         ) {
             val image: Painter = painterResource(R.drawable.logo2)

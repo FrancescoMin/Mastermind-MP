@@ -58,8 +58,7 @@ class AndroidLarge4 {
         Log.w("XXX", storicoList.toString())
         Box(
             modifier = modifier
-                .requiredWidth(width = 400.dp)
-                .requiredHeight(height = 800.dp)
+                .fillMaxSize()
                 .background(color = Color.Black)
         ) {
             Box(
