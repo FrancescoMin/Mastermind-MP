@@ -39,7 +39,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import mp.project.mastermind.GameActivity
-import mp.project.mastermind.GameActivity4
 import mp.project.mastermind.R
 import mp.project.mastermind.RulesActivity
 import mp.project.mastermind.ScoresActivity

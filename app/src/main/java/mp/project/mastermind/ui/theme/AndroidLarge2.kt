@@ -2,7 +2,6 @@ package mp.project.mastermind.ui.theme
 
 import android.annotation.SuppressLint
 import android.content.Intent
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -44,6 +43,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.CoroutineScope
@@ -51,7 +51,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import mp.project.mastermind.GameActivity
-import mp.project.mastermind.MainActivity
 import mp.project.mastermind.R
 import mp.project.mastermind.database.DBStorico
 import mp.project.mastermind.database.Storico
@@ -178,12 +177,16 @@ class AndroidLarge2 {
 
 
     @Composable
-    fun ArrowButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+    fun ArrowButton(onClick: () -> Unit,modifier: Modifier = Modifier) {
+        val context = LocalContext.current
+//        val activity = context as? Activity
+//        val backPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+
         val image: Painter =
             painterResource(R.drawable.freccia)
 
         IconButton(
-            onClick = onClick,
+            onClick = { onClick() },
             modifier = modifier
                 .requiredSize(31.dp)
                 .clip(CircleShape)
@@ -371,7 +374,7 @@ class AndroidLarge2 {
 
     @SuppressLint("NotConstructor", "CoroutineCreationDuringComposition")
     @Composable
-    fun AndroidLarge2(modifier: Modifier = Modifier, number: Int) {
+    fun AndroidLarge2(modifier: Modifier = Modifier, number: Int,onBackPressed: () -> Unit) {
         numberOfBoxesPerRow = number
         if(!supporto) {
             randomColors = generateRandomColorsArray()
@@ -447,7 +450,8 @@ class AndroidLarge2 {
                                             val boxPosition =
                                                 (rowIndex * numberOfBoxesPerRow) + index
                                             val startRange = row.value * numberOfBoxesPerRow
-                                            val endRange = row.value * numberOfBoxesPerRow + numberOfBoxesPerRow
+                                            val endRange =
+                                                row.value * numberOfBoxesPerRow + numberOfBoxesPerRow
 
                                             if (boxPosition in startRange..endRange) {
                                                 specialColorChange(boxId)
@@ -707,14 +711,11 @@ class AndroidLarge2 {
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffb62fcc)),
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    Text("CHECK", color = Color.White)
+                    Text(stringResource(id = R.string.check), color = Color.White)
                 }
             }
             ArrowButton(
-                onClick = {
-                    val intent = Intent(context, MainActivity::class.java)
-                    context.startActivity(intent)
-                },
+                onClick= { onBackPressed() },
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
                     .offset(x = 20.dp, y = 22.dp)
