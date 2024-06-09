@@ -7,16 +7,17 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import mp.project.mastermind.ui.theme.AndroidLarge2
 
 class GameActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {        //bundle è una classe di mappatura basata su coppie
+    private val androidLarge2 = AndroidLarge2()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val number = intent.getIntExtra("number", 0)
         setContent {
-            AndroidLarge2().AndroidLarge2(Modifier.fillMaxSize())
+            androidLarge2.AndroidLarge2(Modifier.fillMaxSize(), number)
         }
     }
     override fun onBackPressed() {
@@ -34,6 +35,4 @@ class GameActivity : ComponentActivity() {
             .setNegativeButton(no) { _, _ -> }
             .show()
     }
-
-
 }

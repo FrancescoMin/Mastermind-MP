@@ -120,7 +120,9 @@ class AndroidLarge1 {
                                     Button(
                                         onClick = {
                                             showPopup = false
-                                            val intent = Intent(context, GameActivity::class.java)
+                                            val intent = Intent(context, GameActivity::class.java).apply{
+                                                putExtra("number", 5)
+                                            }
                                             context.startActivity(intent)
                                         }
                                     ) {
@@ -129,7 +131,9 @@ class AndroidLarge1 {
                                     Button(
                                         onClick = {
                                             showPopup = false
-                                            val intent = Intent(context, GameActivity4::class.java)
+                                            val intent = Intent(context, GameActivity::class.java).apply{
+                                                putExtra("number", 4)
+                                            }
                                             context.startActivity(intent)
                                         }
                                     ) {

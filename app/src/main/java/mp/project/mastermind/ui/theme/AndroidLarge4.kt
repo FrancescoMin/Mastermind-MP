@@ -44,7 +44,7 @@ class AndroidLarge4 {
     @SuppressLint("NotConstructor")
     @Composable
     fun AndroidLarge4(modifier: Modifier = Modifier) {
-        println("sono dentro androd4")
+        println("sono dentro android4")
         val application = LocalContext.current.applicationContext
         val context = LocalContext.current
         println(application)

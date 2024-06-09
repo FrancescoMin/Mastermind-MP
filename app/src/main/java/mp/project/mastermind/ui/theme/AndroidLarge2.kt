@@ -6,9 +6,12 @@ import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
@@ -20,6 +23,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.IconButton
@@ -40,8 +44,6 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.CoroutineScope
@@ -56,14 +58,16 @@ import mp.project.mastermind.database.Storico
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class AndroidLarge2{
+class AndroidLarge2 {
 
     //Una mappa che associa quadretto a colore
-    private val boxColors = mutableStateMapOf<String,Color>()
+    private val boxColors = mutableStateMapOf<String, Color>()
 
-    private val checkColors = mutableStateMapOf<Int,Color>()
-
+    private val checkColors = mutableStateMapOf<Int, Color>()
+    var numberOfBoxesPerRow = 0
+    var supporto = false
     private val appoggioCheckColors = mutableStateOf(0)
+
     private val colorNames = mapOf(
         R.color.arancio to "Arancio",
         R.color.giallo to "Giallo",
@@ -75,16 +79,17 @@ class AndroidLarge2{
     )
 
     //genera soluzione della partita
-    val randomColors = generateRandomColorsArray()
+    var randomColors: Array<Pair<Int, String>> = emptyArray()
+
+    val mySetSol: MutableList<String> = mutableListOf()
 
     //lo usiamo insieme al boxId per tenere traccia del quadretto a cui ci troviamo
     private var box = mutableStateOf(0)
-    private var currentBox= mutableStateOf(0)
+    private var currentBox = mutableStateOf(0)
 
     //per fare il check del mastermind,
     private var mastermindPressed = mutableStateOf(true)
-
-    private var changedColor =  mutableStateOf(false)
+    private var changedColor = mutableStateOf(false)
 
     //per tenere traccia in quale riga siamo
     private var row = mutableStateOf(0)
@@ -92,39 +97,42 @@ class AndroidLarge2{
     var _allBoxesAreGreen = mutableStateOf(false)
     val allBoxesAreGreen: State<Boolean> = _allBoxesAreGreen
 
-    fun colorChange(id: String, color : Color){
+    fun colorChange(id: String, color: Color) {
 
         //colora il quadretto va avanti di uno
-        if(mastermindPressed.value) {
+        if (mastermindPressed.value) {
             boxColors[id] = color
             box.value++
 
-            if(changedColor.value || boxColors["Box #${box.value}"] != Color(0xffd9d9d9)){
+            if (changedColor.value || boxColors["Box #${box.value}"] != Color(0xffd9d9d9)) {
                 //println("Ci risiamo ecco: Box #${box.value} poi ecco ${boxColors["Box #${box.value+1}"] != Color(0xffd9d9d9)}  ")
 
-                while(boxColors.containsKey("Box #${box.value}") && boxColors["Box #${box.value}"] != Color(0xffd9d9d9)){
+                while (boxColors.containsKey("Box #${box.value}") && boxColors["Box #${box.value}"] != Color(
+                        0xffd9d9d9
+                    )
+                ) {
                     box.value++
                 }
                 changedColor.value = false
             }
 
             //se abbiamo riempito tutte e 5 le caselle, blocca l'avanzamento
-            if(box.value %5 == 0 && box.value != 0){
+            if (box.value % numberOfBoxesPerRow == 0 && box.value != 0) {
                 mastermindPressed.value = false
             }
-        }
-        else{
+        } else {
             println("TOCCA PREME MASTERMIND PE ANNA AVANTI")
         }
     }
 
     var isPaused = mutableStateOf(false)
     var timerState = mutableStateOf("")
+
     @Composable
     fun TimerScreen() {
-      //  var timerState = remember {mutableStateOf("") }
-        var minutes = remember {mutableStateOf(0)}
-        var seconds = remember {mutableStateOf(0)}
+        //  var timerState = remember {mutableStateOf("") }
+        var minutes = remember { mutableStateOf(0) }
+        var seconds = remember { mutableStateOf(0) }
 
         LaunchedEffect(isPaused.value) {
             if (!isPaused.value) {
@@ -153,7 +161,8 @@ class AndroidLarge2{
                 .background(color = Color.White)
         )
         {
-            Button(onClick = { isPaused.value = !isPaused.value },
+            Button(
+                onClick = { isPaused.value = !isPaused.value },
                 modifier = Modifier
                     .fillMaxSize()
                     .background(color = Color.White)
@@ -188,51 +197,52 @@ class AndroidLarge2{
         }
     }
 
-@Composable
- fun Successcheck() {
-    println("immagine del successo")
-    val context = LocalContext.current
-    val image: Painter =
-        painterResource(R.drawable.winner)
-    // Mostra l'icona a schermo
-    Box(
-        modifier = Modifier
-            .size(200.dp)
-            .background(Color.Transparent)
-            .offset(
-                x = 100.dp,
-                y = 300.dp  //così è al centro
-            )
-    ) {
-        Image(
-            painter = image,
-            contentDescription = "Win Image",
-            modifier = Modifier.size(200.dp)
+    @Composable
+    fun Successcheck() {
+        println("immagine del successo")
+        val context = LocalContext.current
+        val image: Painter =
+            painterResource(R.drawable.winner)
+        // Mostra l'icona a schermo
+        Box(
+            modifier = Modifier
+                .size(200.dp)
+                .background(Color.Transparent)
+                .offset(
+                    x = 100.dp,
+                    y = 300.dp  //così è al centro
+                )
+        ) {
+            Image(
+                painter = image,
+                contentDescription = "Win Image",
+                modifier = Modifier.size(200.dp)
 
-        )
-    }
-    Box(
-        modifier = Modifier
-            .background(Color.Transparent)
-            .offset(
-                x = 150.dp,
-                y = 500.dp)
+            )
+        }
+        Box(
+            modifier = Modifier
+                .background(Color.Transparent)
+                .offset(
+                    x = 150.dp,
+                    y = 500.dp
+                )
                 .requiredWidth(width = 200.dp)
                 .requiredHeight(height = 50.dp)
 
-    ) {
-        Button(
-            onClick = {
-                val intent = Intent(context, GameActivity::class.java)
-                context.startActivity(intent)
-            },
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffb62fcc)),
         ) {
-            Text("NEW GAME", color = Color.White)
+            Button(
+                onClick = {
+                    val intent = Intent(context, GameActivity::class.java)
+                    context.startActivity(intent)
+                },
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffb62fcc)),
+            ) {
+                Text("NEW GAME", color = Color.White)
+            }
         }
-    }
 
-}
+    }
 
 
     fun getCurrentDate(): String {
@@ -240,54 +250,55 @@ class AndroidLarge2{
         return dateFormat.format(Date())
     }
 
-@Composable
-fun FailedCheck(){
-    val context = LocalContext.current
-    val image: Painter =
-        painterResource(R.drawable.lose)
-    // Mostra l'icona a schermo
-    Box(
-        modifier = Modifier
-            .size(200.dp)
-            .background(Color.Transparent)
-            .offset(
-                x = 100.dp,
-                y = 300.dp  //così è al centro
-            )
+    @Composable
+    fun FailedCheck() {
+        val context = LocalContext.current
+        val image: Painter =
+            painterResource(R.drawable.lose)
+        // Mostra l'icona a schermo
+        Box(
+            modifier = Modifier
+                .size(200.dp)
+                .background(Color.Transparent)
+                .offset(
+                    x = 100.dp,
+                    y = 300.dp  //così è al centro
+                )
 
-    ) {
-        Image(
-            painter = image,
-            contentDescription = "Lose Image",
-            modifier = Modifier.size(200.dp)
-
-        )
-    }
-    Box(
-        modifier = Modifier
-            .background(Color.Transparent)
-            .offset(
-                x = 150.dp,
-                y = 500.dp  //così è al centro
-            )
-            .requiredWidth(width = 200.dp)
-            .requiredHeight(height = 50.dp)
-    ){
-        Button(onClick = {
-            val intent = Intent(context, GameActivity::class.java)
-            context.startActivity(intent)
-        },
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffb62fcc)),
         ) {
-            Text(stringResource(id = R.string.new_game), color = Color.White)
+            Image(
+                painter = image,
+                contentDescription = "Lose Image",
+                modifier = Modifier.size(200.dp)
+
+            )
         }
+        Box(
+            modifier = Modifier
+                .background(Color.Transparent)
+                .offset(
+                    x = 150.dp,
+                    y = 500.dp  //così è al centro
+                )
+                .requiredWidth(width = 200.dp)
+                .requiredHeight(height = 50.dp)
+        ) {
+            Button(
+                onClick = {
+                    val intent = Intent(context, GameActivity::class.java)
+                    context.startActivity(intent)
+                },
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffb62fcc)),
+            ) {
+                Text("NEW GAME", color = Color.White)
+            }
+        }
+
     }
 
-}
-    val mySet: MutableList<String> = mutableListOf()
     private fun checkMastermind() {
 
-        if (box.value != 0 && box.value % 5 == 0 && mastermindPressed.value == false) {
+        if (box.value != 0 && box.value % numberOfBoxesPerRow == 0 && mastermindPressed.value == false) {
             println("valore di boxvalue è : ${box.value}")
             println("valore di appoggio è : ${appoggioCheckColors.value}")
 
@@ -295,36 +306,42 @@ fun FailedCheck(){
 
 
             var positionMatchFound = false
+            var mySet: MutableList<String> = mutableListOf()
 
-            for(element in randomColors) {
+
+            for (element in randomColors) {
                 mySet.add(getColorHexFromName(element.second))
             }
 
-            for(i in 1 until 6){
-                val boxKey = "Box #${box.value-i}"
-                val boxColorHex = boxColors[boxKey]?.toArgb()?.let { colorIntToHex(it)}
-                val randomColorHex = getColorHexFromName(randomColors[5-i].second)
+            for (i in 1 until numberOfBoxesPerRow +1) {
+                val boxKey = "Box #${box.value - i}"
+                val boxColorHex = boxColors[boxKey]?.toArgb()?.let { colorIntToHex(it) }
+                val randomColorHex = getColorHexFromName(randomColors[numberOfBoxesPerRow - i].second)
 
                 if (boxColors[boxKey]?.let { colorToHex(it) } == randomColorHex) {
-                    mySet.remove(boxColors[boxKey]?.let{colorToHex(it)})
+                    mySet.remove(boxColors[boxKey]?.let { colorToHex(it) })
                     checkColors[appoggioCheckColors.value] = Color(0xFF07FF5C)
                     appoggioCheckColors.value += 1
-                    println("Sono VERDE per ${boxColors[boxKey]?.let { colorToHex(it)}}")
+                    println("Sono VERDE per ${boxColors[boxKey]?.let { colorToHex(it) }}")
 
                     // Verifica se tutti i box sono verdi
-                    if (appoggioCheckColors.value%5 == 0 && appoggioCheckColors.value != 0 ) {
+                    if (appoggioCheckColors.value % numberOfBoxesPerRow == 0 && appoggioCheckColors.value != 0) {
                         println("cambio in green i res")
                         _allBoxesAreGreen.value = true
                     }
                 }
             }
 
-            for (i in 1 until 6) {
+            for (i in 1 until numberOfBoxesPerRow +1) {
                 val boxKey = "Box #${box.value - i}"
                 val boxColorHex = boxColors[boxKey]?.toArgb()?.let { colorIntToHex(it) }
-                val randomColorHex = getColorHexFromName(randomColors[5 - i].second)
+                val randomColorHex = getColorHexFromName(randomColors[numberOfBoxesPerRow - i].second)
 
-                if(box.value-i >= 0 && boxColors[boxKey]?.let { colorToHex(it) } != randomColorHex && boxColors[boxKey]?.let { colorToHex(it) } in mySet){
+                if (box.value - i >= 0 && boxColors[boxKey]?.let { colorToHex(it) } != randomColorHex && boxColors[boxKey]?.let {
+                        colorToHex(
+                            it
+                        )
+                    } in mySet) {
                     println("Ho trovato ${boxColors[boxKey]?.let { colorToHex(it) }} ")
                     mySet.remove(boxColors[boxKey]?.let { colorToHex(it) })
                     checkColors[appoggioCheckColors.value] = Color(0xFFFBF207)
@@ -336,8 +353,8 @@ fun FailedCheck(){
         }
 
         //Qui si arrotonda appoggio per farlo passare alla riga successiva(QUI C ERA IL BUG DI GIADA DEL 02/06
-        if(appoggioCheckColors.value != row.value*5) {
-            appoggioCheckColors.value += 5 - appoggioCheckColors.value % 5
+        if (appoggioCheckColors.value != row.value * numberOfBoxesPerRow) {
+            appoggioCheckColors.value += numberOfBoxesPerRow - appoggioCheckColors.value % numberOfBoxesPerRow
             println("Ho aggiunto ${appoggioCheckColors.value}")
         }
 
@@ -348,21 +365,36 @@ fun FailedCheck(){
     }
 
 
-
     private fun colorIntToHex(colorInt: Int): String {
         return String.format("#%06X", 0xFFFFFF and colorInt)
     }
 
     @SuppressLint("NotConstructor", "CoroutineCreationDuringComposition")
     @Composable
-    fun AndroidLarge2(modifier: Modifier = Modifier) {
+    fun AndroidLarge2(modifier: Modifier = Modifier, number: Int) {
+        numberOfBoxesPerRow = number
+        if(!supporto) {
+            randomColors = generateRandomColorsArray()
+            supporto = true
+        }
+
         randomColors.forEach { (colorId, colorName) ->
             println("Generated color: $colorName (ID: $colorId)")
         }
-        val stringList: List<String> = randomColors.map { it.second }
-    println(stringList)
+        val stringList: List<String> = randomColors.map {it.second}
+
+        for (element in randomColors) {
+            mySetSol.add(getColorHexFromName(element.second))
+        }
+
         val temp = 0
         val context = LocalContext.current
+        var isVisible by remember { mutableStateOf(false) }
+        var buttonText by remember { mutableStateOf("MASTERMIND") }
+        var textColor by remember { mutableStateOf(Color.Black) }
+        val dismissDialog: () -> Unit = { isVisible = false }
+
+
 
         Box(
             modifier = modifier
@@ -381,9 +413,7 @@ fun FailedCheck(){
             )
             {
                 val listState = rememberLazyListState()
-
                 val numberOfRows = 10
-                val numberOfBoxesPerRow = 5
                 val spacingBetweenBoxes = 8.dp // Spaziatura tra le caselle
 
                 LazyColumn(state = listState) {
@@ -416,8 +446,8 @@ fun FailedCheck(){
                                         .clickable {
                                             val boxPosition =
                                                 (rowIndex * numberOfBoxesPerRow) + index
-                                            val startRange = row.value * 5
-                                            val endRange = row.value * 5 + 5
+                                            val startRange = row.value * numberOfBoxesPerRow
+                                            val endRange = row.value * numberOfBoxesPerRow + numberOfBoxesPerRow
 
                                             if (boxPosition in startRange..endRange) {
                                                 specialColorChange(boxId)
@@ -446,7 +476,6 @@ fun FailedCheck(){
             ) {
                 val listState = rememberLazyListState()
                 val numberOfRows = 10
-                val numberOfBoxesPerRow = 5
                 val spacingBetweenBoxes = 5.dp // Spaziatura tra le caselle
 // ...
                 //box di check
@@ -462,9 +491,11 @@ fun FailedCheck(){
                         ) {
                             items(numberOfBoxesPerRow) { index ->
                                 var boxId = "Box #${(rowIndex * numberOfBoxesPerRow) + index}"
-
                                 var checkColor by remember { mutableStateOf(Color(0xffd9d9d9)) }
-                                checkColor = checkColors[(rowIndex * numberOfBoxesPerRow) + index] ?: Color(0xffd9d9d9)
+                                checkColor =
+                                    checkColors[(rowIndex * numberOfBoxesPerRow) + index] ?: Color(
+                                        0xffd9d9d9
+                                    )
 
                                 Box(
                                     modifier = Modifier
@@ -482,24 +513,70 @@ fun FailedCheck(){
             }
             Box(
                 modifier = Modifier
-                    .align(alignment = Alignment.TopStart)
-                    .offset(
-                        x = 157.dp,
-                        y = 21.dp
-                    )
-                    .requiredWidth(width = 212.dp)
-                    .requiredHeight(height = 37.dp)
-                    .clip(shape = RoundedCornerShape(18.dp))
-                    .background(color = Color(0xffd9d9d9))
+                    .align(Alignment.TopStart)
+                    .offset(157.dp, 21.dp)
+                    .requiredWidth(212.dp)
+                    .requiredHeight(37.dp)
+                    .clip(RoundedCornerShape(18.dp))
+                    .background(Color(0xffd9d9d9))
             ) {
-                Button( //mastermind
-                    onClick = {  },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffb62fcc)),
-                    modifier = Modifier.fillMaxSize()
+                Button(
+                    onClick = {
+                        isVisible = !isVisible
+                        buttonText = "MASTERMIND"
+                        textColor =Color.Black
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = if (isVisible) Color(0xffd9d9d9) else Color(0xffb62fcc)
+                    ),
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("MASTERMIND", color = Color.White)
+                    Text(buttonText, color = textColor, fontSize = 16.sp)
                 }
             }
+
+            if (isVisible) {
+                AlertDialog(
+                    onDismissRequest = dismissDialog,
+
+                    confirmButton = {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .heightIn(min = 70.dp)  // Imposta un'altezza minima per il contenuto del popup
+                                .padding(16.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center  // Centra verticalmente il contenuto
+                        ) {
+                            LazyRow(
+                                modifier = Modifier
+                                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                            ) {
+                                items(numberOfBoxesPerRow) { index ->
+                                    val boxColorSol = randomColors[index].second
+
+                                    Box(
+                                        modifier = Modifier
+                                            .padding(end = if (index < numberOfBoxesPerRow - 1) 8.dp else 0.dp)
+                                            .requiredWidth(43.dp)
+                                            .requiredHeight(43.dp)
+                                            .background(HexToColor(getColorHexFromName(boxColorSol)))
+                                    )
+                                }
+                            }
+
+                            Button(
+                                onClick = dismissDialog
+                            ) {
+                                Text(text = "OK")
+                            }
+                        }
+                    }
+                )
+            }
+
+
+
 
             //Qui ci sono tutte i colori da cliccare, ognuno alla onclick chiama changeColor passandogli il proprio colore
             Box(
@@ -626,11 +703,11 @@ fun FailedCheck(){
                     .background(color = Color(0xffd9d9d9))
             ) {
                 Button( //tasto di check line
-                    onClick = {checkMastermind() },
+                    onClick = { checkMastermind() },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffb62fcc)),
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    Text(stringResource(id = R.string.check), color = Color.White)
+                    Text("CHECK", color = Color.White)
                 }
             }
             ArrowButton(
@@ -650,7 +727,7 @@ fun FailedCheck(){
             println("sono entrato nel successo")
             isPaused.value = true
             Successcheck()
-            while (box.value <= 49)
+            while (box.value <= numberOfBoxesPerRow*10 -1)
                 box.value++
             val storico = Storico(
                 date = getCurrentDate(),
@@ -668,18 +745,19 @@ fun FailedCheck(){
                 try {
                     storicoDao.insert(storico)
                     // Verifico che l'inserimento sia avvenuto
-                    val storedStorico= storicoDao.getLastInserted() // Implementa questa funzione per recuperare l'ultimo record inserito
-                    if (storedStorico != null ) {
-                       println("Database Inserimento avvenuto con successo: $storedStorico")
+                    val storedStorico =
+                        storicoDao.getLastInserted() // Implementa questa funzione per recuperare l'ultimo record inserito
+                    if (storedStorico != null) {
+                        println("Database Inserimento avvenuto con successo: $storedStorico")
                     } else {
-                       println("Database Inserimento fallito")
+                        println("Database Inserimento fallito")
                     }
                 } catch (e: Exception) {
-                   println("Database Errore durante l'inserimento: ${e.message}")
+                    println("Database Errore durante l'inserimento: ${e.message}")
                 }
             }
-            }
-        if(box.value>49 && mastermindPressed.value==true && allBoxesAreGreen.value==false){
+        }
+        if (box.value > numberOfBoxesPerRow*10 -1 && mastermindPressed.value == true && allBoxesAreGreen.value == false) {
             isPaused.value = true
             println("fallito")
             FailedCheck()
@@ -688,8 +766,9 @@ fun FailedCheck(){
                 configuration = stringList,
                 result = allBoxesAreGreen.value.toString(),
                 attempts = row.value,
-                time = timerState.value)
-            val storicoDao= DBStorico.getInstance(context).daoStorico()
+                time = timerState.value
+            )
+            val storicoDao = DBStorico.getInstance(context).daoStorico()
             val scope = CoroutineScope(Dispatchers.Main)
 
 // Eseguo l'inserimento nel database in background
@@ -697,8 +776,9 @@ fun FailedCheck(){
                 try {
                     storicoDao.insert(storico)
                     // Verifico che l'inserimento sia avvenuto
-                    val storedStorico = storicoDao.getLastInserted() // Implementa questa funzione per recuperare l'ultimo record inserito
-                    if (storedStorico != null ) {
+                    val storedStorico =
+                        storicoDao.getLastInserted() // Implementa questa funzione per recuperare l'ultimo record inserito
+                    if (storedStorico != null) {
                         println("Database Inserimento avvenuto con successo: $storedStorico")
                     } else {
                         println("Database Inserimento fallito")
@@ -713,31 +793,29 @@ fun FailedCheck(){
     }
 
 
-
-
     private fun specialColorChange(s: String) {
 
-        if(boxColors[s] != Color(0xffd9d9d9)) {
+        if (boxColors[s] != Color(0xffd9d9d9)) {
             mastermindPressed.value = true
             boxColors[s] = Color(0xffd9d9d9)
 
-            if(s.substringAfter("#").toIntOrNull()!!< box.value ) {
-                if (box.value != row.value * 5 && row.value < 2) {
+            if (s.substringAfter("#").toIntOrNull()!! < box.value) {
+                if (box.value != row.value * numberOfBoxesPerRow && row.value < 2) {
                     println("1.sono entrato per boxvalue ${box.value}")
 
                     box.value = s[s.length - 1].digitToInt()
-                } else if (box.value != row.value * 5 && box.value != row.value * 5 + 5 && row.value >= 2 && (box.value / 5) % 2 != 0) {
+                } else if (box.value != row.value * numberOfBoxesPerRow && box.value != row.value * numberOfBoxesPerRow + numberOfBoxesPerRow && row.value >= 2 && (box.value / numberOfBoxesPerRow) % 2 != 0) {
                     println("2.sono entrato per boxvalue ${box.value}")
 
-                    box.value = row.value * 5 + s[s.length - 1].digitToInt() % 5
-                } else if (box.value != row.value * 5 && box.value != row.value * 5 && row.value >= 2 && (box.value / 5) % 2 != 0) {
+                    box.value = row.value * numberOfBoxesPerRow + s[s.length - 1].digitToInt() % numberOfBoxesPerRow
+                } else if (box.value != row.value * numberOfBoxesPerRow && box.value != row.value * numberOfBoxesPerRow && row.value >= 2 && (box.value / numberOfBoxesPerRow) % 2 != 0) {
                     println("3.sono entrato per boxvalue ${box.value}")
 
-                    box.value = row.value * 5 + s[s.length - 1].digitToInt()
-                } else if (box.value != row.value * 5 && row.value >= 2 && (box.value / 5) % 2 == 0) {
+                    box.value = row.value * numberOfBoxesPerRow + s[s.length - 1].digitToInt()
+                } else if (box.value != row.value * numberOfBoxesPerRow && row.value >= 2 && (box.value / numberOfBoxesPerRow) % 2 == 0) {
                     println("4.sono entrato per boxvalue ${box.value}")
 
-                    box.value = row.value * 5 + s[s.length - 1].digitToInt() % 5
+                    box.value = row.value * numberOfBoxesPerRow + s[s.length - 1].digitToInt() % numberOfBoxesPerRow
 
                 } /*else if(box.value == row.value*5 && box.value != 0 ){
                 box.value = row.value*5 + s[s.length - 1].digitToInt()%5
@@ -766,9 +844,11 @@ fun FailedCheck(){
             else -> throw IllegalArgumentException("Invalid color: $color")
         }
     }
-    fun generateRandomColorsArray(size: Int = 5): Array<Pair<Int, String>> {
+
+    fun generateRandomColorsArray(size: Int = numberOfBoxesPerRow): Array<Pair<Int, String>> {
         return Array(size) { getRandomColorResourceId() }
     }
+
     // Funzione per ottenere un colore casuale dal set predefinito
     fun getRandomColorResourceId(): Pair<Int, String> {
         val colors = listOf(
@@ -800,6 +880,19 @@ fun FailedCheck(){
         }
     }
 
+    fun HexToColor(color: String): Color {
+        return when {
+            color ==  "#FF69B4"-> Color(0.9647059f, 0.56078434f, 1.0f, 1.0f) // Rosa
+            color ==   "#FF0000"->Color(0.9843137f, 0.02745098f, 0.02745098f, 1.0f) // Rosso
+            color ==   "#008000"->Color(0.02745098f, 1.0f, 0.36078432f, 1.0f) // Verde
+            color ==  "#0000FF"-> Color(0.047058824f, 0.14117648f, 0.96862745f, 1.0f) // Blu
+            color ==  "#00FFFF"->Color(0.02745098f, 0.9843137f, 0.87058824f, 1.0f)  // Cyan
+            color ==   "#FFFF00" ->Color(0.9843137f, 0.9490196f, 0.02745098f, 1.0f)// Giallo
+            color ==   "#B81ECC" -> Color(0.7137255f, 0.18431373f, 0.8f, 1.0f) // Viola
+            color ==   "#FFA500" -> Color(0.9843137f, 0.25882354f, 0.02745098f, 1.0f) // Arancione
+            else -> throw IllegalArgumentException("Colore non valido")
+        }
+    }
     fun colorToHex(color: Color): String {
         return when {
             color == Color(0.9647059f, 0.56078434f, 1.0f, 1.0f) -> "#FF69B4" // Rosa
@@ -829,12 +922,43 @@ fun FailedCheck(){
 //    }
 
 
+
+
+
+/*    @Composable
+    fun DisplayBoxes() {
+        val numberOfBoxes = 5
+        val spacingBetweenBoxes = 8.dp
+
+        LazyRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 60.dp),  // Adjust padding as needed
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            repeat(numberOfBoxes) { index ->
+                Box(
+                    modifier = Modifier
+                        .padding(end = if (index < numberOfBoxes - 1) spacingBetweenBoxes else 0.dp)
+                        .requiredWidth(43.dp)
+                        .requiredHeight(43.dp)
+                        .background(Color(0xffd9d9d9))
+                        .clip(CircleShape)
+                        .clickable { }
+                )
+            }
+        }
+    }*/
+
+/*
     @Preview(widthDp = 400, heightDp = 800)
     @Composable
     private fun AndroidLarge2Preview() {
-        AndroidLarge2(Modifier)
-    }
+        AndroidLarge2(Modifier,numberOfBoxesPerRow)
+    }*/
 }
+
+
 
 
 
