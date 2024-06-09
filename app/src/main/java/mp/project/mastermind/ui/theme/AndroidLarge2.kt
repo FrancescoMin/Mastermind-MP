@@ -233,7 +233,9 @@ class AndroidLarge2 {
         ) {
             Button(
                 onClick = {
-                    val intent = Intent(context, GameActivity::class.java)
+                    val intent = Intent(context, GameActivity::class.java).apply{
+                        putExtra("number", numberOfBoxesPerRow )
+                    }
                     context.startActivity(intent)
                 },
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffb62fcc)),
@@ -285,7 +287,9 @@ class AndroidLarge2 {
         ) {
             Button(
                 onClick = {
-                    val intent = Intent(context, GameActivity::class.java)
+                    val intent = Intent(context, GameActivity::class.java).apply{
+                        putExtra("number",numberOfBoxesPerRow)
+                    }
                     context.startActivity(intent)
                 },
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffb62fcc)),
