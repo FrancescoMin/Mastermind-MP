@@ -307,12 +307,8 @@ class AndroidLarge2 {
             println("valore di appoggio è : ${appoggioCheckColors.value}")
 
             mastermindPressed.value = true
-
-
             var positionMatchFound = false
             var mySet: MutableList<String> = mutableListOf()
-
-
             for (element in randomColors) {
                 mySet.add(getColorHexFromName(element.second))
             }
@@ -814,12 +810,22 @@ class AndroidLarge2 {
                     box.value = row.value * numberOfBoxesPerRow + s[s.length - 1].digitToInt() % numberOfBoxesPerRow
                 } else if (box.value != row.value * numberOfBoxesPerRow && box.value != row.value * numberOfBoxesPerRow && row.value >= 2 && (box.value / numberOfBoxesPerRow) % 2 != 0) {
                     println("3.sono entrato per boxvalue ${box.value}")
+                    if(numberOfBoxesPerRow == 5)
+                        box.value = row.value * numberOfBoxesPerRow + s[s.length - 1].digitToInt()
+                    else if(numberOfBoxesPerRow == 4)
+                        if(row.value == 2)
+                            box.value = row.value * numberOfBoxesPerRow + s[s.length - 1].digitToInt() % numberOfBoxesPerRow
+                        else
+                            box.value = row.value * numberOfBoxesPerRow + (s[s.length - 2].digitToInt()*10 + s[s.length - 1].digitToInt()) % numberOfBoxesPerRow
 
-                    box.value = row.value * numberOfBoxesPerRow + s[s.length - 1].digitToInt()
+
                 } else if (box.value != row.value * numberOfBoxesPerRow && row.value >= 2 && (box.value / numberOfBoxesPerRow) % 2 == 0) {
                     println("4.sono entrato per boxvalue ${box.value}")
 
-                    box.value = row.value * numberOfBoxesPerRow + s[s.length - 1].digitToInt() % numberOfBoxesPerRow
+                    if(numberOfBoxesPerRow == 5)
+                        box.value = row.value * numberOfBoxesPerRow + s[s.length - 1].digitToInt() % numberOfBoxesPerRow
+                    else if(numberOfBoxesPerRow == 4)
+                        box.value = row.value * numberOfBoxesPerRow + (s[s.length - 2].digitToInt()*10 + s[s.length - 1].digitToInt()) % numberOfBoxesPerRow
 
                 } /*else if(box.value == row.value*5 && box.value != 0 ){
                 box.value = row.value*5 + s[s.length - 1].digitToInt()%5
