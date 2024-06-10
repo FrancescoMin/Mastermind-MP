@@ -35,7 +35,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -57,7 +56,7 @@ import mp.project.mastermind.database.Storico
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class AndroidLarge2 {
+class GameScreenAndLogic {
 
     //variabili per colori box e cerchi di verifica
     private val boxColors = mutableStateMapOf<String, Color>()//colori dei box
