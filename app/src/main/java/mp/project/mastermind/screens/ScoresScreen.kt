@@ -41,6 +41,8 @@ import mp.project.mastermind.database.StoricoViewModel
 import mp.project.mastermind.database.StoricoViewModelFactory
 
 class ScoresScreen {
+
+    var verifica: String = "false"
     @SuppressLint("NotConstructor")
     @Composable
     fun AndroidLarge4(modifier: Modifier = Modifier) {
@@ -56,6 +58,7 @@ class ScoresScreen {
         val storicoList by viewModel.allStorico.observeAsState(emptyList())
         println(storicoList.toString())
         Log.w("XXX", storicoList.toString())
+
         Box(
             modifier = modifier
                 .fillMaxSize()
@@ -130,24 +133,49 @@ class ScoresScreen {
                             .padding(8.dp)
                     ) {
                         items(storicoList) { storico ->
+                            if(storico.result=="true"){
                             Box(
                                 modifier = Modifier
                                     .padding(4.dp)
                                     .clip(shape = RoundedCornerShape(10.dp))
-                                    .background(color = Color.LightGray)
+                                    .background(color = Color.Green)
                                     .padding(8.dp)
                                     .fillMaxWidth()
                             ) {
                                 Text(
+
                                     text = storico.toString(),
                                     style = TextStyle(color = Color.Black),
                                     modifier = Modifier
                                         .padding(4.dp)
+
                                 )
+                            }
+                            }
+                                else{
+                                    Box(
+                                        modifier = Modifier
+                                            .padding(4.dp)
+                                            .clip(shape = RoundedCornerShape(10.dp))
+                                            .background(color = Color.Red)
+                                            .padding(8.dp)
+                                            .fillMaxWidth()
+                                    ) {
+                                        Text(
+
+                                            text = storico.toString(),
+                                            style = TextStyle(color = Color.Black),
+                                            modifier = Modifier
+                                                .padding(4.dp)
+
+                                        )
+                                    }
+                                }
+
                             }
                         }
                     }
-                } else {
+                 else {
                     Text(
                         text = stringResource(id = R.string.DB),
                         style = TextStyle(color = Color.Black),

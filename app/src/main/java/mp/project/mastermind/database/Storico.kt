@@ -17,6 +17,12 @@ data class Storico(
     @ColumnInfo(name= "time") var time: String          //intended in seconds
 ){
     override fun toString(): String {
-        return """Id: $id,Date: $date,Config: $configuration,Res: $result,Atts: $attempts,Time: $time"""
+        return """
+        Numero Partita: $id
+        Data: $date 
+        Soluzione: $configuration
+        Risultato: $result
+        Tentativi: $attempts
+        Tempo: $time""".trimIndent()
     }
 }
