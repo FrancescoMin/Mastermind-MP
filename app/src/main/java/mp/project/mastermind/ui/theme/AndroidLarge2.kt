@@ -65,6 +65,9 @@ class AndroidLarge2 {
     private val checkColors = mutableStateMapOf<Int, Color>()
     var numberOfBoxesPerRow = 0
     var supporto = false
+    var supportoDB = false
+    var disabilita = mutableStateOf(true)
+
     private val appoggioCheckColors = mutableStateOf(0)
 
     private val colorNames = mapOf(
@@ -162,6 +165,7 @@ class AndroidLarge2 {
         {
             Button(
                 onClick = { isPaused.value = !isPaused.value },
+                enabled = disabilita.value,
                 modifier = Modifier
                     .fillMaxSize()
                     .background(color = Color.White)
@@ -187,6 +191,8 @@ class AndroidLarge2 {
 
         IconButton(
             onClick = { onClick() },
+            enabled = disabilita.value,
+
             modifier = modifier
                 .requiredSize(31.dp)
                 .clip(CircleShape)
@@ -530,6 +536,7 @@ class AndroidLarge2 {
                         buttonText = "MASTERMIND"
                         textColor =Color.Black
                     },
+
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = if (isVisible) Color(0xffd9d9d9) else Color(0xffb62fcc)
                     ),
@@ -708,6 +715,7 @@ class AndroidLarge2 {
             ) {
                 Button( //tasto di check line
                     onClick = { checkMastermind() },
+                    enabled = disabilita.value,
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffb62fcc)),
                     modifier = Modifier.fillMaxSize()
                 ) {
@@ -727,6 +735,7 @@ class AndroidLarge2 {
         if (allBoxesAreGreen.value) {
             println("sono entrato nel successo")
             isPaused.value = true
+            disabilita.value = false
             Successcheck()
             while (box.value <= numberOfBoxesPerRow*10 -1)
                 box.value++
@@ -737,9 +746,12 @@ class AndroidLarge2 {
                 attempts = row.value,
                 time = timerState.value
             )
-            val storicoDao = DBStorico.getInstance(context).daoStorico()
-            // Creo un coroutine scope
-            val scope = CoroutineScope(Dispatchers.Main)
+            if(!supportoDB) {
+                val storicoDao = DBStorico.getInstance(context).daoStorico()
+                // Creo un coroutine scope
+                val scope = CoroutineScope(Dispatchers.Main)
+                supportoDB = true
+
 
 // Eseguo l'inserimento nel database in background
             scope.launch(Dispatchers.IO) {
@@ -757,9 +769,12 @@ class AndroidLarge2 {
                     println("Database Errore durante l'inserimento: ${e.message}")
                 }
             }
+            }
         }
         if (box.value > numberOfBoxesPerRow*10 -1 && mastermindPressed.value == true && allBoxesAreGreen.value == false) {
             isPaused.value = true
+            disabilita.value = false
+
             println("fallito")
             FailedCheck()
             val storico = Storico(
@@ -769,23 +784,25 @@ class AndroidLarge2 {
                 attempts = row.value,
                 time = timerState.value
             )
-            val storicoDao = DBStorico.getInstance(context).daoStorico()
-            val scope = CoroutineScope(Dispatchers.Main)
+            if(!supportoDB) {
+                val storicoDao = DBStorico.getInstance(context).daoStorico()
+                val scope = CoroutineScope(Dispatchers.Main)
 
 // Eseguo l'inserimento nel database in background
-            scope.launch(Dispatchers.IO) {
-                try {
-                    storicoDao.insert(storico)
-                    // Verifico che l'inserimento sia avvenuto
-                    val storedStorico =
-                        storicoDao.getLastInserted() // Implementa questa funzione per recuperare l'ultimo record inserito
-                    if (storedStorico != null) {
-                        println("Database Inserimento avvenuto con successo: $storedStorico")
-                    } else {
-                        println("Database Inserimento fallito")
+                scope.launch(Dispatchers.IO) {
+                    try {
+                        storicoDao.insert(storico)
+                        // Verifico che l'inserimento sia avvenuto
+                        val storedStorico =
+                            storicoDao.getLastInserted() // Implementa questa funzione per recuperare l'ultimo record inserito
+                        if (storedStorico != null) {
+                            println("Database Inserimento avvenuto con successo: $storedStorico")
+                        } else {
+                            println("Database Inserimento fallito")
+                        }
+                    } catch (e: Exception) {
+                        println("Database Errore durante l'inserimento: ${e.message}")
                     }
-                } catch (e: Exception) {
-                    println("Database Errore durante l'inserimento: ${e.message}")
                 }
             }
 //            StoricoRepository.addStorico(storico)
@@ -795,9 +812,8 @@ class AndroidLarge2 {
 
 
     private fun specialColorChange(s: String) {
-
+        mastermindPressed.value = true
         if (boxColors[s] != Color(0xffd9d9d9)) {
-            mastermindPressed.value = true
             boxColors[s] = Color(0xffd9d9d9)
 
             if (s.substringAfter("#").toIntOrNull()!! < box.value) {
@@ -807,15 +823,30 @@ class AndroidLarge2 {
                     box.value = s[s.length - 1].digitToInt()
                 } else if (box.value != row.value * numberOfBoxesPerRow && box.value != row.value * numberOfBoxesPerRow + numberOfBoxesPerRow && row.value >= 2 && (box.value / numberOfBoxesPerRow) % 2 != 0) {
                     println("2.sono entrato per boxvalue ${box.value}")
+                    if(s.substringAfter("#").toIntOrNull()!! < 10) {
+                        println("")
+                        box.value =
+                            row.value * numberOfBoxesPerRow + s[s.length - 1].digitToInt() % numberOfBoxesPerRow
+                    }
+                    else {
+                        box.value =
+                            row.value * numberOfBoxesPerRow + (s[s.length - 2].digitToInt()*10 + s[s.length - 1].digitToInt()) % numberOfBoxesPerRow
+                    }
 
-                    box.value = row.value * numberOfBoxesPerRow + s[s.length - 1].digitToInt() % numberOfBoxesPerRow
                 } else if (box.value != row.value * numberOfBoxesPerRow && box.value != row.value * numberOfBoxesPerRow && row.value >= 2 && (box.value / numberOfBoxesPerRow) % 2 != 0) {
                     println("3.sono entrato per boxvalue ${box.value}")
                     if(numberOfBoxesPerRow == 5)
                         box.value = row.value * numberOfBoxesPerRow + s[s.length - 1].digitToInt()
                     else if(numberOfBoxesPerRow == 4)
-                        if(row.value == 2)
-                            box.value = row.value * numberOfBoxesPerRow + s[s.length - 1].digitToInt() % numberOfBoxesPerRow
+                        if(s.substringAfter("#").toIntOrNull()!! < 10) {
+                            println(
+                                "Ci troviamo a confine, attenzione valore di box.value cancellata è " + s.substringAfter(
+                                    "#"
+                                ).toIntOrNull()
+                            )
+                            box.value =
+                                row.value * numberOfBoxesPerRow + s[s.length - 1].digitToInt() % numberOfBoxesPerRow
+                        }
                         else
                             box.value = row.value * numberOfBoxesPerRow + (s[s.length - 2].digitToInt()*10 + s[s.length - 1].digitToInt()) % numberOfBoxesPerRow
 
@@ -826,13 +857,20 @@ class AndroidLarge2 {
                     if(numberOfBoxesPerRow == 5)
                         box.value = row.value * numberOfBoxesPerRow + s[s.length - 1].digitToInt() % numberOfBoxesPerRow
                     else if(numberOfBoxesPerRow == 4)
-                        box.value = row.value * numberOfBoxesPerRow + (s[s.length - 2].digitToInt()*10 + s[s.length - 1].digitToInt()) % numberOfBoxesPerRow
+                        if(s.substringAfter("#").toIntOrNull()!! < 10) {
+                            println("Attenzione ci troviamo a confine, il valore è" + s.substringAfter("#").toIntOrNull())
+                            box.value =
+                                row.value * numberOfBoxesPerRow + s[s.length - 1].digitToInt() % numberOfBoxesPerRow
 
+                        }
+                    else
+                            box.value =
+                                row.value * numberOfBoxesPerRow + (s[s.length - 2].digitToInt() * 10 + s[s.length - 1].digitToInt()) % numberOfBoxesPerRow
                 } /*else if(box.value == row.value*5 && box.value != 0 ){
                 box.value = row.value*5 + s[s.length - 1].digitToInt()%5
             }*/
                 else {
-                    println("Non sono entrato in nessun if per boxvalue ${box.value}")
+                    println("ATTENZIONE sono entrato in nessun if per boxvalue ${box.value}")
                     println("IL valore dell'infamotto è ${box.value}")
                 }
             }
