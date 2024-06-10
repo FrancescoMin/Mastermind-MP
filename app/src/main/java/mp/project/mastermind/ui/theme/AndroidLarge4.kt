@@ -1,6 +1,6 @@
 package mp.project.mastermind.ui.theme
 
-import android.annotation.SuppressLint
+import  android.annotation.SuppressLint
 import android.app.Application
 import android.content.Intent
 import android.util.Log
