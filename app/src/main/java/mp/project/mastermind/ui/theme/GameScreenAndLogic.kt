@@ -35,6 +35,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -56,7 +57,7 @@ import mp.project.mastermind.database.Storico
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class GameScreenAndLogic {
+class AndroidLarge2 {
 
     //variabili per colori box e cerchi di verifica
     private val boxColors = mutableStateMapOf<String, Color>()//colori dei box
@@ -753,21 +754,21 @@ class GameScreenAndLogic {
 
 
 // Eseguo l'inserimento nel database in background
-                scope.launch(Dispatchers.IO) {
-                    try {
-                        storicoDao.insert(storico)
-                        // Verifico che l'inserimento sia avvenuto
-                        val storedStorico =
-                            storicoDao.getLastInserted() // Implementa questa funzione per recuperare l'ultimo record inserito
-                        if (storedStorico != null) {
-                            println("Database Inserimento avvenuto con successo: $storedStorico")
-                        } else {
-                            println("Database Inserimento fallito")
-                        }
-                    } catch (e: Exception) {
-                        println("Database Errore durante l'inserimento: ${e.message}")
+            scope.launch(Dispatchers.IO) {
+                try {
+                    storicoDao.insert(storico)
+                    // Verifico che l'inserimento sia avvenuto
+                    val storedStorico =
+                        storicoDao.getLastInserted() // Implementa questa funzione per recuperare l'ultimo record inserito
+                    if (storedStorico != null) {
+                        println("Database Inserimento avvenuto con successo: $storedStorico")
+                    } else {
+                        println("Database Inserimento fallito")
                     }
+                } catch (e: Exception) {
+                    println("Database Errore durante l'inserimento: ${e.message}")
                 }
+            }
             }
         }
         if (box.value > numberOfBoxesPerRow*10 -1 && checkLine.value == true && _allBoxesAreGreen.value == false) {
@@ -862,7 +863,7 @@ class GameScreenAndLogic {
                                 row.value * numberOfBoxesPerRow + s[s.length - 1].digitToInt() % numberOfBoxesPerRow
 
                         }
-                        else
+                    else
                             box.value =
                                 row.value * numberOfBoxesPerRow + (s[s.length - 2].digitToInt() * 10 + s[s.length - 1].digitToInt()) % numberOfBoxesPerRow
                 } /*else if(box.value == row.value*5 && box.value != 0 ){
@@ -946,6 +947,7 @@ class GameScreenAndLogic {
         return String.format("#%06X", 0xFFFFFF and colorInt)
     }
 }
+
 
 
 
