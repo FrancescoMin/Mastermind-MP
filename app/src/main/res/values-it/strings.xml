@@ -17,10 +17,10 @@
 
     <string name="explained_rules">Lo scopo del gioco è indovinare \l\'esatta sequenza di colori generata dal computer.
 
-Nella sezione gioco hai 4 caselle rotonde in cui dovrai selezionare i colori.
+Nella sezione gioco hai 4 o 5  caselle in cui dovrai selezionare i colori.
 
-Per indovinare hai suggerimenti disponibili per ogni gioco, ci sono 10 giochi in totale.
-I suggerimenti sono contrassegnati in nero se hai indovinato il colore e la posizione di una delle caselle e in giallo se hai solo indovinato il colore</string>
+Per indovinare hai suggerimenti disponibili per ogni riga di gioco, ci sono 10 tentativi in totale.
+I suggerimenti sono contrassegnati in verde se hai indovinato il colore e la posizione di una delle caselle e in giallo se hai solo indovinato il colore</string>
     <string name="close">Chiudi</string>
     //AndroidLarge4.kt
     <string name="scores">PUNTEGGI</string>
