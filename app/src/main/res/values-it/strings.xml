@@ -29,7 +29,7 @@ I suggerimenti sono contrassegnati in nero se hai indovinato il colore e la posi
     //GameActivity.kt
 
     <string name="DB">"Nessun dato presente nel database"</string>
-    <string name="exit_dialog">Sei sicuro di voler uscire dalla schermata di gioco? La partita non verrà salvata</string>
+    <string name="exit_dialog">Sei sicuro di voler uscire dalla schermata di gioco? La partita non verrà salvata se non l\'hai conclusa </string>
     <string name="yes">Sì</string>
     <string name="no">No</string>
 </resources>
