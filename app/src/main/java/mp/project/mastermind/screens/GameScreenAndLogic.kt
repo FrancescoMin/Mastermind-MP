@@ -1,4 +1,4 @@
-package mp.project.mastermind.ui.theme
+package mp.project.mastermind.screens
 
 import android.annotation.SuppressLint
 import android.content.Intent
