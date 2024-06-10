@@ -40,7 +40,7 @@ import mp.project.mastermind.R
 import mp.project.mastermind.database.StoricoViewModel
 import mp.project.mastermind.database.StoricoViewModelFactory
 
-class AndroidLarge4 {
+class ScoresScreen {
     @SuppressLint("NotConstructor")
     @Composable
     fun AndroidLarge4(modifier: Modifier = Modifier) {

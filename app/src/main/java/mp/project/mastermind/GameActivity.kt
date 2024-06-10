@@ -8,16 +8,16 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
-import mp.project.mastermind.ui.theme.AndroidLarge2
+import mp.project.mastermind.ui.theme.GameScreenAndLogic
 
 class GameActivity : ComponentActivity() {
-    private val androidLarge2 = AndroidLarge2()
+    private val gameScreenAndLogic = GameScreenAndLogic()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val number = intent.getIntExtra("number", 0)
         setContent {
-            androidLarge2.AndroidLarge2(Modifier.fillMaxSize(), number,{ onBackPressed() } )
+            gameScreenAndLogic.AndroidLarge2(Modifier.fillMaxSize(), number,{ onBackPressed() } )
         }
     }
     override fun onBackPressed() {

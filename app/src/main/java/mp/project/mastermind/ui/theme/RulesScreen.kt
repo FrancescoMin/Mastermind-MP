@@ -42,7 +42,7 @@ import androidx.compose.ui.unit.sp
 import mp.project.mastermind.MainActivity
 import mp.project.mastermind.R
 
-class AndroidLarge3 {
+class RulesScreen {
     val Typography.headlineSmall: TextStyle
         get() = TextStyle(
             // Imposta qui gli attributi dello stile di testo desiderato
