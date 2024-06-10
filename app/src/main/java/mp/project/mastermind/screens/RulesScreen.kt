@@ -139,7 +139,7 @@ class RulesScreen {
             )
             Text(
                 text = stringResource(id = R.string.rules),
-                color = Color(0xff7b24bf),
+                color = Color(0xffb62fcc),
                 textAlign = TextAlign.Center,
                 lineHeight = 6.25.em,
                 style = MaterialTheme.typography.headlineSmall,
@@ -177,7 +177,7 @@ class RulesScreen {
                             )
                             Spacer(modifier = Modifier.height(1.dp))
                             Button(
-                                onClick = { showPopup = false }
+                                onClick = { showPopup = false },
                             ) {
                                 Text(stringResource(id = R.string.close))
                             }

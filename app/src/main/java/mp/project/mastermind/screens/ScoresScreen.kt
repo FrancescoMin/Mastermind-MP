@@ -99,7 +99,7 @@ class ScoresScreen {
             )
             Text(
                 text = stringResource(id = R.string.scores),
-                color = Color(0xff7b24bf),
+                color = Color(0xffb62fcc),
                 textAlign = TextAlign.Center,
                 lineHeight = 6.25.em,
                 style = MaterialTheme.typography.headlineSmall,

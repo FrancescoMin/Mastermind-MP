@@ -531,7 +531,6 @@ class GameScreenAndLogic {
                     onClick = {
                         isVisible = !isVisible
                         buttonText = "MASTERMIND"
-                        textColor =Color.Black
                     },
 
                     colors = ButtonDefaults.buttonColors(
@@ -539,7 +538,7 @@ class GameScreenAndLogic {
                     ),
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(buttonText, color = textColor, fontSize = 16.sp)
+                    Text(buttonText, color = Color.White, fontSize = 16.sp)
                 }
             }
 
