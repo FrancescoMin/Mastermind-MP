@@ -550,10 +550,11 @@ class AndroidLarge2 {
                 AlertDialog(
                     onDismissRequest = dismissDialog,
 
+
                     confirmButton = {
                         Column(
                             modifier = Modifier
-                                .fillMaxWidth()
+                                .fillMaxSize()
                                 .heightIn(min = 70.dp)  // Imposta un'altezza minima per il contenuto del popup
                                 .padding(16.dp),
                             horizontalAlignment = Alignment.CenterHorizontally,
@@ -561,7 +562,8 @@ class AndroidLarge2 {
                         ) {
                             LazyRow(
                                 modifier = Modifier
-                                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                                    .padding(horizontal = 13.dp, vertical = 8.dp)
+                                    .fillMaxSize()
                             ) {
                                 items(numberOfBoxesPerRow) { index ->
                                     val boxColorSol = randomColors[index].second
@@ -602,8 +604,8 @@ class AndroidLarge2 {
             )
             {//ARANCIONE
                 Button(
-                    onClick = { colorChange("Box #" + box.value, Color(0xFFFB4207)) },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFFB4207)),
+                    onClick = { colorChange("Box #" + box.value, Color(0XFFFF6700)) },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0XFFFF6700)),
                     modifier = Modifier
                         .align(alignment = Alignment.TopStart)
                         .offset(
@@ -916,7 +918,7 @@ class AndroidLarge2 {
 
     fun getColorHexFromName(colorName: String): String {
         return when (colorName) {
-            "Arancio" -> "#FFA500"
+            "Arancio" -> "#FFFF6700"
             "Giallo" -> "#FFFF00"
             "Verde" -> "#008000"
             "Rosso" -> "#FF0000"
@@ -938,7 +940,7 @@ class AndroidLarge2 {
             color ==  "#00FFFF"->Color(0.02745098f, 0.9843137f, 0.87058824f, 1.0f)  // Cyan
             color ==   "#FFFF00" ->Color(0.9843137f, 0.9490196f, 0.02745098f, 1.0f)// Giallo
             color ==   "#B81ECC" -> Color(0.7137255f, 0.18431373f, 0.8f, 1.0f) // Viola
-            color ==   "#FFA500" -> Color(0.9843137f, 0.25882354f, 0.02745098f, 1.0f) // Arancione
+            color ==   "#FFFF6700" -> Color(1.0f, 0.40392157f, 0.0f, 1.0f) // Arancione
             else -> throw IllegalArgumentException("Colore non valido")
         }
     }
@@ -951,7 +953,7 @@ class AndroidLarge2 {
             color == Color(0.02745098f, 0.9843137f, 0.87058824f, 1.0f) -> "#00FFFF" // Cyan
             color == Color(0.9843137f, 0.9490196f, 0.02745098f, 1.0f) -> "#FFFF00" // Giallo
             color == Color(0.7137255f, 0.18431373f, 0.8f, 1.0f) -> "#B81ECC" // Viola
-            color == Color(0.9843137f, 0.25882354f, 0.02745098f, 1.0f) -> "#FFA500" // Arancione
+            color == Color(1.0f, 0.40392157f, 0.0f, 1.0f) -> "#FFFF6700" // Arancione
             else -> throw IllegalArgumentException("Colore non valido")
         }
     }
