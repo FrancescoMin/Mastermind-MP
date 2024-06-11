@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             MastermindTheme {
-                // A surface container using the 'background' color from the theme
+
                 MainScreen().AndroidLarge1(Modifier.fillMaxSize())
 
             }

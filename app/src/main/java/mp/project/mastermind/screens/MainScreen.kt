@@ -47,10 +47,10 @@ import mp.project.mastermind.ScoresActivity
 
 val Typography.headlineSmall: TextStyle
     get() = TextStyle(
-        // Imposta qui gli attributi dello stile di testo desiderato
+
         fontSize = 16.sp,
         fontWeight = FontWeight.Bold,
-        /* Altri attributi come fontFamily, lineHeight, etc. */
+
     )
 
 class MainScreen {
