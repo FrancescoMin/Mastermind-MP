@@ -17,7 +17,8 @@
 In the game section you have 4 or 5 boxes where you\'ll have to select colors.
 
 To guess you have suggestions available for each game, there are 10 games in total.
-The suggestions are marked green if you have guessed the color and position of one of the boxes and yellow if you have only guessed the color</string>
+The suggestions are marked green if you have guessed the color and position of one of the boxes and yellow if you have only guessed the color.
+    Under the Mastermind button is possible to view the secret code configuration</string>
     <string name="close">Close</string>
     //AndroidLarge4.kt
     <string name="scores">SCORES</string>
@@ -29,4 +30,5 @@ The suggestions are marked green if you have guessed the color and position of o
     <string name="exit_dialog">Are you sure you want to exit the game screen? Your game will not be saved if you have not finished the game</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+
 </resources>

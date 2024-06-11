@@ -20,7 +20,8 @@
 Nella sezione gioco hai 4 o 5  caselle in cui dovrai selezionare i colori.
 
 Per indovinare hai suggerimenti disponibili per ogni riga di gioco, ci sono 10 tentativi in totale.
-I suggerimenti sono contrassegnati in verde se hai indovinato il colore e la posizione di una delle caselle e in giallo se hai solo indovinato il colore</string>
+I suggerimenti sono contrassegnati in verde se hai indovinato il colore e la posizione di una delle caselle e in giallo se hai solo indovinato il colore.
+    Sotto il bottone Mastermind è possibile visualizzare la configurazione del codice segreto.</string>
     <string name="close">Chiudi</string>
     //AndroidLarge4.kt
     <string name="scores">PUNTEGGI</string>

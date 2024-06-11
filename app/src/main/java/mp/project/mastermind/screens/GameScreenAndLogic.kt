@@ -39,7 +39,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -131,52 +130,35 @@ class GameScreenAndLogic {
 
     @Composable
     fun TimerScreen() {
-        //  var timerState = remember {mutableStateOf("") }
         var minutes = remember { mutableStateOf(0) }
         var seconds = remember { mutableStateOf(0) }
-
         LaunchedEffect(isPaused.value) {
             if (!isPaused.value) {
-
-
                 while (true) {
                     delay(1000) // attendi 1 secondo
                     seconds.value++
-
                     if (seconds.value >= 60) {
                         minutes.value++
                         seconds.value = 0
                     }
-                    timerState.value = String.format("%02d:%02d", minutes.value, seconds.value)
-
-                }
-            }
-        }
-
+                    timerState.value = String.format("%02d:%02d", minutes.value, seconds.value) }}}
         Column(
             modifier = Modifier
                 .requiredWidth(width = 70.dp)
                 .requiredHeight(height = 37.dp)
                 .offset(x = 80.dp, y = 21.dp)
                 .clip(shape = RoundedCornerShape(18.dp))
-                .background(color = Color.White)
-        )
-        {
-            Button(
+                .background(color = Color.White))
+        {Button(
                 onClick = { isPaused.value = !isPaused.value },
                 enabled = disabilita.value,
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(color = Color.White)
-            )
-            {
-                Text(
+                    .background(color = Color.White))
+            {Text(
                     text = timerState.value,
                     fontSize = 11.sp
-                )
-            }
-        }
-    }
+                )}}}
 
 
     @Composable
@@ -309,57 +291,31 @@ class GameScreenAndLogic {
     }
 
     private fun checkMastermind() {
-
         if (box.value != 0 && box.value % numberOfBoxesPerRow == 0 && checkLine.value == false) {
-            println("valore di boxvalue è : ${box.value}")
-            println("valore di appoggio è : ${appoggioCheckColors.value}")
-
             checkLine.value = true
-            var positionMatchFound = false
             var mySet: MutableList<String> = mutableListOf()
             for (element in randomColors) {
-                mySet.add(getColorHexFromName(element.second))
-            }
-
+                mySet.add(getColorHexFromName(element.second))}
             for (i in 1 until numberOfBoxesPerRow +1) {
                 val boxKey = "Box #${box.value - i}"
-                val boxColorHex = boxColors[boxKey]?.toArgb()?.let { colorIntToHex(it) }
                 val randomColorHex = getColorHexFromName(randomColors[numberOfBoxesPerRow - i].second)
-
                 if (boxColors[boxKey]?.let { colorToHex(it) } == randomColorHex) {
                     mySet.remove(boxColors[boxKey]?.let { colorToHex(it) })
                     checkColors[appoggioCheckColors.value] = Color(0xFF07FF5C)
                     appoggioCheckColors.value += 1
-                    println("Sono VERDE per ${boxColors[boxKey]?.let { colorToHex(it) }}")
-
                     // Verifica se tutti i box sono verdi
                     if (appoggioCheckColors.value % numberOfBoxesPerRow == 0 && appoggioCheckColors.value != 0) {
-                        println("cambio in green i res")
-                        _allBoxesAreGreen.value = true
-                    }
-                }
-            }
-
+                        _allBoxesAreGreen.value = true}}}
             for (i in 1 until numberOfBoxesPerRow +1) {
                 val boxKey = "Box #${box.value - i}"
-                val boxColorHex = boxColors[boxKey]?.toArgb()?.let { colorIntToHex(it) }
                 val randomColorHex = getColorHexFromName(randomColors[numberOfBoxesPerRow - i].second)
-
                 if (box.value - i >= 0 && boxColors[boxKey]?.let { colorToHex(it) } != randomColorHex && boxColors[boxKey]?.let {
-                        colorToHex(
-                            it
-                        )
+                        colorToHex(it)
                     } in mySet) {
-                    println("Ho trovato ${boxColors[boxKey]?.let { colorToHex(it) }} ")
                     mySet.remove(boxColors[boxKey]?.let { colorToHex(it) })
                     checkColors[appoggioCheckColors.value] = Color(0xFFFBF207)
-                    appoggioCheckColors.value += 1
-                }
-            }
-
-            row.value += 1
-        }
-
+                    appoggioCheckColors.value += 1}}
+            row.value += 1 }
         //Qui si arrotonda appoggio per farlo passare alla riga successiva(QUI C ERA IL BUG DI GIADA DEL 02/06
         if (appoggioCheckColors.value != row.value * numberOfBoxesPerRow) {
             appoggioCheckColors.value += numberOfBoxesPerRow - appoggioCheckColors.value % numberOfBoxesPerRow
@@ -421,28 +377,21 @@ class GameScreenAndLogic {
                 val listState = rememberLazyListState()
                 val numberOfRows = 10
                 val spacingBetweenBoxes = 8.dp // Spaziatura tra le caselle
-
                 LazyColumn(state = listState) {
                     items(numberOfRows) { rowIndex ->
                         val rowKey = "Row #$rowIndex"
-
                         LazyRow(
                             modifier = Modifier
                                 .padding(
                                     horizontal = 16.dp,
                                     vertical = 8.dp
                                 )
-                        ) {
-                            items(numberOfBoxesPerRow) { index ->
-
+                        ) { items(numberOfBoxesPerRow) { index ->
                                 //Questo è l'identificatore univoco di ogni box
                                 val boxId = "Box #${(rowIndex * numberOfBoxesPerRow) + index}"
-
                                 //Questo è il colore di ogni box, all'inizio è default grigio
                                 var boxColor by remember { mutableStateOf(Color(0xffd9d9d9)) }
                                 boxColor = boxColors[boxId] ?: Color(0xffd9d9d9)
-
-
                                 Box(
                                     modifier = Modifier
                                         .padding(end = if (index < numberOfBoxesPerRow - 1) spacingBetweenBoxes else 0.dp)
@@ -450,17 +399,15 @@ class GameScreenAndLogic {
                                         .requiredHeight(height = 43.dp)
                                         .background(boxColor)
                                         .clickable {
-                                            val boxPosition =
-                                                (rowIndex * numberOfBoxesPerRow) + index
+                                            val boxPosition = (rowIndex * numberOfBoxesPerRow) + index
                                             val startRange = row.value * numberOfBoxesPerRow
                                             val endRange =
                                                 row.value * numberOfBoxesPerRow + numberOfBoxesPerRow
 
                                             if (boxPosition in startRange..endRange) {
                                                 specialColorChange(boxId)
-                                                println("DAJe")
                                             } else {
-                                                println("Erroraccio qua boxPosition è ${boxId} mentre il range è ${startRange} - ${endRange}")
+                                                println("Errore boxPosition è ${boxId} mentre il range è ${startRange} - ${endRange}")
                                             }
                                         }
                                 )
@@ -817,57 +764,29 @@ class GameScreenAndLogic {
             } == true) {
             checkLine.value = true
             boxColors[s] = Color(0xffd9d9d9)
-
             if (s.substringAfter("#").toIntOrNull()!! < box.value) {
                 if (box.value != row.value * numberOfBoxesPerRow && row.value < 2) {
-                    println("1.sono entrato per boxvalue ${box.value}")
-
                     box.value = s[s.length - 1].digitToInt()
                 } else if (box.value != row.value * numberOfBoxesPerRow && box.value != row.value * numberOfBoxesPerRow + numberOfBoxesPerRow && row.value >= 2 && (box.value / numberOfBoxesPerRow) % 2 != 0) {
-                    println("2.sono entrato per boxvalue ${box.value}")
                     if(s.substringAfter("#").toIntOrNull()!! < 10) {
-                        println("")
-                        box.value =
-                            row.value * numberOfBoxesPerRow + s[s.length - 1].digitToInt() % numberOfBoxesPerRow
-                    }
+                        box.value = row.value * numberOfBoxesPerRow + s[s.length - 1].digitToInt() % numberOfBoxesPerRow }
                     else {
-                        box.value =
-                            row.value * numberOfBoxesPerRow + (s[s.length - 2].digitToInt()*10 + s[s.length - 1].digitToInt()) % numberOfBoxesPerRow
-                    }
-
-                } else if (box.value != row.value * numberOfBoxesPerRow && box.value != row.value * numberOfBoxesPerRow && row.value >= 2 && (box.value / numberOfBoxesPerRow) % 2 != 0) {
+                        box.value = row.value * numberOfBoxesPerRow + (s[s.length - 2].digitToInt()*10 + s[s.length - 1].digitToInt()) % numberOfBoxesPerRow } }
+                else if (box.value != row.value * numberOfBoxesPerRow && box.value != row.value * numberOfBoxesPerRow && row.value >= 2 && (box.value / numberOfBoxesPerRow) % 2 != 0) {
                     println("3.sono entrato per boxvalue ${box.value}")
                     if(numberOfBoxesPerRow == 5)
                         box.value = row.value * numberOfBoxesPerRow + s[s.length - 1].digitToInt()
                     else if(numberOfBoxesPerRow == 4)
                         if(s.substringAfter("#").toIntOrNull()!! < 10) {
-                            println(
-                                "Ci troviamo a confine, attenzione valore di box.value cancellata è " + s.substringAfter(
-                                    "#"
-                                ).toIntOrNull()
-                            )
-                            box.value =
-                                row.value * numberOfBoxesPerRow + s[s.length - 1].digitToInt() % numberOfBoxesPerRow
-                        }
-                        else
-                            box.value = row.value * numberOfBoxesPerRow + (s[s.length - 2].digitToInt()*10 + s[s.length - 1].digitToInt()) % numberOfBoxesPerRow
-
-
+                            box.value = row.value * numberOfBoxesPerRow + s[s.length - 1].digitToInt() % numberOfBoxesPerRow }
+                        else box.value = row.value * numberOfBoxesPerRow + (s[s.length - 2].digitToInt()*10 + s[s.length - 1].digitToInt()) % numberOfBoxesPerRow
                 } else if (box.value != row.value * numberOfBoxesPerRow && row.value >= 2 && (box.value / numberOfBoxesPerRow) % 2 == 0) {
-                    println("4.sono entrato per boxvalue ${box.value}")
-
                     if(numberOfBoxesPerRow == 5)
                         box.value = row.value * numberOfBoxesPerRow + s[s.length - 1].digitToInt() % numberOfBoxesPerRow
                     else if(numberOfBoxesPerRow == 4)
                         if(s.substringAfter("#").toIntOrNull()!! < 10) {
-                            println("Attenzione ci troviamo a confine, il valore è" + s.substringAfter("#").toIntOrNull())
-                            box.value =
-                                row.value * numberOfBoxesPerRow + s[s.length - 1].digitToInt() % numberOfBoxesPerRow
-
-                        }
-                    else
-                            box.value =
-                                row.value * numberOfBoxesPerRow + (s[s.length - 2].digitToInt() * 10 + s[s.length - 1].digitToInt()) % numberOfBoxesPerRow
+                            box.value = row.value * numberOfBoxesPerRow + s[s.length - 1].digitToInt() % numberOfBoxesPerRow }
+                    else box.value = row.value * numberOfBoxesPerRow + (s[s.length - 2].digitToInt() * 10 + s[s.length - 1].digitToInt()) % numberOfBoxesPerRow
                 } /*else if(box.value == row.value*5 && box.value != 0 ){
                 box.value = row.value*5 + s[s.length - 1].digitToInt()%5
             }*/
