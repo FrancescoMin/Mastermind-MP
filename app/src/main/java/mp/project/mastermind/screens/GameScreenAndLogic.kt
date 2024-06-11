@@ -810,8 +810,9 @@ class GameScreenAndLogic {
 
 
     private fun specialColorChange(s: String) {
-        checkLine.value = true
+        
         if (boxColors[s] != Color(0xffd9d9d9)) {
+            checkLine.value = true
             boxColors[s] = Color(0xffd9d9d9)
 
             if (s.substringAfter("#").toIntOrNull()!! < box.value) {
