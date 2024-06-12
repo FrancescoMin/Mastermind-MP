@@ -17,7 +17,7 @@ class GameActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val number = intent.getIntExtra("number", 0)
         setContent {
-            gameScreenAndLogic.AndroidLarge2(Modifier.fillMaxSize(), number,{ onBackPressed() } )
+            gameScreenAndLogic.AndroidLarge2(Modifier.fillMaxSize(), number,{ onBackPressed() })
         }
     }
     override fun onBackPressed() {
@@ -35,4 +35,5 @@ class GameActivity : ComponentActivity() {
             .setNegativeButton(no) { _, _ -> }
             .show()
     }
+
 }

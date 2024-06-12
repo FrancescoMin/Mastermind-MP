@@ -88,7 +88,7 @@ class GameScreenAndLogic {
 
 
     //variabili di supporto
-    var supportoDB = false//gestione db
+    var supportoDB = false  //gestione db
     var disabilita = mutableStateOf(true)//blocca i bottoni
 
     //variabili per il timer di gioco
@@ -291,7 +291,7 @@ class GameScreenAndLogic {
     }
 
     private fun checkMastermind() {
-        if (box.value != 0 && box.value % numberOfBoxesPerRow == 0 && checkLine.value == false) {
+        if (box.value != 0 && box.value % numberOfBoxesPerRow == 0 && !checkLine.value && !isPaused.value) {
             checkLine.value = true
             var mySet: MutableList<String> = mutableListOf()
             for (element in randomColors) {
@@ -334,11 +334,13 @@ class GameScreenAndLogic {
     @SuppressLint("NotConstructor", "CoroutineCreationDuringComposition")
     @Composable
     fun AndroidLarge2(modifier: Modifier = Modifier, number: Int,onBackPressed: () -> Unit) {
+
         numberOfBoxesPerRow = number
         if(!supporto) {
             randomColors = generateRandomColorsArray()
             supporto = true
         }
+
 
         randomColors.forEach { (colorId, colorName) ->
             println("Generated color: $colorName (ID: $colorId)")
@@ -716,7 +718,7 @@ class GameScreenAndLogic {
             }
             }
         }
-        if (box.value > numberOfBoxesPerRow*10 -1 && checkLine.value == true && _allBoxesAreGreen.value == false) {
+        if (box.value > numberOfBoxesPerRow*10 -1 && checkLine.value && !_allBoxesAreGreen.value) {
             isPaused.value = true
             disabilita.value = false
 
@@ -732,7 +734,7 @@ class GameScreenAndLogic {
             if(!supportoDB) {
                 val storicoDao = DBStorico.getInstance(context).daoStorico()
                 val scope = CoroutineScope(Dispatchers.Main)
-
+                supportoDB = true
 // Eseguo l'inserimento nel database in background
                 scope.launch(Dispatchers.IO) {
                     try {
@@ -867,6 +869,9 @@ class GameScreenAndLogic {
     private fun colorIntToHex(colorInt: Int): String {
         return String.format("#%06X", 0xFFFFFF and colorInt)
     }
+
+
+
 }
 
 
