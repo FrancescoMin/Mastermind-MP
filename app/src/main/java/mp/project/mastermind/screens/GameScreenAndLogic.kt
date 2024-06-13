@@ -172,7 +172,6 @@ class GameScreenAndLogic {
 
         IconButton(
             onClick = { onClick() },
-            enabled = disabilita.value,
 
             modifier = modifier
                 .requiredSize(31.dp)

@@ -18,11 +18,11 @@ data class Storico(
 ){
     override fun toString(): String {
         return """
-        Numero Partita: $id
-        Data: $date 
-        Soluzione: $configuration
-        Risultato: $result
-        Tentativi: $attempts
-        Tempo: $time""".trimIndent()
+        Game Number: $id
+        Date: $date 
+        Solution: $configuration
+        Result: $result
+        Attempts: $attempts
+        Time: $time""".trimIndent()
     }
 }
