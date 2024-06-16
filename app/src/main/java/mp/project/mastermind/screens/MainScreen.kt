@@ -36,7 +36,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
@@ -53,7 +52,6 @@ val Typography.headlineSmall: TextStyle
 
     )
 
-class MainScreen {
 
     @SuppressLint("NotConstructor")
     @Composable
@@ -206,13 +204,5 @@ class MainScreen {
                 }
             }
         }
-    }
 
-
-
-    @Preview(widthDp = 400, heightDp = 800)
-    @Composable
-    private fun AndroidLarge1Preview() {
-        AndroidLarge1(Modifier)
-    }
 }

@@ -184,6 +184,7 @@ class GameScreenAndLogic {
         ) {
             Button(
                 onClick = { isPaused.value = !isPaused.value },
+                enabled = disabilita.value,
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Color.White)
