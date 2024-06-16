@@ -28,22 +28,28 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -130,36 +136,65 @@ class GameScreenAndLogic {
 
     @Composable
     fun TimerScreen() {
-        var minutes = remember { mutableStateOf(0) }
-        var seconds = remember { mutableStateOf(0) }
+        var minutes by remember { mutableStateOf(0) }
+        var seconds by remember { mutableStateOf(0) }
+        var timerState by remember { mutableStateOf("00:00") }
+
+        val lifecycleOwner = LocalLifecycleOwner.current
+        val observer = rememberUpdatedState(LifecycleEventObserver { _, event ->
+            when (event) {
+                Lifecycle.Event.ON_PAUSE -> isPaused.value = true
+                Lifecycle.Event.ON_RESUME -> isPaused.value = false
+                else -> Unit
+            }
+        })
+
+        DisposableEffect(lifecycleOwner) {
+            val lifecycle = lifecycleOwner.lifecycle
+            lifecycle.addObserver(observer.value)
+            onDispose {
+                lifecycle.removeObserver(observer.value)
+            }
+        }
+
         LaunchedEffect(isPaused.value) {
-            if (!isPaused.value) {
-                while (true) {
-                    delay(1000) // attendi 1 secondo
-                    seconds.value++
-                    if (seconds.value >= 60) {
-                        minutes.value++
-                        seconds.value = 0
+            snapshotFlow { isPaused.value}
+                .collect { paused ->
+                    if (!isPaused.value) {
+                        while (true) {
+                            delay(1000)
+                            seconds++
+                            if (seconds >= 60) {
+                                minutes++
+                                seconds = 0
+                            }
+                            timerState = String.format("%02d:%02d", minutes, seconds)
+                        }
                     }
-                    timerState.value = String.format("%02d:%02d", minutes.value, seconds.value) }}}
+                }
+        }
+
         Column(
             modifier = Modifier
-                .requiredWidth(width = 70.dp)
-                .requiredHeight(height = 37.dp)
+                .requiredWidth(70.dp)
+                .requiredHeight(37.dp)
                 .offset(x = 80.dp, y = 21.dp)
-                .clip(shape = RoundedCornerShape(18.dp))
-                .background(color = Color.White))
-        {Button(
+                .clip(RoundedCornerShape(18.dp))
+                .background(Color.White)
+        ) {
+            Button(
                 onClick = { isPaused.value = !isPaused.value },
-                enabled = disabilita.value,
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(color = Color.White))
-            {Text(
-                    text = timerState.value,
+                    .background(Color.White)
+            ) {
+                Text(
+                    text = timerState,
                     fontSize = 11.sp
-                )}}}
-
+                )
+            }
+        }
+    }
 
     @Composable
     fun ArrowButton(onClick: () -> Unit,modifier: Modifier = Modifier) {
@@ -185,6 +220,7 @@ class GameScreenAndLogic {
             )
         }
     }
+
 
     @Composable
     fun Successcheck() {
@@ -316,7 +352,7 @@ class GameScreenAndLogic {
                     appoggioCheckColors.value += 1}}
             row.value += 1 }
         //Qui si arrotonda appoggio per farlo passare alla riga successiva(QUI C ERA IL BUG DI GIADA DEL 02/06
-        if (appoggioCheckColors.value != row.value * numberOfBoxesPerRow) {
+        if (appoggioCheckColors.value != row.value * numberOfBoxesPerRow &&!isPaused.value) {
             appoggioCheckColors.value += numberOfBoxesPerRow - appoggioCheckColors.value % numberOfBoxesPerRow
             println("Ho aggiunto ${appoggioCheckColors.value}")
         }
@@ -388,31 +424,31 @@ class GameScreenAndLogic {
                                     vertical = 8.dp
                                 )
                         ) { items(numberOfBoxesPerRow) { index ->
-                                //Questo è l'identificatore univoco di ogni box
-                                val boxId = "Box #${(rowIndex * numberOfBoxesPerRow) + index}"
-                                //Questo è il colore di ogni box, all'inizio è default grigio
-                                var boxColor by remember { mutableStateOf(Color(0xffd9d9d9)) }
-                                boxColor = boxColors[boxId] ?: Color(0xffd9d9d9)
-                                Box(
-                                    modifier = Modifier
-                                        .padding(end = if (index < numberOfBoxesPerRow - 1) spacingBetweenBoxes else 0.dp)
-                                        .requiredWidth(width = 43.dp)
-                                        .requiredHeight(height = 43.dp)
-                                        .background(boxColor)
-                                        .clickable {
-                                            val boxPosition = (rowIndex * numberOfBoxesPerRow) + index
-                                            val startRange = row.value * numberOfBoxesPerRow
-                                            val endRange =
-                                                row.value * numberOfBoxesPerRow + numberOfBoxesPerRow
+                            //Questo è l'identificatore univoco di ogni box
+                            val boxId = "Box #${(rowIndex * numberOfBoxesPerRow) + index}"
+                            //Questo è il colore di ogni box, all'inizio è default grigio
+                            var boxColor by remember { mutableStateOf(Color(0xffd9d9d9)) }
+                            boxColor = boxColors[boxId] ?: Color(0xffd9d9d9)
+                            Box(
+                                modifier = Modifier
+                                    .padding(end = if (index < numberOfBoxesPerRow - 1) spacingBetweenBoxes else 0.dp)
+                                    .requiredWidth(width = 43.dp)
+                                    .requiredHeight(height = 43.dp)
+                                    .background(boxColor)
+                                    .clickable {
+                                        val boxPosition = (rowIndex * numberOfBoxesPerRow) + index
+                                        val startRange = row.value * numberOfBoxesPerRow
+                                        val endRange =
+                                            row.value * numberOfBoxesPerRow + numberOfBoxesPerRow
 
-                                            if (boxPosition in startRange..endRange) {
-                                                specialColorChange(boxId)
-                                            } else {
-                                                println("Errore boxPosition è ${boxId} mentre il range è ${startRange} - ${endRange}")
-                                            }
+                                        if (boxPosition in startRange..endRange) {
+                                            specialColorChange(boxId)
+                                        } else {
+                                            println("Errore boxPosition è ${boxId} mentre il range è ${startRange} - ${endRange}")
                                         }
-                                )
-                            }
+                                    }
+                            )
+                        }
                         }
                     }
                 }
@@ -700,21 +736,21 @@ class GameScreenAndLogic {
 
 
 // Eseguo l'inserimento nel database in background
-            scope.launch(Dispatchers.IO) {
-                try {
-                    storicoDao.insert(storico)
-                    // Verifico che l'inserimento sia avvenuto
-                    val storedStorico =
-                        storicoDao.getLastInserted() // Implementa questa funzione per recuperare l'ultimo record inserito
-                    if (storedStorico != null) {
-                        println("Database Inserimento avvenuto con successo: $storedStorico")
-                    } else {
-                        println("Database Inserimento fallito")
+                scope.launch(Dispatchers.IO) {
+                    try {
+                        storicoDao.insert(storico)
+                        // Verifico che l'inserimento sia avvenuto
+                        val storedStorico =
+                            storicoDao.getLastInserted() // Implementa questa funzione per recuperare l'ultimo record inserito
+                        if (storedStorico != null) {
+                            println("Database Inserimento avvenuto con successo: $storedStorico")
+                        } else {
+                            println("Database Inserimento fallito")
+                        }
+                    } catch (e: Exception) {
+                        println("Database Errore durante l'inserimento: ${e.message}")
                     }
-                } catch (e: Exception) {
-                    println("Database Errore durante l'inserimento: ${e.message}")
                 }
-            }
             }
         }
         if (box.value > numberOfBoxesPerRow*10 -1 && checkLine.value && !_allBoxesAreGreen.value) {
@@ -758,7 +794,7 @@ class GameScreenAndLogic {
 
 
     private fun specialColorChange(s: String) {
-        
+
         if (boxColors[s] != Color(0xffd9d9d9) &&
             s.substringAfter("#").toIntOrNull()?.let { index ->
                 index in (row.value * numberOfBoxesPerRow) until (row.value * numberOfBoxesPerRow + numberOfBoxesPerRow)
@@ -787,7 +823,7 @@ class GameScreenAndLogic {
                     else if(numberOfBoxesPerRow == 4)
                         if(s.substringAfter("#").toIntOrNull()!! < 10) {
                             box.value = row.value * numberOfBoxesPerRow + s[s.length - 1].digitToInt() % numberOfBoxesPerRow }
-                    else box.value = row.value * numberOfBoxesPerRow + (s[s.length - 2].digitToInt() * 10 + s[s.length - 1].digitToInt()) % numberOfBoxesPerRow
+                        else box.value = row.value * numberOfBoxesPerRow + (s[s.length - 2].digitToInt() * 10 + s[s.length - 1].digitToInt()) % numberOfBoxesPerRow
                 } /*else if(box.value == row.value*5 && box.value != 0 ){
                 box.value = row.value*5 + s[s.length - 1].digitToInt()%5
             }*/
@@ -872,7 +908,6 @@ class GameScreenAndLogic {
 
 
 }
-
 
 
 
