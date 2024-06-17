@@ -30,6 +30,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
@@ -99,7 +100,7 @@ class GameScreenAndLogic {
 
     //variabili per il timer di gioco
     var isPaused = mutableStateOf(false)
-    var timerState = mutableStateOf("")
+    var timerState: MutableState<String> = mutableStateOf("00:00")
 
 
 
@@ -138,7 +139,7 @@ class GameScreenAndLogic {
     fun TimerScreen() {
         var minutes by remember { mutableStateOf(0) }
         var seconds by remember { mutableStateOf(0) }
-        var timerState by remember { mutableStateOf("00:00") }
+      //  var timerState by remember { mutableStateOf("00:00") }
 
         val lifecycleOwner = LocalLifecycleOwner.current
         val observer = rememberUpdatedState(LifecycleEventObserver { _, event ->
@@ -168,7 +169,7 @@ class GameScreenAndLogic {
                                 minutes++
                                 seconds = 0
                             }
-                            timerState = String.format("%02d:%02d", minutes, seconds)
+                            timerState.value = String.format("%02d:%02d", minutes, seconds)
                         }
                     }
                 }
@@ -190,7 +191,7 @@ class GameScreenAndLogic {
                     .background(Color.White)
             ) {
                 Text(
-                    text = timerState,
+                    text = timerState.value,
                     fontSize = 11.sp
                 )
             }
@@ -718,7 +719,7 @@ class GameScreenAndLogic {
         if (_allBoxesAreGreen.value) {
             println("sono entrato nel successo")
             isPaused.value = true
-            disabilita.value = false
+            println(timerState.value)
             Successcheck()
             while (box.value <= numberOfBoxesPerRow*10 -1)
                 box.value++
@@ -729,6 +730,7 @@ class GameScreenAndLogic {
                 attempts = row.value,
                 time = timerState.value
             )
+            disabilita.value = false
             if(!supportoDB) {
                 val storicoDao = DBStorico.getInstance(context).daoStorico()
                 // Creo un coroutine scope
@@ -756,8 +758,8 @@ class GameScreenAndLogic {
         }
         if (box.value > numberOfBoxesPerRow*10 -1 && checkLine.value && !_allBoxesAreGreen.value) {
             isPaused.value = true
-            disabilita.value = false
 
+            println(timerState)
             println("fallito")
             FailedCheck()
             val storico = Storico(
@@ -767,6 +769,7 @@ class GameScreenAndLogic {
                 attempts = row.value,
                 time = timerState.value
             )
+            disabilita.value = false
             if(!supportoDB) {
                 val storicoDao = DBStorico.getInstance(context).daoStorico()
                 val scope = CoroutineScope(Dispatchers.Main)
